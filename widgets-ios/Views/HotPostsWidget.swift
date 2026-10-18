@@ -10,7 +10,7 @@ struct HotPostsWidget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Hot Posts")
-        .description("Top trending ideas on Hikko.")
+        .description("Top trending ideas on Thinkpond.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }

@@ -1,4 +1,4 @@
-# Launch checklist, Hikko
+# Launch checklist, Thinkpond
 
 - [ ] Pick a launch day (Tue–Thu)
 - [ ] Pick a hunter

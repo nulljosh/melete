@@ -1,6 +1,6 @@
 <img src="icon.svg" width="80" style="border-radius:18px">
 
-# Hikko
+# Thinkpond
 
 ![version](https://img.shields.io/badge/version-v3.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fhikko-black?logo=github)](https://github.com/nulljosh/hikko)
 

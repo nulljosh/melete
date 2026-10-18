@@ -150,7 +150,7 @@ struct FeedView: View {
                 }
             }
             .background(Color.paper)
-            .navigationTitle("Hikko")
+            .navigationTitle("Thinkpond")
             .searchable(text: $searchText, prompt: "Search posts")
             .navigationDestination(for: Post.self) { post in
                 PostDetailView(post: post)
@@ -816,7 +816,7 @@ struct SettingsSection: View {
         } header: {
             Text("Settings")
         } footer: {
-            Text("Hikko \(version)")
+            Text("Thinkpond \(version)")
                 .frame(maxWidth: .infinity)
                 .padding(.top, 12)
         }

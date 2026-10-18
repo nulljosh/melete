@@ -1,11 +1,11 @@
-# Hikko roadmap
+# Thinkpond roadmap
 
 > Priority tier 1 (2026-10-17): live blocker, work first. Order: live blockers, ship pushes, active features, portfolio, exploratory. See ~/Documents/Code/LOOP-HANDOFF.md.
 
 Only what is still open. History lives in git and `CHANGELOG.md`.
 
 ## Waiting on Apple
-- [ ] 3.0 is waiting for review on iPhone and Mac. The iPhone build was bounced once (2.3.3, stale 6.5-inch and iPad Pro 2nd gen screenshots), the screenshots were replaced and it went back in on 2026-10-05. The store name flips from Sparkjar to Hikko when it is approved. Check with `asc versions list --app 6785162492`.
+- [ ] 3.0 is waiting for review on iPhone and Mac. The iPhone build was bounced once (2.3.3, stale 6.5-inch and iPad Pro 2nd gen screenshots), the screenshots were replaced and it went back in on 2026-10-05. The store name flips from Sparkjar to Thinkpond when it is approved. Check with `asc versions list --app 6785162492`.
 
 ## Sign-in and mail
 - [ ] Sign in with Apple has never had a real round trip on a physical device. Needs a phone in hand.

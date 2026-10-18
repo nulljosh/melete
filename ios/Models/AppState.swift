@@ -151,7 +151,7 @@ final class AppState {
 
         let context = LAContext()
         do {
-            try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Sign in to Hikko")
+            try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Sign in to Thinkpond")
             guard let credentials = loadBiometricCredentials() else {
                 error = "No saved credentials found"
                 return

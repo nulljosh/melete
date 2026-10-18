@@ -63,7 +63,7 @@ function _setClient(client) {
 }
 
 function from() {
-  return process.env.MAIL_FROM || 'Hikko <noreply@jaybulb.com>';
+  return process.env.MAIL_FROM || 'Thinkpond <noreply@jaybulb.com>';
 }
 
 // No-ops when Resend is unconfigured so a missing env var degrades to "no email"

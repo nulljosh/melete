@@ -513,7 +513,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_CFBundleDisplayName = Hikko;
+				INFOPLIST_KEY_CFBundleDisplayName = Thinkpond;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -522,7 +522,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heyitsmejosh.spark;
-				PRODUCT_NAME = Hikko;
+				PRODUCT_NAME = Thinkpond;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -537,7 +537,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_CFBundleDisplayName = Hikko;
+				INFOPLIST_KEY_CFBundleDisplayName = Thinkpond;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -546,7 +546,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heyitsmejosh.spark;
-				PRODUCT_NAME = Hikko;
+				PRODUCT_NAME = Thinkpond;
 				SDKROOT = macosx;
 			};
 			name = Debug;

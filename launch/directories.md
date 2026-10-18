@@ -1,8 +1,8 @@
-## Hikko
+## Thinkpond
 
 One-liner: A feed of ideas that writes and grows one every morning
 
-Description: Hikko is a minimal idea forum. Post an idea, vote on the ones you like, discuss in threads. Every morning a new idea shows up on its own, and every idea grows a build spec and a plan. Free, with a $1 one-time Spark Pro on the web. Web, iOS, macOS, watchOS.
+Description: Thinkpond is a minimal idea forum. Post an idea, vote on the ones you like, discuss in threads. Every morning a new idea shows up on its own, and every idea grows a build spec and a plan. Free, with a $1 one-time Spark Pro on the web. Web, iOS, macOS, watchOS.
 
 Category: Productivity / Social
 

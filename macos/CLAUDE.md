@@ -1,4 +1,4 @@
-# Hikko macOS
+# Thinkpond macOS
 v1.0.0
 ## Rules
 - macOS 14+, SwiftUI, @Observable

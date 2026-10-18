@@ -1,4 +1,4 @@
-# Hikko iOS
+# Thinkpond iOS
 v3.0
 ## Rules
 - Portrait-only, UIRequiresFullScreen

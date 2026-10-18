@@ -1,4 +1,4 @@
-# Hikko API
+# Thinkpond API
 
 Base URL: `https://hikko.heyitsmejosh.com`
 

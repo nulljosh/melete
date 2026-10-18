@@ -1,6 +1,6 @@
 {
-  "name": "Hikko",
-  "short_name": "Hikko",
+  "name": "Thinkpond",
+  "short_name": "Thinkpond",
   "description": "Where ideas become reality",
   "start_url": "/app.html",
   "display": "standalone",
