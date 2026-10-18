@@ -25,7 +25,6 @@
 		3AA8B6E58C3E58DFFB03C361 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C960C5A9D0E4A37C066CE8E /* Assets.xcassets */; };
 		3AB763D6EB79A52825C41A0B /* WidgetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36144F6E413872BCE8C0CF6 /* WidgetAPI.swift */; };
 		406DB6B6C2317DDE3A7A0A46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255A33F3F797DB0BCEA702E8 /* ContentView.swift */; };
-		4103673983CDA16D8722D9CB /* Thinkpond.icon in Resources */ = {isa = PBXBuildFile; fileRef = E4DC65B277253D53481F875B /* Thinkpond.icon */; };
 		47A294EE4FE183EBBF7397CD /* UserProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B888EDFCBF793441DF737D48 /* UserProfileTests.swift */; };
 		4EFC1638CAD5D0389BB4B23D /* SparkWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252262F74DC4F74094B9E99F /* SparkWidgets.swift */; };
 		5007BDF70ECAB68A25A52AA9 /* RFSEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250A1A3E452EAFE4CFA20022 /* RFSEntry.swift */; };
@@ -45,6 +44,7 @@
 		BD2E236DE4521AB57EE48AB1 /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B965FAC4CDC7FEF516075210 /* CommentTests.swift */; };
 		C3308327E1F1154C3173124A /* VotingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898137529EC29A57F6260C07 /* VotingTests.swift */; };
 		D3123D41C0F32D9A96549332 /* PostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634073CA4721A8AA0746825 /* PostTests.swift */; };
+		D53AFC1EEB2AECFF89879F09 /* Thinkpond.icon in Resources */ = {isa = PBXBuildFile; fileRef = AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */; };
 		D96B6B932EA576313377BD54 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853643D321C111724EAABB6E /* PostDetailView.swift */; };
 		D9CE52F15DCEE57F1C52005E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6AE8F06520FF46047DC42 /* AppState.swift */; };
 		DE4910D8269C9AEAE75D98EA /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC9FCE7C2CE1C146107688 /* CommentsView.swift */; };
@@ -131,6 +131,7 @@
 		93D5DF75DDDFC297BA58F06B /* HotPostsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPostsProvider.swift; sourceTree = "<group>"; };
 		A548771F89593961D51C0506 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A95B026567C272F91FC1DB10 /* SparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkApp.swift; sourceTree = "<group>"; };
+		AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Thinkpond.icon; sourceTree = "<group>"; };
 		B888EDFCBF793441DF737D48 /* UserProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTests.swift; sourceTree = "<group>"; };
 		B965FAC4CDC7FEF516075210 /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		C36144F6E413872BCE8C0CF6 /* WidgetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetAPI.swift; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 		DEDE7FBC9391B3EC90CE2136 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DF0AE766ACE7A24B15BEB2FF /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		E188B5AB14AB56062C850BD7 /* Spark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spark.entitlements; sourceTree = "<group>"; };
-		E4DC65B277253D53481F875B /* Thinkpond.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Thinkpond.icon; sourceTree = "<group>"; };
 		E5DA0EC06F704242AF7E70B0 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		FCC6BAE9EE29681504AD6344 /* SparkWidgetsExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SparkWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -199,7 +199,7 @@
 		3389F4D949ECD1C4C7A3FC0B = {
 			isa = PBXGroup;
 			children = (
-				E4DC65B277253D53481F875B /* Thinkpond.icon */,
+				AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */,
 				37A7F3C1514EFD03DEFEE1BA /* API */,
 				9999C470A131215DD71ABE5A /* ios */,
 				87226969E9F919EE002A3916 /* Models */,
@@ -446,8 +446,8 @@
 			files = (
 				FB8C3417091AAAFBD8BC6402 /* .swiftlint.yml in Resources */,
 				3AA8B6E58C3E58DFFB03C361 /* Assets.xcassets in Resources */,
-				4103673983CDA16D8722D9CB /* Thinkpond.icon in Resources */,
 				08125EF0204EB82912058BF8 /* PrivacyInfo.xcprivacy in Resources */,
+				D53AFC1EEB2AECFF89879F09 /* Thinkpond.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,7 +680,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 202610041206;
+				CURRENT_PROJECT_VERSION = 202610172324;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QMM486NPYC;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -773,7 +773,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 202610041206;
+				CURRENT_PROJECT_VERSION = 202610172324;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QMM486NPYC;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

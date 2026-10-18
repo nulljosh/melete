@@ -1,8 +1,8 @@
-# Hikko
+# Thinkpond
 
 Version: v3.0.0 (web, iOS, macOS share one version from 3.0 on)
 
-Was Sparkjar, then Hotaru for a day, Hikko since 2026-10-04. Open work lives in `roadmap.md`.
+Was Sparkjar, then Hotaru for a day, Thinkpond since 2026-10-04. Open work lives in `roadmap.md`.
 
 ## What did not get renamed, on purpose
 - Cloudflare Pages project is `sparkjar`. Deploy with `npm run deploy`.
