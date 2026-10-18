@@ -1,0 +1,7 @@
+/* Thinkpond brand tokens. The accent is the only colour this app owns; spacing, radii and type come from the shared system. */
+:root {
+  --accent: #e3640c;
+  --accent-light: #ffa24d;
+  --accent-deep: #e3640c;
+  --accent-ring: color-mix(in srgb, #e3640c 30%, transparent);
+}
