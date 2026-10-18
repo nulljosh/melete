@@ -807,10 +807,10 @@ struct SettingsSection: View {
             .onChange(of: dailyIdea) { _, on in
                 Task { on ? await DailyIdea.schedule() : DailyIdea.cancel() }
             }
-            Link(destination: URL(string: "https://hikko.heyitsmejosh.com/support.html")!) {
+            Link(destination: URL(string: "https://hikko.jaybulb.com/support.html")!) {
                 Label("Support", systemImage: "questionmark.circle")
             }
-            Link(destination: URL(string: "https://hikko.heyitsmejosh.com/tos.html")!) {
+            Link(destination: URL(string: "https://hikko.jaybulb.com/tos.html")!) {
                 Label("Terms and Privacy", systemImage: "doc.text")
             }
         } header: {
