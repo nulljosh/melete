@@ -16,20 +16,23 @@ Rules that bite:
 
 ## Where things stand
 
-- Repo: main at 00fce44, pushed. Web feed is simplified and live on melete.jaybulb.com: cards are title, pitch and votes, one New/Trending switch, opening a card shows the closest App Store apps, then comments. The app page colours are back on the brand kit.
-- Store: iOS 3.1 and Mac 3.1 are WAITING_FOR_REVIEW, submitted 2026-10-19.
-- 3.2 on iOS and Mac carries the same simpler feed. Both build and the tests pass. It is committed but not submitted.
+- Repo: main at 427f7f3, pushed. The name is Melete everywhere except the store listing and the hosts that old builds still call. The web feed is live on melete.jaybulb.com: cards are title, pitch and votes, one New/Trending switch, opening a card shows the closest App Store apps, then comments. The landing and app colours sit on the laurel brand kit, with a lit oil lamp as the mark.
+- Store: iOS 3.1 and Mac 3.1 are WAITING_FOR_REVIEW, submitted 2026-10-19 under the Thinkpond listing name.
+- 3.2 on iOS and Mac is built and not submitted. It carries the simpler feed, the lamp splash, the Melete name and icon, the Mac profile as a grouped settings form, the Mac detail pane fitted to its window, no YC strip in Brainstorm, and the notification prompt waiting for the splash.
 - Daily ideas: the cron writes one idea a day on gpt-oss-120b. The first run is 09:00 UTC 2026-10-20. If it posts nothing, `npx wrangler tail sparkjar-cron` says why.
 - Junk posts: 42 are still in the feed. The backup is `_attic/thinkpond-junk-posts-2026-10-19.json` and the delete is `_attic/thinkpond-delete-junk.sql`. Joshua runs the SQL himself.
 - Issues: 27 open GitHub issues, many done or duplicates. Issues here are closed by hand only, never mirrored from the roadmap.
+- Local tests: two iOS UI tests fail on this Mac only. Its DNS still caches melete.jaybulb.com as not found.
 
 ## Next, in order
 
-1. When 3.1 clears review, submit 3.2 with `asc workflow run ship-ios VERSION:3.2` and `ship-mac`, then copy the version and build into `project.yml`. Needs Joshua's yes.
-2. Watch the first gpt-oss-120b daily idea at 09:00 UTC 2026-10-20. If it fails, fix the cron before the next tick.
-3. Close the 27 GitHub issues by hand, one at a time, checking each against the code first.
-4. Delete the stale branch `origin/spark-api-migration` after tagging it, once nothing unmerged on it is wanted.
-5. Work `roadmap.md` top down.
+1. When 3.1 clears review and Joshua says yes, submit 3.2 with `asc workflow run ship-ios VERSION:3.2` and `ship-mac`, with the App Store name changed to Melete, then copy the version and build into `project.yml`.
+2. Watch the first gpt-oss-120b daily idea at 09:00 UTC 2026-10-20 with `npx wrangler tail sparkjar-cron`. If it fails, fix the cron before the next tick.
+3. Check the launch colour on a phone. The simulator shows a white frame before the laurel splash.
+4. Re-run the iOS UI tests once this Mac's DNS resolves melete.jaybulb.com.
+5. Close the 27 GitHub issues by hand, one at a time, checking each against the code first.
+6. Delete the stale branch `origin/spark-api-migration` after tagging it, once nothing unmerged on it is wanted.
+7. Work `roadmap.md` top down.
 
 ## Restart prompt
 
