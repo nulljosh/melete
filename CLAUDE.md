@@ -84,8 +84,8 @@ post that has no spec yet. One-off, not scheduled.
 
 | Platform | Dir | Bundle ID | Status |
 |---|---|---|---|
-| iOS | ios/ | com.heyitsmejosh.spark | 1.0.1 live. 3.0 waiting for review (submitted 2026-10-04) |
-| macOS | macos/ | com.heyitsmejosh.spark | 1.0.2 live. 3.0 waiting for review (submitted 2026-10-04) |
+| iOS | ios/ | com.heyitsmejosh.spark | 3.0 live. 3.0.1 waiting for review (submitted 2026-10-19) |
+| macOS | macos/ | com.heyitsmejosh.spark | 3.0 live |
 | watchOS | watchos/ | com.heyitsmejosh.spark.watchos | Bundled with iOS; no login UI (view-only without iOS pre-auth) |
 
 Build with `xcodegen generate` in each platform dir. Screenshots in `screenshots/`.

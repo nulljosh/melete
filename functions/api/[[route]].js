@@ -15,6 +15,7 @@ import ai from '../../api/ai.js';
 import auth from '../../api/auth.js';
 import avatar from '../../api/avatar.js';
 import comments from '../../api/comments.js';
+import health from '../../api/health.js';
 import notifications from '../../api/notifications.js';
 import posts from '../../api/posts.js';
 import stripe from '../../api/stripe.js';
@@ -27,6 +28,7 @@ const handlers = {
   auth,
   avatar,
   comments,
+  health,
   notifications,
   posts,
   stripe,

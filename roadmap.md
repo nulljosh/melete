@@ -2,28 +2,26 @@
 
 > Priority tier 1 (2026-10-17): live blocker, work first. Order: live blockers, ship pushes, active features, portfolio, exploratory. See ~/Documents/Code/LOOP-HANDOFF.md.
 
-Only what is still open. History lives in git and `CHANGELOG.md`.
+Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs until 4.0.
 
 ## Waiting on Apple
-- [ ] 3.0 is waiting for review on iPhone and Mac. The iPhone build was bounced once (2.3.3, stale 6.5-inch and iPad Pro 2nd gen screenshots), the screenshots were replaced and it went back in on 2026-10-05. The store name flips from Sparkjar to Thinkpond when it is approved. Check with `asc versions list --app 6785162492`.
+- [ ] iOS 3.0.1 is waiting for review (submitted 2026-10-19). It carries the new Thinkpond screenshots, the post detail fix and a description without "Sparkjar". Check with `asc versions list --app 6785162492`.
+
+## Ship next
+- [ ] Mac 3.0.1: four or more fresh screenshots (the listing has one, and it says Hikko), the same post detail fix, and the `ship-mac` workflow still exports `Hikko.pkg` and `Hikko.app`. Check what the Mac target is called now before fixing the path.
+- [ ] Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.
+- [ ] Backfill: the feed is 20 "Shared X tracker for roommates" posts from the old model. Decide whether to unpin, hide or leave them.
 
 ## Sign-in and mail
 - [ ] Sign in with Apple has never had a real round trip on a physical device. Needs a phone in hand.
-- [ ] Confirm a password-reset email lands in a real inbox. The endpoint returns the same 200 whether or not the send worked.
-- [ ] Add `/api/health/mail`. It should ask Resend whether the key is valid without sending anything. A dead key stayed hidden for months because reset swallows send errors.
+- [ ] Confirm a password-reset email lands in a real inbox. `/api/health/mail` now says the Resend key is alive, but not that the mail arrives.
 - [ ] GitHub and Google sign-in on iOS, plus forgot-password on iOS. Code is done on the web. Blocked on the console registrations.
 - [ ] Sign in with Apple on the web. Native only today. Needs a Services ID.
-- [ ] The authmail worker still lists this app as "Sparkjar" with a blue accent (`authmail/src/index.js`). That repo is mid-branch, so it was left alone.
+- [ ] The authmail worker still lists this app as "Sparkjar" with a blue accent (`authmail/src/index.js`).
 
 ## Cleanup
-- [ ] iPhone post detail shows no body, spec or plan. The feed list leaves them out on purpose and `PostDetailView` never asks for the single post (`GET /api/posts?id=...`, which the web uses). Fetch it on open, then retake the idea-open screenshot (`ios/scripts/appstore-shots.sh` already captures it as `02-idea`). Check the Mac app for the same gap.
-- [ ] Idea Base shows `&quot;` literally in "A Cloud for Small Software". Decode HTML entities where the YC text is loaded.
-- [ ] Two probe accounts in Supabase from August: `probe1786367989`, `probe1786367990b`.
-- [ ] The Mac listing has one screenshot. Three or four would sell it better.
+- [ ] Two probe accounts in Supabase from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
-## Ideas, no deadline
-- [ ] A second model that filters the daily idea before it posts.
+## Toward 4.0
+- [ ] A second model pass that rejects a daily idea before it posts if it is generic.
 - [ ] Trademark and prior-art lookup on an idea.
-
-## Ingested 2026-10-16
-- [ ] Needs App Store icon and screenshot refresh: live 1.0.1 still shows the Spark-era screenshots. iOS 3.0 got an issue email 2026-10-05 and shows rejected. (screenshots: notes/attachments/2026-10-16/hikko-3.png, notes/attachments/2026-10-16/hikko-4.png)
