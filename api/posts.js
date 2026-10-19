@@ -116,19 +116,31 @@ async function addPostToDataSource({ title, content, category, linked_repo, date
 async function votePostInDataSource({ id, voteType, user }) {
   if (!user) throw new Error('Authentication required');
 
-  const delta = voteType === 'up' ? 1 : -1;
-
-  // Atomic increment via spark-api RPC -- no read-modify-write race condition
-  const newScore = await sparkRpc('increment_score', {
+  // One vote per person per idea, kept by spark-api: the same arrow again
+  // takes it back, the other arrow switches it. Score moves atomically with it.
+  const out = await sparkRpc('cast_vote', {
+    user_id: user.userId,
     post_id: id,
-    delta
+    value: voteType === 'up' ? 1 : -1
   }, { useServiceRole: true });
 
-  if (newScore === null || newScore === undefined) {
+  if (!out || out.score === null || out.score === undefined) {
     throw new Error('not_found');
   }
 
-  return { post: { id, score: newScore } };
+  return { post: { id, score: out.score, myVote: out.mine } };
+}
+
+// The signed-in caller's votes, so each client can show which arrow is lit.
+async function attachMyVotes(posts, user) {
+  if (!user || !posts.length) return posts;
+  try {
+    const mine = await sparkRpc('my_votes', { user_id: user.userId }, { useServiceRole: true });
+    return posts.map(p => ({ ...p, myVote: (mine && mine[p.id]) || 0 }));
+  } catch (err) {
+    console.error('[POSTS] my_votes failed:', err.message);
+    return posts;
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -201,7 +213,9 @@ module.exports = async function handler(req, res) {
       const rows = await sparkRequest(`posts?id=eq.${encodeURIComponent(id)}&select=*`);
       const row = Array.isArray(rows) ? rows[0] : null;
       if (!row) return res.status(404).json({ error: 'Post not found' });
-      return res.status(200).json({ post: rowToPost(row) });
+      const user = parseToken(req.headers.authorization, req.headers.cookie);
+      const [post] = await attachMyVotes([rowToPost(row)], user);
+      return res.status(200).json({ post });
     } catch (err) {
       console.error('[POSTS] Fetch one failed:', err.message);
       return res.status(500).json({ error: 'Failed to fetch post' });
@@ -216,7 +230,8 @@ module.exports = async function handler(req, res) {
         limit: Number.isFinite(limit) ? limit : undefined,
         offset: Number.isFinite(offset) ? offset : undefined
       });
-      return res.status(200).json({ posts });
+      const user = parseToken(req.headers.authorization, req.headers.cookie);
+      return res.status(200).json({ posts: await attachMyVotes(posts, user) });
     } catch (err) {
       console.error('[POSTS] spark-api fetch failed:', err.message);
       // Return seed data as fallback when spark-api is unreachable
