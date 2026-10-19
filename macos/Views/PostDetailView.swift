@@ -11,8 +11,12 @@ struct PostDetailView: View {
     private var currentPost: Post {
         // Prefer the fully-loaded copy; the appState entry is a list row and
         // would otherwise mask the body with its own empty fields.
-        if let full = fullPost, full.id == post.id { return full }
-        return appState.posts.first(where: { $0.id == post.id }) ?? post
+        let listed = appState.posts.first(where: { $0.id == post.id }) ?? post
+        guard let full = fullPost, full.id == post.id else { return listed }
+        // Votes update the list row, so the live score comes from there.
+        var merged = full
+        merged.score = listed.score
+        return merged
     }
 
     var body: some View {

@@ -10,7 +10,7 @@ struct Post: Codable, Identifiable, Hashable {
     /// message on launch (Guideline 2.1(a)). The detail fetch supplies it.
     let content: String?
     let category: String
-    let score: Int
+    var score: Int
     let author: Author?
     let createdAt: String?
     let enriched: Bool?
