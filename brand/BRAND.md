@@ -1,6 +1,6 @@
 # Thinkpond brand kit and design system
 
-An idea drops into the pond and ripples out
+A brain resting on a lily pad: the pond that thinks
 
 ## The mark
 One bold flat white glyph on an accent gradient tile. No text, no outline, no emblem.

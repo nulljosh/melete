@@ -1,15 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="262 170 500 700">
-  <circle cx="512" cy="600" r="235" fill="#ffca30" opacity=".10"/>
-  <circle cx="512" cy="600" r="165" fill="#ffca30" opacity=".18"/>
-  <rect x="372" y="196" width="280" height="64" rx="18" fill="#f3ede0"/>
-  <rect x="396" y="262" width="232" height="34" rx="8" fill="#f3ede0" opacity=".55"/>
-  <rect x="292" y="300" width="440" height="544" rx="124" fill="none" stroke="#f3ede0" stroke-width="28"/>
-  <ellipse cx="458" cy="520" rx="30" ry="82" transform="rotate(-32 458 520)" fill="#f3ede0" opacity=".6"/>
-  <ellipse cx="566" cy="520" rx="30" ry="82" transform="rotate(32 566 520)" fill="#f3ede0" opacity=".6"/>
-  <circle cx="512" cy="468" r="26" fill="#8fc286"/>
-  <ellipse cx="512" cy="522" rx="36" ry="40" fill="#8fc286"/>
-  <ellipse cx="512" cy="626" rx="62" ry="82" fill="#ffca30"/>
-  <circle cx="392" cy="726" r="14" fill="#ffca30"/>
-  <circle cx="636" cy="398" r="11" fill="#ffca30"/>
-  <circle cx="626" cy="770" r="9" fill="#ffca30" opacity=".7"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><defs>
+<mask id="brain" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><rect width="1024" height="1024" fill="#fff"/><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="none" stroke="#000" stroke-width="50" stroke-linecap="round"><path d="M512 560L440 140H584Z" fill="#000" stroke="none"/><path d="M512 540V720"/><path d="M170 470C260 470 300 450 330 395"/><path d="M854 470C764 470 724 450 694 395"/><path d="M200 650C280 640 330 670 380 615"/><path d="M824 650C744 640 694 670 644 615"/></g></mask>
+<mask id="pad" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><rect width="1024" height="1024" fill="#fff"/><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="#000" stroke="#000" stroke-width="80"><circle cx="512" cy="540" r="320"/><circle cx="802" cy="540" r="85"/><circle cx="763" cy="685" r="85"/><circle cx="261" cy="685" r="85"/><circle cx="222" cy="540" r="85"/><circle cx="261" cy="395" r="85"/><circle cx="367" cy="289" r="85"/><circle cx="512" cy="250" r="85"/><circle cx="657" cy="289" r="85"/><circle cx="763" cy="395" r="85"/></g><path d="M512 690L620 830L780 810Z" fill="#000"/></mask>
+</defs>
+<ellipse cx="512" cy="690" rx="410" ry="125" fill="currentColor" mask="url(#pad)"/>
+<g mask="url(#brain)"><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="currentColor"><circle cx="512" cy="540" r="320"/><circle cx="802" cy="540" r="85"/><circle cx="763" cy="685" r="85"/><circle cx="261" cy="685" r="85"/><circle cx="222" cy="540" r="85"/><circle cx="261" cy="395" r="85"/><circle cx="367" cy="289" r="85"/><circle cx="512" cy="250" r="85"/><circle cx="657" cy="289" r="85"/><circle cx="763" cy="395" r="85"/></g></g></svg>
