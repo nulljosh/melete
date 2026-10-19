@@ -3,10 +3,15 @@ import SwiftUI
 struct PostDetailView: View {
     @Environment(AppState.self) private var appState
     let post: Post
+    @State private var fullPost: Post?
 
     private var currentPost: Post {
         appState.posts.first(where: { $0.id == post.id }) ?? post
     }
+
+    // The feed list omits content and the enrichment columns, so the body, spec
+    // and plan come from the fully-loaded copy. Score stays live from appState.
+    private var detail: Post { fullPost ?? currentPost }
 
     var body: some View {
         ScrollView {
@@ -54,13 +59,13 @@ struct PostDetailView: View {
 
                 Divider()
 
-                Text(currentPost.content ?? "")
+                Text(detail.content ?? "")
                     .font(.body)
                     .foregroundStyle(.primary)
                     .fixedSize(horizontal: false, vertical: true)
 
                 // LLM enrichment panels
-                if let spec = currentPost.enrichmentSpec, !spec.isEmpty {
+                if let spec = detail.enrichmentSpec, !spec.isEmpty {
                     Divider()
                     VStack(alignment: .leading, spacing: 8) {
                         Text("SPEC")
@@ -72,7 +77,7 @@ struct PostDetailView: View {
                     }
                 }
 
-                if let plan = currentPost.enrichmentPlan, !plan.isEmpty {
+                if let plan = detail.enrichmentPlan, !plan.isEmpty {
                     Divider()
                     VStack(alignment: .leading, spacing: 8) {
                         Text("PLAN")
@@ -107,6 +112,9 @@ struct PostDetailView: View {
         .background(Color.paper)
         .navigationTitle("Post")
         .navigationBarTitleDisplayMode(.inline)
+        .task(id: post.id) {
+            fullPost = try? await appState.api.fetchPost(id: post.id)
+        }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if appState.isLoggedIn && !(currentPost.enriched ?? false) && currentPost.enrichmentRequestedAt == nil {
@@ -116,7 +124,7 @@ struct PostDetailView: View {
                         Image(systemName: "wand.and.stars")
                     }
                 }
-                ShareLink(item: "\(currentPost.title)\n\n\(currentPost.content ?? "")") {
+                ShareLink(item: "\(currentPost.title)\n\n\(detail.content ?? "")") {
                     Image(systemName: "square.and.arrow.up")
                 }
             }

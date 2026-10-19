@@ -67,6 +67,11 @@ final class MockSparkAPI: SparkAPIProtocol, @unchecked Sendable {
         return try fetchPostsResult.get()
     }
 
+    func fetchPost(id: String) async throws -> Post {
+        guard let post = try fetchPostsResult.get().first(where: { $0.id == id }) else { throw URLError(.fileDoesNotExist) }
+        return post
+    }
+
     func createPost(title: String, content: String, category: String) async throws -> Post {
         createPostCallCount += 1
         return try createPostResult.get()

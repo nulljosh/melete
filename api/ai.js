@@ -221,7 +221,10 @@ const RFS_TTL_MS = 12 * 60 * 60 * 1000;
 const RFS_ENTRY_RE = /<div id="([\w-]+)"><div class="border[^"]*py-10[^"]*"><div class="w-full"><div class="mb-6"><h3[^>]*>([^<]+)<span.*?<\/h3><span[^>]*>By<!-- --> (.*?)<\/span><\/div>.*?whitespace-pre-wrap[^>]*>(.*?)<\/div><\/div><\/div><\/div><\/div><\/div>/gs;
 
 function stripTags(s) {
-  return s.replace(/<[^>]+>/g, '').replace(/&#x27;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  return s.replace(/<[^>]+>/g, '')
+    .replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&') // last, so "&amp;quot;" stays "&quot;"
+    .replace(/\s+/g, ' ').trim();
 }
 
 async function fetchRfs() {
