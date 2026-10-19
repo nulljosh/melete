@@ -37,7 +37,7 @@ const handlers = {
   users
 };
 
-const ALLOWED_ORIGIN = 'https://hikko.jaybulb.com';
+const ALLOWED_ORIGIN = 'https://thinkpond.jaybulb.com';
 const CORS = {
   'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
   'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',

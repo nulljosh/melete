@@ -137,7 +137,7 @@ final class AppState {
     }
 
     func exportPostURL(postId: String) -> URL {
-        URL(string: "https://hikko.jaybulb.com/api/ai?type=notes&id=\(postId)")!
+        URL(string: "https://thinkpond.jaybulb.com/api/ai?type=notes&id=\(postId)")!
     }
 
     func fetchIdeaBases() async throws -> [IdeaBase] {

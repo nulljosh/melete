@@ -7,7 +7,7 @@
 # Usage: SPARK_DAEMON_SECRET=... bash scripts/backfill-enrich.sh
 set -euo pipefail
 
-SITE="${SPARK_API_URL:-https://sparkjar.heyitsmejosh.com}"
+SITE="${SPARK_API_URL:-https://thinkpond.jaybulb.com}"
 : "${SPARK_DAEMON_SECRET:?set SPARK_DAEMON_SECRET}"
 
 ids=$(curl -sf "$SITE/api/posts" \

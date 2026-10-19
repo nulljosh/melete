@@ -66,7 +66,7 @@ const MSG = { to: 'a@b.com', subject: 'Subj', text: 'plain', html: '<p>html</p>'
   assert.strictEqual(sent[0].from, 'Spark <noreply@epiphany.heyitsmejosh.com>');
 
   // 5. Link bases come from APP_URL, with the live host as the fallback.
-  assert.strictEqual(freshMail({}).baseUrl(), 'https://hikko.jaybulb.com');
+  assert.strictEqual(freshMail({}).baseUrl(), 'https://thinkpond.jaybulb.com');
   assert.strictEqual(freshMail({ APP_URL: 'https://x.test' }).baseUrl(), 'https://x.test');
 
   console.log('mail selfcheck: OK');

@@ -47,7 +47,7 @@ final class SparkAPI: SparkAPIProtocol, Sendable {
 
     static let unauthorizedNotification = Notification.Name("SparkAPIUnauthorized")
 
-    private let baseURL = "https://hikko.jaybulb.com"
+    private let baseURL = "https://thinkpond.jaybulb.com"
     private let tokenKey = "spark_jwt"
     private let session: URLSession
 

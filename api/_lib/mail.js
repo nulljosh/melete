@@ -96,7 +96,7 @@ async function sendMail({ to, subject, text, html }) {
 }
 
 function baseUrl() {
-  return process.env.APP_URL || 'https://hikko.jaybulb.com';
+  return process.env.APP_URL || 'https://thinkpond.jaybulb.com';
 }
 
 module.exports = { sendMail, baseUrl, from, hasTransport, _setClient };

@@ -4,7 +4,7 @@
 // api/ai.js on the Pages project; this Worker exists solely because Cloudflare
 // Pages cannot hold a cron trigger. Two authenticated fetches, nothing else.
 // heyitsmejosh.com lapsed 2026-10-13; the cron silently posted nothing after that.
-const SITE = 'https://hikko.jaybulb.com';
+const SITE = 'https://thinkpond.jaybulb.com';
 
 async function post(path, secret, body) {
   const res = await fetch(SITE + path, {

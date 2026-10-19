@@ -1,12 +1,12 @@
 # Thinkpond
 
-Version: v3.0.1 (web, iOS, macOS share one version from 3.0 on)
+Version: v3.1 (web, iOS, macOS share one version from 3.0 on)
 
 Was Sparkjar, then Hotaru for a day, Thinkpond since 2026-10-04. Open work lives in `roadmap.md`.
 
 ## What did not get renamed, on purpose
 - Cloudflare Pages project is `sparkjar`. Deploy with `npm run deploy`.
-- `sparkjar.heyitsmejosh.com` still serves. Shipped binaries call it. Never retire it.
+- Home is `thinkpond.jaybulb.com` (since 2026-10-19). `hikko.jaybulb.com` still serves and the GitHub OAuth callback stays on it; app builds before 3.1 call it. Never retire it.
 - Bundle ids `com.heyitsmejosh.spark`, Xcode targets `Spark` / `SparkMac`, the `spark_*` localStorage keys.
 
 ## Money

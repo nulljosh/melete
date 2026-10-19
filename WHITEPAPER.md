@@ -9,7 +9,7 @@ is the part nobody wants to do. Thinkpond closes that gap. Post one, vote on
 others, argue in the comments. A model turns the good ones into build plans,
 so an idea does not need its poster to know how to scope it. Every morning a
 new idea shows up on its own, so the feed is never empty. Live at
-[hikko.heyitsmejosh.com](https://hikko.heyitsmejosh.com), with native iOS,
+[thinkpond.jaybulb.com](https://thinkpond.jaybulb.com), with native iOS,
 macOS, and watchOS companions.
 
 ## Core Mechanic: Ideas as First-Class Objects

@@ -11,7 +11,7 @@ Topics: Productivity, Artificial Intelligence, Social Networking
 Pricing: Free. Spark Pro is $1 once, on the web.
 
 Links
-Web: https://hikko.jaybulb.com
+Web: https://thinkpond.jaybulb.com
 App Store: https://apps.apple.com/app/id6785162492
 GitHub: https://github.com/nulljosh/hikko
 

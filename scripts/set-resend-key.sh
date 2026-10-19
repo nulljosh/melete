@@ -37,5 +37,5 @@ rm -f /tmp/resend_check.$$
 printf '%s' "$KEY" | npx wrangler pages secret put "$NAME" --project-name "$PROJECT"
 echo
 echo "Stored. Now confirm delivery:"
-echo "  curl -X POST 'https://sparkjar.heyitsmejosh.com/api/auth/password-reset?action=forgot' \\"
+echo "  curl -X POST 'https://thinkpond.jaybulb.com/api/auth/password-reset?action=forgot' \\"
 echo "    -H 'Content-Type: application/json' -d '{\"username\":\"appreview\"}'"
