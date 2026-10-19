@@ -25,7 +25,6 @@ final class MockSparkAPI: SparkAPIProtocol, @unchecked Sendable {
     var fetchUserProfileResult: Result<UserProfile, Error> = .success(
         UserProfile(username: "testuser", createdAt: nil, posts: [])
     )
-    var fetchRfsResult: Result<[RFSEntry], Error> = .success([])
 
     var savedToken: String?
     var tokenCleared = false
@@ -110,10 +109,6 @@ final class MockSparkAPI: SparkAPIProtocol, @unchecked Sendable {
     func fetchUserProfile(username: String) async throws -> UserProfile {
         fetchUserProfileCallCount += 1
         return try fetchUserProfileResult.get()
-    }
-
-    func fetchRfs() async throws -> [RFSEntry] {
-        return try fetchRfsResult.get()
     }
 
     func saveToken(_ token: String) {

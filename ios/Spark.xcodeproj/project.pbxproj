@@ -26,7 +26,6 @@
 		406DB6B6C2317DDE3A7A0A46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255A33F3F797DB0BCEA702E8 /* ContentView.swift */; };
 		47A294EE4FE183EBBF7397CD /* UserProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B888EDFCBF793441DF737D48 /* UserProfileTests.swift */; };
 		4EFC1638CAD5D0389BB4B23D /* SparkWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252262F74DC4F74094B9E99F /* SparkWidgets.swift */; };
-		5007BDF70ECAB68A25A52AA9 /* RFSEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250A1A3E452EAFE4CFA20022 /* RFSEntry.swift */; };
 		54E0B9930C9FD58228F4CDB9 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669DF90C12CC52B9665EF8A4 /* Comment.swift */; };
 		58319A1C995F727E36A9935A /* View+Glass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00AC133C41489BFF2B27166 /* View+Glass.swift */; };
 		5BB9DD6838440BC8EADDA9B3 /* WhatsNewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6198C2205B519C65D90BAA74 /* WhatsNewSheet.swift */; };
@@ -101,7 +100,6 @@
 		14BFFB055F5D3AFB05491CA4 /* Spark.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Spark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20FCF2189B78982DF62F743E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		23E258503065A71D2CA27D42 /* WidgetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModels.swift; sourceTree = "<group>"; };
-		250A1A3E452EAFE4CFA20022 /* RFSEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFSEntry.swift; sourceTree = "<group>"; };
 		252262F74DC4F74094B9E99F /* SparkWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkWidgets.swift; sourceTree = "<group>"; };
 		255A33F3F797DB0BCEA702E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		38B305B02C1805F1432B0604 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -265,7 +263,6 @@
 				669DF90C12CC52B9665EF8A4 /* Comment.swift */,
 				705DF762743CB17D523378AB /* IdeaBase.swift */,
 				7C1FA48B378FBAE5DEC3C7E7 /* Post.swift */,
-				250A1A3E452EAFE4CFA20022 /* RFSEntry.swift */,
 				20FCF2189B78982DF62F743E /* User.swift */,
 				E5DA0EC06F704242AF7E70B0 /* UserProfile.swift */,
 			);
@@ -494,7 +491,6 @@
 				F3249EC16F76847B4ABE6791 /* KeychainHelper.swift in Sources */,
 				28617124CC44BDFAF05DAAF3 /* Post.swift in Sources */,
 				D96B6B932EA576313377BD54 /* PostDetailView.swift in Sources */,
-				5007BDF70ECAB68A25A52AA9 /* RFSEntry.swift in Sources */,
 				7FE504150AE2C080933FDAFF /* SparkAPI.swift in Sources */,
 				FE88C42776901721A0504CC8 /* SparkApp.swift in Sources */,
 				DF3796B1DB84F0A0D41D9156 /* TutorialView.swift in Sources */,

@@ -51,8 +51,10 @@ struct SparkApp: App {
                 try? await Task.sleep(for: .seconds(1.8))
                 showSplash = false
             }
-            .task(id: appState.isLoggedIn && tutorialDone) {
-                if appState.isLoggedIn, tutorialDone, UserDefaults.standard.object(forKey: "daily_idea") as? Bool ?? true { await DailyIdea.schedule() }
+            // The keychain outlives a reinstall, so a fresh install can already be signed in.
+            // Wait for the splash so the prompt lands on the feed, not on a blank screen.
+            .task(id: appState.isLoggedIn && tutorialDone && !showSplash) {
+                if appState.isLoggedIn, tutorialDone, !showSplash, UserDefaults.standard.object(forKey: "daily_idea") as? Bool ?? true { await DailyIdea.schedule() }
             }
         }
     }

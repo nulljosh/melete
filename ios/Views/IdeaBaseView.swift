@@ -7,7 +7,6 @@ struct IdeaBaseView: View {
     @State private var isSubmitting = false
     @State private var message: String?
     @State private var ideaBases: [IdeaBase] = []
-    @State private var rfs: [RFSEntry] = []
     @State private var isLoadingMore = false
     @State private var reachedEnd = false
 
@@ -58,33 +57,11 @@ struct IdeaBaseView: View {
                         }
                     }
                 }
-
-                if !rfs.isEmpty {
-                    Section("Inspiration from YC") {
-                        ForEach(rfs) { entry in
-                            Link(destination: URL(string: entry.url)!) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(entry.title)
-                                        .font(.subheadline.weight(.medium))
-                                        .foregroundStyle(.primary)
-                                    Text("By \(entry.author)")
-                                        .font(.caption2)
-                                        .foregroundStyle(.secondary)
-                                    Text(entry.description)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(2)
-                                }
-                            }
-                        }
-                    }
-                }
             }
             .scrollContentBackground(.hidden)
             .background(Color.paper)
             .task {
                 ideaBases = (try? await appState.api.fetchIdeaBases(offset: 0)) ?? []
-                rfs = (try? await appState.api.fetchRfs()) ?? []
             }
     }
 
