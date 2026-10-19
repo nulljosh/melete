@@ -2,11 +2,11 @@
 
 Version: v3.1 (web, iOS, macOS share one version from 3.0 on)
 
-Was Sparkjar, then Hotaru for a day, Melete since 2026-10-04. Open work lives in `roadmap.md`.
+Was Sparkjar, then Hotaru, Hikko and Thinkpond. Melete since 2026-10-19, named for the Muse of thought. Brand and design system: `brand/BRAND.md`. Open work lives in `roadmap.md`.
 
 ## What did not get renamed, on purpose
 - Cloudflare Pages project is `sparkjar`. Deploy with `npm run deploy`.
-- Home is `melete.jaybulb.com` (since 2026-10-19). `hikko.jaybulb.com` still serves and the GitHub OAuth callback stays on it; app builds before 3.1 call it. Never retire it.
+- Home is `melete.jaybulb.com` (since 2026-10-19). `thinkpond.jaybulb.com` and `hikko.jaybulb.com` still serve: 3.1 builds call thinkpond, older builds call hikko, and the GitHub OAuth callback stays on hikko. Never retire either.
 - Bundle ids `com.heyitsmejosh.spark`, Xcode targets `Spark` / `SparkMac`, the `spark_*` localStorage keys, and the Pages project `sparkjar`.
 
 ## Money
@@ -50,7 +50,7 @@ npm i --no-save playwright && node scripts/screenshots.mjs
 
 ## Key Files
 
-- index.html (marketing landing page: HTML + CSS + JS)
+- index.html (landing page in the Themis style: laurel field, `melete.svg` engraving, footer tiles `mt-*.webp`, engraved wordmark)
 - theme.js (shared light/dark control for every page -- see Theme below)
 - api/posts.js (GET/POST posts, seed data fallback)
 - api/ai.js (?type=generate|enrich|idea-base|notes|rfs -- all the AI paths, server-side)

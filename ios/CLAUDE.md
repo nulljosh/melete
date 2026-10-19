@@ -3,7 +3,7 @@ v3.1
 ## Rules
 - Portrait-only, UIRequiresFullScreen
 - Apple Liquid Glass: .ultraThinMaterial, blur, rounded corners, system font
-- Palette: paper #fafaf8, warm ink #1c1a17, one accent lily-pad green #4d7c45 (#8fc286 in dark). No cream, no yellow. Primary buttons use PrimaryButtonStyle.
+- Palette: paper #fafaf8, warm ink #1c1a17, one accent laurel green #4d7c45 (#8fc286 in dark). No cream, no yellow. Primary buttons use PrimaryButtonStyle.
 - No emojis
 - Error banner system for auth and API failures
 - Optimistic voting with debounce and error revert
@@ -18,4 +18,4 @@ xcodebuild -scheme Spark -destination 'platform=iOS Simulator,name=iPhone 16' te
 - ContentView.swift: Root tab navigation, feed/create/profile views, and auth sheet wiring.
 - Models/AppState.swift: Observable app state for auth, posts, voting, and error handling.
 - API/SparkAPI.swift: HTTP client for Spark auth and posts APIs, including token handling.
-- Tabs: native TabView (custom floating bar removed 2026-10-04, taps were unreliable). Order: Feed, Create, Profile. Create has Write and Brainstorm (topic to three ideas, plus YC requests). Profile is only your ideas.
+- Tabs: native TabView (custom floating bar removed 2026-10-04, taps were unreliable). Order: Feed, Create, Profile. Create has Write and Brainstorm (topic to three ideas). Profile is only your ideas.

@@ -201,7 +201,7 @@ struct TutorialView: View {
         case 1: ("Tap the arrow", "The good ones float to the top. Tap again to take your vote back.")
         case 2: ("Open it", "Every idea gets a build brief: what to make and how, written in seconds.")
         case 3: ("Stuck? Brainstorm", "Pick a topic and it writes three ideas for you.")
-        default: ("Join the pond", "Post ideas, vote, comment, and get the 9am idea.")
+        default: ("Join Melete", "Post ideas, vote, comment, and get the 9am idea.")
         }
         return VStack(spacing: 8) {
             Text(title).font(.title2.bold())

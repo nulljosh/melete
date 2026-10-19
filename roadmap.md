@@ -25,4 +25,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
+- [ ] Launch colour: the simulator shows a white launch frame before the laurel splash although `UILaunchScreen` names `LaunchBackground` and the asset compiles. Check on a phone before 3.2 ships.
+- [ ] 3.2 store listing: rename the App Store name to Melete (free on iOS and Mac as of 2026-10-19), new icon build, new screenshots with the lamp and the Melete name.
 - [ ] 3.2 on iOS and Mac: the simpler feed is built and both apps compile (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description). Submit once 3.1 clears review.

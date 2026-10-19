@@ -83,10 +83,10 @@ struct FeedView: View {
         NavigationStack {
             Group {
                 if appState.isFeedLoading && appState.posts.isEmpty {
-                    FireflyLoader(label: "Catching ideas...")
+                    FireflyLoader(label: "Loading ideas...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if appState.posts.isEmpty {
-                    ContentUnavailableView("The pond is empty", systemImage: "sparkles", description: Text("Be the first to share an idea."))
+                    ContentUnavailableView("No ideas yet", systemImage: "sparkles", description: Text("Be the first to share an idea."))
                 } else {
                     List {
                         Picker("Sort", selection: $state.sortMode) {

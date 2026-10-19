@@ -3,7 +3,7 @@ v3.1
 ## Rules
 - macOS 14+, SwiftUI, @Observable
 - Sidebar navigation: Feed, Create, Profile
-- Accent: lily-pad green #4d7c45 (#8fc286 dark), same palette as iOS
+- Accent: laurel green #4d7c45 (#8fc286 dark), same palette as iOS
 - No emojis
 - Keyboard shortcuts: Cmd-N (new post), Cmd-R (refresh), Cmd-Return (submit post)
 - Error banner system for auth and API failures

@@ -1,11 +1,11 @@
 import SwiftUI
 
-private let whatsNewVersion = "3.1"
+private let whatsNewVersion = "3.2"
 private let whatsNewRows: [(icon: String, text: String)] = [
-    ("leaf", "A new look: a brain on a lily pad, in pond green."),
-    ("arrow.up.circle", "One vote per idea. Tap again to take it back."),
-    ("sparkles", "Brainstorm lives in Create: give a topic, get three ideas."),
-    ("person.circle", "Profile shows every idea you have posted."),
+    ("flame", "A new name: Melete, the Muse of thought. A new icon to match."),
+    ("rectangle.grid.1x2", "A simpler feed: a title, a pitch and votes."),
+    ("magnifyingglass", "Open any idea to see what is already on the App Store."),
+    ("arrow.up.arrow.down", "One switch for New or Trending."),
 ]
 
 struct WhatsNewSheet: View {

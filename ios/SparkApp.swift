@@ -62,50 +62,41 @@ struct SparkApp: App {
 
 struct SplashView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var padIn = false
-    @State private var landed = false
-    @State private var ripple = false
+    @State private var lampIn = false
+    @State private var lit = false
     @State private var titleIn = false
 
-    private let ink = Color(hex: "f3ede0")
+    private let ink = Color(hex: "eef3ea")
 
     var body: some View {
         ZStack {
-            Color(hex: "1c1a17").ignoresSafeArea()
+            Color(hex: "1f2b1d").ignoresSafeArea()
 
             VStack(spacing: 24) {
-                // The mark in two pieces on one 200 pt canvas: a brain drops onto
-                // the lily pad and the pond ripples out from where it lands.
+                // The mark in two pieces on one 200 pt canvas: the lamp settles,
+                // then its flame catches and glows.
                 ZStack {
-                    ForEach(0..<2) { i in
-                        Ellipse()
-                            .stroke(Color.bulb.opacity(0.7), lineWidth: 2)
-                            .frame(width: 160, height: 49)
-                            .scaleEffect(ripple ? 1.7 + CGFloat(i) * 0.5 : 1)
-                            .opacity(ripple ? 0 : (landed ? 0.8 : 0))
-                            .animation(.easeOut(duration: 1.1).delay(Double(i) * 0.18), value: ripple)
-                            .offset(y: 35)
-                    }
-                    Image("SplashPad")
+                    Image("SplashLamp")
                         .resizable()
-                        .frame(width: 200, height: 200)
-                        .opacity(padIn ? 1 : 0)
-                        .scaleEffect(padIn ? 1 : 0.92)
-                    Image("SplashBrain")
+                        .foregroundStyle(ink)
+                        .opacity(lampIn ? 1 : 0)
+                        .offset(y: lampIn ? 0 : 12)
+                    Image("SplashFlame")
                         .resizable()
-                        .frame(width: 200, height: 200)
-                        .offset(y: landed ? 0 : -140)
-                        .opacity(landed ? 1 : 0)
+                        .foregroundStyle(ink)
+                        .shadow(color: ink.opacity(lit ? 0.9 : 0), radius: lit ? 18 : 0)
+                        .scaleEffect(lit ? 1 : 0.2, anchor: UnitPoint(x: 0.76, y: 0.55))
+                        .opacity(lit ? 1 : 0)
                 }
                 .frame(width: 200, height: 200)
 
                 VStack(spacing: 8) {
                     Text("Melete")
-                        .font(.system(size: 34, weight: .semibold))
+                        .font(.system(size: 40, weight: .regular, design: .serif))
                         .foregroundStyle(ink)
-                    Text("Drop an idea in. Watch it ripple.")
+                    Text("Ideas worth thinking about.")
                         .font(.subheadline)
-                        .foregroundStyle(ink.opacity(0.6))
+                        .foregroundStyle(ink.opacity(0.65))
                 }
                 .opacity(titleIn ? 1 : 0)
                 .offset(y: titleIn ? 0 : 8)
@@ -113,14 +104,13 @@ struct SplashView: View {
         }
         .task {
             if reduceMotion {
-                padIn = true; landed = true; titleIn = true
+                lampIn = true; lit = true; titleIn = true
                 return
             }
-            withAnimation(.easeOut(duration: 0.35)) { padIn = true }
+            withAnimation(.easeOut(duration: 0.4)) { lampIn = true }
+            try? await Task.sleep(for: .seconds(0.35))
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.55)) { lit = true }
             try? await Task.sleep(for: .seconds(0.2))
-            withAnimation(.spring(response: 0.45, dampingFraction: 0.62)) { landed = true }
-            try? await Task.sleep(for: .seconds(0.3))
-            ripple = true
             withAnimation(.easeOut(duration: 0.5)) { titleIn = true }
         }
     }
