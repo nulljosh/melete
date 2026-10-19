@@ -245,6 +245,7 @@ async function handleIdeaBase(req, res) {
         topic,
         description: description || null,
         post_ids,
+        pending: false,
         created_by: user.userId,
         created_at: new Date().toISOString()
       },

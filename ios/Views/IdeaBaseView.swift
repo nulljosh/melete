@@ -11,11 +11,54 @@ struct IdeaBaseView: View {
     @State private var isLoadingMore = false
     @State private var reachedEnd = false
 
+    // The Brainstorm half of Create; it lives inside Create's NavigationStack.
     var body: some View {
-        NavigationStack {
             Form {
+                if appState.isLoggedIn {
+                    Section("Brainstorm a topic") {
+                        TextField("Topic", text: $topic)
+                        TextField("Context (optional)", text: $description, axis: .vertical)
+                            .lineLimit(2...4)
+                        Button(action: submit) {
+                            if isSubmitting {
+                                ProgressView().frame(maxWidth: .infinity)
+                            } else {
+                                Text("Write Three Ideas")
+                                    .frame(maxWidth: .infinity)
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .disabled(topic.trimmingCharacters(in: .whitespaces).isEmpty || isSubmitting)
+                        if let msg = message {
+                            Text(msg)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+
+                if !ideaBases.isEmpty {
+                Section("Recent topics") {
+                        ForEach(ideaBases) { ib in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(ib.topic)
+                                    .font(.subheadline.weight(.medium))
+                                Text("\(ib.postIds?.count ?? 0) ideas")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .onAppear {
+                                if ib.id == ideaBases.last?.id { loadMore() }
+                            }
+                        }
+                        if isLoadingMore {
+                            ProgressView().frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+
                 if !rfs.isEmpty {
-                    Section("Inspiration \u{2014} YC Requests for Startups") {
+                    Section("Inspiration from YC") {
                         ForEach(rfs) { entry in
                             Link(destination: URL(string: entry.url)!) {
                                 VStack(alignment: .leading, spacing: 4) {
@@ -34,68 +77,13 @@ struct IdeaBaseView: View {
                         }
                     }
                 }
-
-                if appState.isLoggedIn {
-                    Section("Generate Ideas on a Topic") {
-                        TextField("Topic", text: $topic)
-                        TextField("Context (optional)", text: $description, axis: .vertical)
-                            .lineLimit(2...4)
-                        Button(action: submit) {
-                            if isSubmitting {
-                                ProgressView().frame(maxWidth: .infinity)
-                            } else {
-                                Text("Queue Generation")
-                                    .frame(maxWidth: .infinity)
-                                    .fontWeight(.semibold)
-                            }
-                        }
-                        .disabled(topic.trimmingCharacters(in: .whitespaces).isEmpty || isSubmitting)
-                        if let msg = message {
-                            Text(msg)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-
-                Section("Recent Idea Bases") {
-                    if ideaBases.isEmpty {
-                        Text("No idea bases yet")
-                            .foregroundStyle(.secondary)
-                            .font(.subheadline)
-                    } else {
-                        ForEach(ideaBases) { ib in
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(ib.topic)
-                                    .font(.subheadline.weight(.medium))
-                                HStack {
-                                    Text(ib.pending == true ? "Pending" : "Done")
-                                        .font(.caption2)
-                                        .foregroundStyle(ib.pending == true ? .orange : .green)
-                                    Spacer()
-                                    Text("\(ib.postIds?.count ?? 0) ideas")
-                                        .font(.caption2)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            .onAppear {
-                                if ib.id == ideaBases.last?.id { loadMore() }
-                            }
-                        }
-                        if isLoadingMore {
-                            ProgressView().frame(maxWidth: .infinity)
-                        }
-                    }
-                }
             }
             .scrollContentBackground(.hidden)
             .background(Color.paper)
-            .navigationTitle("Idea Base")
             .task {
                 ideaBases = (try? await appState.api.fetchIdeaBases(offset: 0)) ?? []
                 rfs = (try? await appState.api.fetchRfs()) ?? []
             }
-        }
     }
 
     private func loadMore() {
@@ -117,7 +105,8 @@ struct IdeaBaseView: View {
                     topic: topic,
                     description: description.isEmpty ? nil : description
                 )
-                message = "Queued. Ideas will appear in feed within 5 minutes."
+                message = "Three new ideas are in the feed."
+                await appState.loadPosts()
                 topic = ""
                 description = ""
                 ideaBases = (try? await appState.api.fetchIdeaBases(offset: 0)) ?? []

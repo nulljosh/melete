@@ -18,9 +18,6 @@ struct ContentView: View {
             CreateView(selectedTab: $selectedTab)
                 .tabItem { Label("Create", systemImage: selectedTab == 1 ? "plus.circle.fill" : "plus.circle") }
                 .tag(1)
-            IdeaBaseView()
-                .tabItem { Label("Ideas", systemImage: selectedTab == 3 ? "lightbulb.fill" : "lightbulb") }
-                .tag(3)
             ProfileView()
                 .tabItem { Label("Profile", systemImage: selectedTab == 2 ? "person.circle.fill" : "person.circle") }
                 .tag(2)
@@ -348,12 +345,16 @@ struct CreateView: View {
     @State private var autoEnrich = true
     @State private var isPosting = false
     @State private var errorMsg: String?
-    @State private var showSuccess = false
+    @State private var brainstorm = false
 
     let categories = ["General", "Tech", "Science", "Art", "Business", "Other"]
 
     var body: some View {
         NavigationStack {
+            Group {
+            if brainstorm {
+                IdeaBaseView()
+            } else {
             Form {
                 Section("Idea") {
                     TextField("Title", text: $title)
@@ -402,10 +403,19 @@ struct CreateView: View {
             }
             .scrollContentBackground(.hidden)
             .background(Color.paper)
-            .navigationTitle("Create")
-            .alert("Posted!", isPresented: $showSuccess) {
-                Button("OK") { selectedTab = 0 }
             }
+            }
+            .safeAreaInset(edge: .top) {
+                Picker("Mode", selection: $brainstorm) {
+                    Text("Write").tag(false)
+                    Text("Brainstorm").tag(true)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(Color.paper)
+            }
+            .navigationTitle("Create")
             .overlay {
                 if !appState.isLoggedIn {
                     ContentUnavailableView {
@@ -447,7 +457,7 @@ struct CreateView: View {
                 content = ""
                 category = "General"
                 linkedRepo = ""
-                showSuccess = true
+                selectedTab = 0
             } catch {
                 errorMsg = error.localizedDescription
             }
@@ -462,10 +472,12 @@ struct ProfileView: View {
     @Environment(AppState.self) private var appState
     @Environment(\.colorScheme) private var colorScheme
     @State private var confirmingDeleteAccount = false
+    @State private var serverPosts: [Post]?
 
+    // The feed only holds one page, so your own ideas come from /api/user.
     var myPosts: [Post] {
         guard let username = appState.user?.username else { return [] }
-        return appState.posts.filter { $0.author?.username == username }
+        return serverPosts ?? appState.posts.filter { $0.author?.username == username }
     }
 
     var body: some View {
@@ -494,8 +506,9 @@ struct ProfileView: View {
                     }
 
                     if !myPosts.isEmpty {
-                        Section("Your Posts") {
+                        Section("Your Ideas") {
                             ForEach(myPosts) { post in
+                                NavigationLink(destination: PostDetailView(post: post)) {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(post.title)
                                         .font(.subheadline.weight(.medium))
@@ -509,6 +522,7 @@ struct ProfileView: View {
                                     }
                                 }
                                 .padding(.vertical, 2)
+                                }
                             }
                             .onDelete { offsets in
                                 let toDelete = offsets.map { myPosts[$0] }
@@ -516,6 +530,7 @@ struct ProfileView: View {
                                     Task {
                                         do {
                                             try await appState.deletePost(id: post.id)
+                                            serverPosts?.removeAll { $0.id == post.id }
                                         } catch {
                                             appState.errorBanner = error.localizedDescription
                                         }
@@ -568,6 +583,12 @@ struct ProfileView: View {
             .scrollContentBackground(.hidden)
             .background(Color.paper)
             .navigationTitle("Profile")
+            .task(id: "\(appState.user?.username ?? "")-\(appState.posts.count)") {
+                guard let username = appState.user?.username else { serverPosts = nil; return }
+                if let profile = try? await appState.api.fetchUserProfile(username: username) {
+                    serverPosts = profile.posts
+                }
+            }
             .confirmationDialog(
                 "Delete your account?",
                 isPresented: $confirmingDeleteAccount,

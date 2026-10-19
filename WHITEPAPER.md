@@ -5,10 +5,10 @@
 A jar of ideas.
 
 Most ideas die because turning "someone should build X" into an actual plan
-is the part nobody wants to do. Thinkpond exists to close that gap: post one, vote on others, argue in the comments. A model turns the good ones into
-build plans, so an idea does not need its poster to already know how to
-scope it, and every morning a new idea shows up on its own, so the feed
-is never empty even before anyone else contributes. Live at
+is the part nobody wants to do. Thinkpond closes that gap. Post one, vote on
+others, argue in the comments. A model turns the good ones into build plans,
+so an idea does not need its poster to know how to scope it. Every morning a
+new idea shows up on its own, so the feed is never empty. Live at
 [hikko.heyitsmejosh.com](https://hikko.heyitsmejosh.com), with native iOS,
 macOS, and watchOS companions.
 
@@ -17,35 +17,28 @@ macOS, and watchOS companions.
 An idea is a post with a category, tags, votes, and comment threads, plus two
 AI-generated attachments:
 
-- **Enrichment (SPEC + PLAN)**: a Claude daemon
-  (`daemon/spark-daemon.js`) picks up new ideas and writes a product spec and
-  an implementation plan for each, turning a one-liner into something
-  buildable, because the gap between "someone should build X" and actually
-  starting is usually just nobody having written the plan down.
+- **Enrichment (SPEC + PLAN)**: a model on Cloudflare Workers AI
+  (`gpt-oss-120b`) writes a product spec and an implementation plan for each
+  new idea, turning a one-liner into something buildable.
 - **Idea Bases**: AI-generated idea clusters seeded from a topic, so an empty
   feed can bootstrap itself instead of asking the first visitor to populate it.
 
 Ranking is Hot/New with optimistic-UI upvotes; category and tag filters
 (tech, design, business, random) slice the feed. New users see curated seed
-ideas, and the frontend falls back to seed data if Supabase is unreachable.
+ideas, and the API falls back to seed data when D1 is empty or unreachable.
 
 ## Architecture
 
-- **Frontend**: one `index.html`, all HTML, CSS, and JS, no build step.
-  Responsive CSS grid feed (auto-fill, 320px min columns), PWA with offline
-  support, dark/light toggle.
+- **Frontend**: one `index.html`, plain HTML, CSS, and JS, no build step.
+  CSS grid feed, PWA with offline support, dark/light toggle.
 - **API**: Cloudflare Pages Functions. The site moved off Vercel on
-  2026-08-17, which retired the old 12-function Hobby-plan cap that had forced
-  auth into consolidated shared handlers; the consolidation stayed because it
-  is simpler than splitting endpoints back out for no functional gain, but new endpoints are no longer budgeted against a limit.
-- **Auth**: JWT with sign up/login, GitHub OAuth, ToS gate on register, and
-  Face ID / Touch ID on iOS.
-- **Database**: Supabase PostgreSQL with RLS enabled. This project is the
-  shared free-tier database, lexly and other apps ride on it, so migrations
-  here are effectively multi-tenant changes.
-- **Daemon**: `spark-daemon.js` runs on demand (`--once`) rather than as a
-  resident process, per the no-background-automation house rule, since a
-  process nobody is watching is a process that can silently misbehave.
+  2026-08-17, which retired the old 12-function cap. Handlers stay
+  consolidated.
+- **Database**: Cloudflare D1 (database `spark`) behind the `jaybulb-api`
+  Worker, with files in KV. The schema lives in that repo.
+- **Auth**: JWT login, GitHub OAuth, ToS gate, Face ID on iOS.
+- **Cron Worker**: `worker/` fires daily at 09:00 UTC and calls the generate
+  and enrich endpoints. Nothing runs locally.
 
 ## Platforms
 
@@ -58,7 +51,9 @@ ideas, and the frontend falls back to seed data if Supabase is unreachable.
 
 ## Security
 
-- RLS on every table; JWT secret rotated 2026-05-09.
+- Handlers in `api/` check the caller before any storage call. Storage calls
+  run server side only, with a service key.
+- JWT secret rotated 2026-05-09.
 - Known debt: an old `.env` lives in three historical commits (no longer
   tracked), purge via `git filter-repo` is on the roadmap.
 - Transactional email is wired to Resend but not yet sending: the domain is

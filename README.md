@@ -37,7 +37,7 @@ Each idea gets turned into a build spec and a step-by-step plan, server-side. Up
 - Comment threads. Markdown export
 - Dark and light
 - Installs as a PWA and works offline
-- Cloudflare Pages Functions and Supabase Postgres with RLS on
+- Cloudflare Pages Functions and Cloudflare D1 storage
 - Two columns on desktop, one on mobile
 - Tags: tech, design, business, random
 - Seeded with good ideas so new users don't land on nothing
@@ -63,14 +63,6 @@ npx wrangler deploy --config worker/wrangler.jsonc
 
 To enrich posts that predate the schedule:
 `SPARK_DAEMON_SECRET=... bash scripts/backfill-enrich.sh`
-
-## Database Setup (one-time)
-
-Run this in the [Supabase SQL editor](https://supabase.com/dashboard/project/tjsxsqlxjmanwvmywwvw/sql/new) to enable pixel avatar support:
-
-```sql
-alter table users add column if not exists avatar_url text;
-```
 
 ## Known Issues
 
@@ -107,7 +99,6 @@ Screenshots ready in `screenshots/ios/` (feed, sign-in, profile, ideas). Metadat
 - [ ] watchOS login UI (currently view-only without iOS pre-auth)
 
 **Features**
-- [ ] Real-time updates via Supabase Realtime
 - [ ] Infinite scroll / pagination (feed currently loads all posts)
 - [ ] Moderation tools
 

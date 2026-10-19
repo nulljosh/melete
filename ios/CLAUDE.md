@@ -18,4 +18,4 @@ xcodebuild -scheme Spark -destination 'platform=iOS Simulator,name=iPhone 16' te
 - ContentView.swift: Root tab navigation, feed/create/profile views, and auth sheet wiring.
 - Models/AppState.swift: Observable app state for auth, posts, voting, and error handling.
 - API/SparkAPI.swift: HTTP client for Spark auth and posts APIs, including token handling.
-- Tabs: native TabView (custom floating bar removed 2026-10-04, taps were unreliable). Order: Feed, Create, Ideas, Profile.
+- Tabs: native TabView (custom floating bar removed 2026-10-04, taps were unreliable). Order: Feed, Create, Profile. Create has Write and Brainstorm (topic to three ideas, plus YC requests). Profile is only your ideas.

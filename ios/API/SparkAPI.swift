@@ -288,7 +288,14 @@ final class SparkAPI: SparkAPIProtocol, Sendable {
             throw APIError.invalidURL
         }
         let req = try request("/api/user?username=\(encoded)")
-        return try await perform(req)
+        // The server wraps the profile as {user, posts}.
+        struct Resp: Decodable {
+            struct User: Decodable { let username: String; let joinedAt: String? }
+            let user: User
+            let posts: [Post]
+        }
+        let r: Resp = try await perform(req)
+        return UserProfile(username: r.user.username, createdAt: r.user.joinedAt, posts: r.posts)
     }
 }
 

@@ -1,12 +1,12 @@
 # Architecture
 
-Thinkpond is a self-regulating idea forum. Users post ideas, comment, vote, and browse. An AI daemon (Gemma model via Cloudflare Workers AI) auto-generates new ideas daily and enriches them with specs and build plans. No build step. Web app runs from plain HTML/JS. Native iOS/macOS/watchOS companions. Supabase backend. Future monetization: paid accounts get unlimited posting and 24h pinned visibility.
+Thinkpond is a self-regulating idea forum. Users post ideas, comment, vote, and browse. A cron Worker calls a model on Cloudflare Workers AI (`@cf/openai/gpt-oss-120b`) that auto-generates new ideas daily and enriches them with specs and build plans. No build step. Web app runs from plain HTML/JS. Native iOS/macOS/watchOS companions. Storage is Cloudflare D1 and KV behind the `jaybulb-api` Worker. Future monetization: paid accounts get unlimited posting and 24h pinned visibility.
 
 ## How it runs
 
 1. **Web entry**: User lands on `index.html` (landing page with theme toggle, hero, features, CTA). Clicks to `app.html` or authenticates. Authenticated users see the feed (grid of idea cards) and can create, comment, vote.
-2. **Backend**: Cloudflare Pages + Supabase + Resend. `/api/posts` is the main feed endpoint. `/api/ai` handles generation and enrichment. `/api/auth/*` handles login, register, GitHub OAuth, password reset, email verification.
-3. **AI Daemon**: Cron worker (`worker/`) fires twice daily (09:00 UTC). Calls `/api/ai?type=generate` to create one new idea, then `/api/ai?type=enrich` on all unenriched posts. Uses Gemma small model.
+2. **Backend**: Cloudflare Pages + the `jaybulb-api` Worker (D1 and KV) + Resend. `/api/posts` is the main feed endpoint. `/api/ai` handles generation and enrichment. `/api/auth/*` handles login, register, GitHub OAuth, password reset, email verification.
+3. **AI cron job**: Cron worker (`worker/`) fires daily at 09:00 UTC. Calls `/api/ai?type=generate` to create one new idea, then `/api/ai?type=enrich` on all unenriched posts. Uses `@cf/openai/gpt-oss-120b` on Workers AI.
 4. **Native apps**: iOS, macOS, watchOS share the same backend API. iOS is live on App Store (v1.0). macOS v1.0 in submission. watchOS bundled (view-only).
 
 ## Web
@@ -41,13 +41,13 @@ Thinkpond is a self-regulating idea forum. Users post ideas, comment, vote, and 
 
 ## Backend API (api/)
 
-Cloudflare Pages Functions. Calls Supabase REST API + Resend for email. All functions are in `api/_lib/auth/`, `api/*.js` (data layer), and routed via `functions/api/[[route]].js` (dynamic catch-all).
+Cloudflare Pages Functions. Calls the `jaybulb-api` Worker (D1 and KV) through `api/_lib/spark.js`, and Resend for email. All functions are in `api/_lib/auth/`, `api/*.js` (data layer), and routed via `functions/api/[[route]].js` (dynamic catch-all).
 
 ### Core Endpoints
 
 | File | What it owns |
 |---|---|
-| `api/posts.js` | GET feed (paginated, filtered by tag/sort), POST create post (rate-limited 10 per 60s), GET single post. Seed data fallback when Supabase is down. |
+| `api/posts.js` | GET feed (paginated, filtered by tag/sort), POST create post (rate-limited 10 per 60s), GET single post. Seed data fallback when D1 is empty or unreachable. |
 | `api/comments.js` | GET post comments, POST add comment, DELETE comment. |
 | `api/ai.js` | POST ?type=generate (create new idea as "gemma" author), ?type=enrich (fill spec+build plan on existing idea), ?type=idea-base (fetch idea base prompts), ?type=notes (fetch enrichment notes), ?type=rfs (fetch RFS data). Uses Cloudflare Workers AI binding. |
 | `api/user.js` | GET current user, PUT update profile (avatar, bio, settings). |
@@ -77,8 +77,7 @@ Cloudflare Pages Functions. Calls Supabase REST API + Resend for email. All func
 
 | File | What it owns |
 |---|---|
-| `api/_lib/supabase.js` | REST wrapper for Supabase. Exposes query(), insert(), update(), delete() with auth header. |
-| `api/_lib/supabase.selfcheck.js` | Supabase connectivity test. |
+| `api/_lib/spark.js` | Client for the `jaybulb-api` Worker at `https://api.jaybulb.com` (override with `SPARK_API_URL`). Sends the service key on every call. Rows live in D1, files in KV. |
 | `api/_lib/auth/` | Shared auth logic (see above). |
 | `api/_lib/mail.js` | Email sending via Resend API. Used for verification, password reset, notifications. |
 | `api/_lib/mail.selfcheck.js` | Mail delivery test. |
@@ -91,7 +90,7 @@ Cron trigger for daily idea generation and enrichment.
 
 | File | What it owns |
 |---|---|
-| `worker/worker.js` | Scheduled handler. Fires at 09:00 UTC (and second trigger time). Calls `/api/ai?type=generate`, then `/api/ai?type=enrich` on all unenriched posts. Bearer token: SPARK_DAEMON_SECRET. |
+| `worker/worker.js` | Scheduled handler. Fires daily at 09:00 UTC. Calls `/api/ai?type=generate`, then `/api/ai?type=enrich` on all unenriched posts. Bearer token: SPARK_DAEMON_SECRET. |
 | `worker/wrangler.jsonc` | Cloudflare Workers config. Cron triggers, env vars, binding to the main Pages project. |
 
 ## Deployment
@@ -256,26 +255,17 @@ Not yet shipped. Gradle-based project with shared common code + platform-specifi
 | `kmp/gradle.properties` | Gradle properties. JVM version, Compose version, plugin versions. |
 | `kmp/settings.gradle.kts` | Root settings. Includes composeApp and shared modules. Declares plugin versions (Kotlin, Compose, Android). |
 
-## Database Schema & Migrations
+## Database (Cloudflare D1)
 
-Database migrations define schema changes applied in order. Two copies exist for historical reasons.
-
-| Dir/File | What it owns |
-|---|---|
-| `schema.sql` | Legacy base schema. Replaced by migrations system but kept for reference. |
-| `migrations/` | 8 historical SQL migration files (001 through 008). Copy of supabase/migrations for backup. Rarely used now. |
-| `supabase/migrations/` | Authoritative Supabase migrations, version-dated. Run via `supabase db push`. Covers: password reset tokens, comments table, RLS policies, score increment RPC, GitHub OAuth columns, Apple signin columns, email verification, LLM enrichment (idea bases, spec/plan columns), avatar URL, date/time fields, anon-key security tightening. |
-
-## Database (Supabase)
+Rows live in D1 (database `spark`) behind the `jaybulb-api` Worker. Files go to KV. The D1 schema lives in the `jaybulb-api` repo, not here.
 
 | Table | Purpose |
 |---|---|
-| `users` | User accounts (email, hashed password, github_id, avatar_url, verified, created_at). |
-| `posts` | Ideas (id, author_id, title, content, spec, build_plan, tags, created_at, updated_at, enriched_at). |
-| `comments` | Post comments (id, post_id, author_id, content, created_at). |
-| `votes` | Post/comment votes (id, user_id, post_id, comment_id, direction [1 or -1]). |
-| `notifications` | User notifications (id, user_id, type, related_id, message, read, created_at). |
-| `idea_base` | Enrichment prompts and inspiration data (id, category, title, content). |
+| `users` | User accounts. |
+| `posts` | Ideas, with spec and build plan once enriched. |
+| `comments` | Post comments. |
+| `idea_bases` | Idea base clusters. |
+| `notifications` | User notifications. |
 
 ## Testing
 
@@ -284,7 +274,7 @@ Vitest for backend/adapter testing. Playwright for browser-based onboarding veri
 | File | What it owns |
 |---|---|
 | `tests/adapter.test.mjs` | Verifies Cloudflare Pages adapter translation contract. Tests that (req, res) doubles are built and handled correctly. |
-| `tests/ai.test.mjs` | Tests AI generation and enrichment endpoints. Mocks Supabase and mail transport to exercise business logic. |
+| `tests/ai.test.mjs` | Tests AI generation and enrichment endpoints. Exercises the generation and enrichment business logic. |
 | `tests/auth.test.mjs` | Tests login, registration, GitHub/Apple OAuth flows, tokens, sessions, password reset. Verifies auth state correctness. |
 | `tests/comments.test.mjs` | Tests comment creation, retrieval, and thread nesting. Verifies rate limiting on comment posts. |
 | `tests/full-workflow.test.mjs` | End-to-end test: signup, create post, vote, comment. Runs against live API (skipped if API_URL not set). |
@@ -310,9 +300,9 @@ Utility scripts for development, deployment, and screenshot capture.
 ## Deployment & Secrets
 
 - **Web**: Cloudflare Pages + Functions. Serves HTML/JS from Pages, routes `/api/*` to Functions.
-- **AI**: Cloudflare Workers AI binding (Gemma model).
+- **AI**: Cloudflare Workers AI binding (`@cf/openai/gpt-oss-120b`).
 - **Email**: Resend API (RESEND_API_KEY).
-- **Database**: Supabase (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY).
+- **Database**: `jaybulb-api` Worker over D1 and KV. `SPARK_API_URL` is optional and defaults to `https://api.jaybulb.com`. `SPARK_SERVICE_KEY` is the service key sent on every call.
 - **Auth**: GitHub OAuth (GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET), Apple Sign In (keys from ASC).
 - **Stripe** (future): STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET.
 - **Cron Worker**: SPARK_DAEMON_SECRET (matches Pages project secret). Triggers daily generation/enrichment.
@@ -323,13 +313,13 @@ Current state: all features free, 10 posts per 60s rate limit (spam protection o
 
 Planned (no timeline):
 - **Spark Pro**: Unlimited posting, 24h pinned/priority visibility on new posts.
-- **Implementation hooks**: Supabase `is_pro`/`tier` column, Stripe product/checkout, auth session wiring, Stripe webhook handler.
+- **Implementation hooks**: `is_pro`/`tier` column on the D1 `users` table, Stripe product/checkout, auth session wiring, Stripe webhook handler.
 - **Reference**: See Epiphany's `server/api/stripe.js` and `gates.js` for the pattern to copy.
 
 ## Performance & Caching
 
 - **Feed caching**: Stored in KV, served stale-while-revalidate (client gets cached, server refreshes in background).
-- **Seed data fallback**: When Supabase is unreachable, `api/posts.js` returns hardcoded example posts so the app doesn't fully break.
+- **Seed data fallback**: When D1 is empty or unreachable, `api/posts.js` returns hardcoded example posts so the app doesn't fully break.
 - **Service worker**: Static assets cached on install, API responses cached with Network-First strategy for pages, Cache-First for hashed assets.
 - **Theme sync**: localStorage (`spark_theme`) + browser preference (`prefers-color-scheme`).
 

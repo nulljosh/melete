@@ -18,7 +18,7 @@ Free, plus a $1 one-time unlock on the web through Stripe (live since 2026-09-06
 - No build step -- everything runs from index.html
 - Mobile-first layout
 - Respect the existing visual language; keep UI minimal and fast to scan
-- Seed data fallback when Supabase is unreachable
+- Seed data fallback when D1 is empty or unreachable
 
 ## Run
 
@@ -54,7 +54,7 @@ npm i --no-save playwright && node scripts/screenshots.mjs
 - theme.js (shared light/dark control for every page -- see Theme below)
 - api/posts.js (GET/POST posts, seed data fallback)
 - api/ai.js (?type=generate|enrich|idea-base|notes|rfs -- all the AI paths, server-side)
-- api/_lib/supabase.js (Supabase REST wrapper)
+- api/_lib/spark.js (client for the jaybulb-api Worker, which keeps rows in D1 and files in KV)
 - worker/worker.js (cron trigger only -- calls the API above, holds no logic)
 - sw.js
 
@@ -64,7 +64,7 @@ The feed generates and enriches itself server-side. There is no local daemon and
 API key -- `callGemma` in `api/ai.js` runs Cloudflare Workers AI through the `AI`
 binding, the same way nimble does.
 
-- `POST /api/ai?type=generate` writes one idea to Supabase as author `gemma`.
+- `POST /api/ai?type=generate` writes one idea to D1 (through the jaybulb-api Worker) as author `gemma`.
 - `POST /api/ai?type=enrich` with `{id}` fills its spec + build plan.
 - Both accept `Authorization: Bearer $SPARK_DAEMON_SECRET`; enrich also accepts a
   signed-in user token.
