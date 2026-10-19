@@ -7,17 +7,16 @@ const { getIp, checkRateLimit } = require('./_lib/ratelimit');
 // --- gemma ---
 
 // Cloudflare Workers AI -- no API key to obtain, rotate, or silently expire.
-// Model + /no_think + the response-read chain are all lifted from
-// nimble/worker/worker.js, which is the known-good shape on this account.
-const GEMMA_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8';
+// gpt-oss-120b beat qwen3-30b, gemma-4 and qwen3.8 on a side-by-side 2026-10-19:
+// sharper ideas, tighter briefs, and it is on the free plan (kimi, glm-5.3 and
+// deepseek-v4 are not).
+const GEMMA_MODEL = '@cf/openai/gpt-oss-120b';
 
 async function callGemma(prompt, maxTokens = 1200) {
   const ai = globalThis.__env && globalThis.__env.AI;
   if (!ai) throw new Error('AI binding unavailable');
-  // Without /no_think the model spends its whole budget on a reasoning trace and
-  // returns empty content -- which is exactly how this failed the first time.
   const out = await ai.run(GEMMA_MODEL, {
-    messages: [{ role: 'user', content: prompt + ' /no_think' }],
+    messages: [{ role: 'user', content: prompt }],
     temperature: 0.9,
     max_tokens: maxTokens
   });
@@ -62,6 +61,17 @@ function tooSimilar(title, recentTitles) {
 
 const GEN_CATEGORIES = ['tech', 'productivity', 'finance', 'health', 'sustainability'];
 
+// Left to itself the model wrote "Shared X tracker for roommates" for a month.
+// Starting from a named group of people forces a real, specific job to fix.
+const GEN_ANGLES = ['night-shift nurses', 'wedding photographers', 'small landlords',
+  'high school robotics coaches', 'beekeepers', 'independent pharmacists', 'food truck owners',
+  'court interpreters', 'long-haul truckers', 'church treasurers', 'ESL tutors',
+  'HVAC technicians', 'dog groomers', 'indie game devs', 'community theatre directors',
+  'farmers market vendors', 'new immigrants filing taxes', 'used bookstore owners',
+  'climbing gyms', 'school bus dispatchers', 'freelance translators', 'home care aides',
+  'municipal clerks', 'tattoo artists', 'marine mechanics', 'youth soccer leagues',
+  'podcast editors', 'museum registrars', 'solar installers', 'wildland firefighters'];
+
 async function handleGenerate(req, res) {
   // Vercel strips inbound x-vercel-* headers, so this only passes for real cron
   // invocations. Manual trigger: daemon secret as bearer.
@@ -80,11 +90,14 @@ async function handleGenerate(req, res) {
   let idea, category, text;
   for (let attempt = 0; attempt < 3; attempt++) {
     category = GEN_CATEGORIES[Math.floor(Math.random() * GEN_CATEGORIES.length)];
+    const angle = GEN_ANGLES[Math.floor(Math.random() * GEN_ANGLES.length)];
     text = await callGemma(
-      `You generate one startup/app idea for an idea-sharing board. Category: ${category}.\n` +
-      `Style: concrete, everyday problem, plain language, no buzzwords.\n` +
-      `These are already posted. Pick a different problem, a different audience and a different first word:\n${recentTitles}\n\n` +
-      `Reply with ONLY valid JSON, no markdown fences: {"title": "...", "content": "2-3 sentence description"}`
+      `Invent one software idea for a public idea board. Category: ${category}. Start from this group of people: ${angle}.\n` +
+      `Find one specific, annoying job they do by hand today that software could kill. Not a generic tracker, list, calendar, splitter or "shared X". No apps for roommates or families.\n` +
+      `Title: under 8 words, names the thing, no colon.\n` +
+      `Content: two sentences, under 45 words total. First says the pain, second says what the app does. Plain words, no hype.\n` +
+      `Already posted, do not repeat:\n${recentTitles}\n\n` +
+      `Reply with ONLY JSON: {"title": "...", "content": "..."}`
     );
     idea = parseJsonish(text);
     if (idea && idea.title && idea.content && !tooSimilar(idea.title, titles)) break;
@@ -143,8 +156,10 @@ async function handleEnrich(req, res) {
       const p = rows[0];
       const text = await callGemma(
         `Idea: "${p.title}" (${p.category})\n${p.content}\n\n` +
-        `Write two short markdown sections to help build this idea.\n` +
-        `Reply with ONLY valid JSON, no markdown fences: {"spec": "what to build, key features, ~150 words", "plan": "step-by-step build plan, ~150 words"}`,
+        `Write a tight build brief.\n` +
+        `spec: 3 to 5 markdown bullets, each under 15 words: the core screen, the one feature that matters, data source, what to leave out.\n` +
+        `plan: 4 to 6 numbered steps, each under 15 words, first step shippable in a weekend.\n` +
+        `No intro, no filler, no "user-friendly". Reply with ONLY JSON: {"spec": "...", "plan": "..."}`,
         1200
       );
       const gen = parseJsonish(text);
