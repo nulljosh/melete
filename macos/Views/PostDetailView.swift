@@ -89,6 +89,8 @@ struct PostDetailView: View {
                                 .textSelection(.enabled)
                         }
                     }
+                    Divider()
+                    AppStoreMatches(query: currentPost.title)
                 }
 
                 Divider()

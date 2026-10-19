@@ -89,6 +89,11 @@ struct PostDetailView: View {
                     }
                 }
 
+                if detail.enriched == true {
+                    Divider()
+                    AppStoreMatches(query: detail.title)
+                }
+
                 Divider()
 
                 HStack(spacing: 14) {

@@ -25,5 +25,5 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
-- [ ] "Already on the App Store" on iOS and Mac: same iTunes search the web uses (call it from the device; Apple 429s Cloudflare's shared IPs). Show the top three under the brief.
+- [ ] "Already on the App Store" is built on iOS and Mac (AppStoreMatches.swift); it ships in 3.2. Check it on the iPhone simulator first (the last tap missed the post).
 - [ ] Trademark lookup on an idea's name (USPTO has no free JSON search; find a source before building).
