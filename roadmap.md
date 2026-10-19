@@ -26,4 +26,3 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Toward 4.0
 - [ ] Trademark and prior-art lookup on an idea.
-- [ ] The landing runs the real app under the hero (house standard), not just a wall of titles.

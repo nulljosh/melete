@@ -118,6 +118,11 @@
   }
 
   section { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  /* The real app, not a picture of it: same origin, no device frame. */
+  .try-lead { color: var(--text2); margin: 0.75rem 0 0; line-height: 1.55; }
+  .live-app { max-width: 960px; height: 720px; margin: 0 auto; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .live-app iframe { width: 100%; height: 100%; border: 0; display: block; }
+  @media (max-width: 600px) { .live-app { height: 640px; } }
   .section-head { max-width: 480px; margin: 0 auto 3rem; text-align: center; }
   .section-head h2 { font-size: 2rem; }
 
@@ -180,6 +185,7 @@ footer .foot-rule > :last-child { order: 2; }
   <div class="header-inner">
     <a href="/" class="logo"><img src="/icon.svg" alt=""> Thinkpond</a>
     <nav class="main-nav">
+      <a href="#try">Try it</a>
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
     </nav>
@@ -212,6 +218,15 @@ footer .foot-rule > :last-child { order: 2; }
     </div>
   </div>
 </div>
+
+<section id="try">
+  <div class="section-head">
+    <div class="eyebrow">Try it here</div>
+    <h2>This is the real feed</h2>
+    <p class="try-lead">Vote, open a brief, read the comments. Sign in to post your own.</p>
+  </div>
+  <div class="live-app"><iframe src="/app.html?embed" title="Thinkpond, live" loading="lazy"></iframe></div>
+</section>
 
 <section id="features">
   <div class="section-head">
