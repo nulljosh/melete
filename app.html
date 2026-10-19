@@ -78,19 +78,6 @@
             .header-right { gap: 6px; flex-shrink: 0; }
             .auth-btn { padding: 8px 12px; font-size: 13px; white-space: nowrap; }
             .theme-btn, .bell-btn { width: 32px; height: 32px; }
-            .filters { flex-direction: column; align-items: stretch; gap: 10px; }
-            .filter-group {
-                display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
-                gap: 8px; padding-bottom: 4px; scrollbar-width: none;
-            }
-            .filter-group::-webkit-scrollbar { display: none; }
-            .filter-group .filter-btn { flex-shrink: 0; white-space: nowrap; }
-            .sort-group { flex-wrap: nowrap; }
-            .nav-pills .tag-filters {
-                flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-            }
-            .nav-pills .tag-filters::-webkit-scrollbar { display: none; }
-            .nav-pills .tag-filters .tag-filter-btn { flex-shrink: 0; white-space: nowrap; }
         }
         .idea { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
         .idea h3 { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
@@ -125,13 +112,6 @@
         footer { margin-top: 60px; padding: 30px 0 20px; border-top: 1px solid var(--border); color: var(--text3); font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         footer a { color: var(--text3); text-decoration: none; }
         footer a:hover { color: var(--accent); }
-        .tier-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-        .tier-1 { background: #2a2a2a; color: #8e8e93; border: 1px solid #3a3a3a; }
-        .tier-2 { background: #1a2a1a; color: #30d158; border: 1px solid #2a3a2a; }
-        .tier-3 { background: #2a1a00; color: #ff9f0a; border: 1px solid #3a2a00; }
-        :root[data-theme="light"] .tier-1 { background: #e8e8ed; color: #636366; border-color: #d1d1d6; }
-        :root[data-theme="light"] .tier-2 { background: #e0f5e0; color: #248a3d; border-color: #c0e0c0; }
-        :root[data-theme="light"] .tier-3 { background: #fff3e0; color: #c93400; border-color: #ffe0b0; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Notification bell */
@@ -164,34 +144,13 @@
         .profile-dropdown-item.danger { color: #ff453a; }
         .profile-dropdown-item.danger:hover { background: rgba(255, 69, 58, 0.1); }
 
-        /* Tag pills */
-        .tag-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .tag-pill { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); transition: all 0.15s; }
-        .tag-pill:hover { border-color: var(--text3); }
-        .tag-pill.selected { color: #fff; border-color: transparent; }
-        .tag-pill[data-tag="tech"].selected { background: #1c1a17; }
-        .tag-pill[data-tag="design"].selected { background: #4f6b34; }
-        .tag-pill[data-tag="business"].selected { background: #4d7c45; }
-        .tag-pill[data-tag="random"].selected { background: #9e3b1f; }
-        .post-tags { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
-        .post-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; color: #fff; }
-        .post-tag.tag-tech { background: #1c1a17; }
-        .post-tag.tag-design { background: #4f6b34; }
-        .post-tag.tag-business { background: #4d7c45; }
-        .post-tag.tag-random { background: #9e3b1f; }
-
-        /* Tag filter bar */
-        .tag-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-        .tag-filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); transition: all 0.15s; }
-        .tag-filter-btn:hover { border-color: var(--text3); }
-        .tag-filter-btn.active { background: var(--accent); color: var(--bg); border-color: transparent; }
-
+        /* Cards and comments */
         .idea { cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .idea:hover { transform: translateY(-2px); }
-        .idea-meta { display: flex; align-items: center; gap: 12px; color: var(--text3); font-size: 12px; margin-bottom: 10px; }
         .comment-count { color: var(--text3); font-size: 12px; margin-left: auto; }
         .comments-section { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; display: none; }
         .comments-section.open { display: block; }
+        .idea.open p { -webkit-line-clamp: unset; }
         .comment { background: var(--surface2); padding: 12px; border-radius: 8px; margin-bottom: 8px; }
         .comment-header { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
         .comment-body { font-size: 14px; color: var(--text2); }
@@ -199,49 +158,8 @@
         .comment-input-row input { flex: 1; margin-bottom: 0; font-size: 14px; padding: 10px; }
         .comment-input-row button { flex-shrink: 0; width: auto; padding: 10px 16px; margin-bottom: 0; }
 
-        .nav-pills {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin: 20px 0 30px;
-        }
-        .filters {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .filter-group, .sort-group {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .sort-group::before {
-            content: "Sort";
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: var(--text3);
-            margin-right: 4px;
-        }
-        .nav-pills .tag-filters {
-            margin: 12px 0 0;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-        /* Apple Liquid Glass -- filter/sort buttons */
-        .rfs-strip { display: flex; align-items: flex-start; gap: 12px; overflow-x: auto; padding: 4px 0 16px; margin-bottom: 8px; }
-        .rfs-card { flex: 0 0 260px; border: 1px solid var(--border); border-radius: 8px; padding: 14px; color: inherit; text-decoration: none; }
-        .rfs-card:hover { border-color: var(--text3); }
-        .rfs-card .rfs-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .rfs-card h4 { margin: 4px 0 6px; font-size: 14px; }
-        .rfs-card p { margin: 0; font-size: 13px; color: var(--text3); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-        .filter-btn, .sort-btn {
+        .sort-group { display: flex; gap: 8px; margin: 20px 0 24px; }
+        .sort-btn {
             padding: 8px 14px;
             border-radius: 20px;
             cursor: pointer;
@@ -252,12 +170,12 @@
             border: 1px solid var(--border);
             color: var(--text);
         }
-        .filter-btn:hover, .sort-btn:hover {
+        .sort-btn:hover {
             background: var(--surface2);
             border-color: var(--link, var(--accent));
         }
         /* Selected chips match the landing's primary button: flat lily-pad green. */
-        .filter-btn.active, .sort-btn.active {
+        .sort-btn.active {
             background: var(--accent);
             backdrop-filter: blur(10px);
             border-color: var(--accent);
@@ -301,31 +219,10 @@
             </div>
         </div>
         <p class="subtitle">Drop an idea in. Watch it ripple.</p>
-        <div class="nav-pills">
-            <div class="filters">
-                <div class="filter-group">
-                    <button class="filter-btn active" onclick="filterByCategory('all', event)">All</button>
-                    <button class="filter-btn" onclick="filterByCategory('tech', event)">Tech</button>
-                    <button class="filter-btn" onclick="filterByCategory('business', event)">Business</button>
-                    <button class="filter-btn" onclick="filterByCategory('health', event)">Health</button>
-                    <button class="filter-btn" onclick="filterByCategory('productivity', event)">Productivity</button>
-                    <button class="filter-btn" onclick="filterByCategory('finance', event)">Finance</button>
-                    <button class="filter-btn" onclick="filterByCategory('sustainability', event)">Sustainability</button>
-                </div>
-                <div class="sort-group">
-                    <button class="sort-btn active" onclick="setSortMode('new', event)">New</button>
-                    <button class="sort-btn" onclick="setSortMode('trending', event)">Trending</button>
-                </div>
-            </div>
-            <div class="tag-filters">
-                <button class="tag-filter-btn active" onclick="filterByTag('all', event)">All Tags</button>
-                <button class="tag-filter-btn" onclick="filterByTag('tech', event)">Tech</button>
-                <button class="tag-filter-btn" onclick="filterByTag('design', event)">Design</button>
-                <button class="tag-filter-btn" onclick="filterByTag('business', event)">Business</button>
-                <button class="tag-filter-btn" onclick="filterByTag('random', event)">Random</button>
-            </div>
+        <div class="sort-group">
+            <button class="sort-btn active" onclick="setSortMode('new', event)">New</button>
+            <button class="sort-btn" onclick="setSortMode('trending', event)">Trending</button>
         </div>
-        <div id="rfsStrip" class="rfs-strip hidden"></div>
         <div id="feed">Loading...</div>
         <div id="feedSentinel"></div>
     </main>
@@ -394,29 +291,6 @@
             <input type="text" id="title" placeholder="Title">
             <textarea id="content" placeholder="Describe your idea..." maxlength="500" oninput="updateCharCount()"></textarea>
             <div id="charCount" style="font-size:12px;color:var(--text-secondary);text-align:right;margin-top:-10px;margin-bottom:10px">0 / 500</div>
-            <label style="font-size:13px;color:var(--text3);margin-bottom:6px;display:block">Tags (pick up to 3)</label>
-            <div class="tag-selector" id="tagSelector">
-                <span class="tag-pill" data-tag="tech" onclick="toggleTag(this)">Tech</span>
-                <span class="tag-pill" data-tag="design" onclick="toggleTag(this)">Design</span>
-                <span class="tag-pill" data-tag="business" onclick="toggleTag(this)">Business</span>
-                <span class="tag-pill" data-tag="random" onclick="toggleTag(this)">Random</span>
-            </div>
-            <select id="category">
-                <option value="tech">Tech</option>
-                <option value="business">Business</option>
-                <option value="social">Social</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="whitepaper">Whitepaper</option>
-                <option value="patent">Patent</option>
-            </select>
-            <input type="url" id="linked_repo" placeholder="Repo URL (optional, e.g. github.com/...)" style="margin-top:10px">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
-                <input type="date" id="idea_date" placeholder="Date (optional)">
-                <input type="time" id="idea_time" placeholder="Time (optional)">
-            </div>
-            <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--text3);cursor:pointer">
-                <input type="checkbox" id="auto_enrich" checked> Request AI write-up after submit
-            </label>
             <button class="btn" onclick="submitIdea()">Submit</button>
         </div>
     </div>
@@ -642,13 +516,6 @@
         function logout() { clearAuth(); updateAuthUI(); load(); }
 
         // Feed
-        function getTier(score) {
-            if (score >= 1000000) return { level: 3, label: 'TIER 3' };
-            if (score >= 1000) return { level: 2, label: 'TIER 2' };
-            if (score >= 100) return { level: 1, label: 'TIER 1' };
-            return null;
-        }
-
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -656,48 +523,19 @@
         }
 
         function renderIdea(p) {
-            const score = p.score || 0;
-            const tier = getTier(score);
-            const tierHtml = tier ? `<span class="tier-badge tier-${tier.level}">${tier.label}</span>` : '';
             const commentCount = (window.commentCounts && window.commentCounts[p.id]) || 0;
-            const tags = p.tags || [];
-            const tagsHtml = tags.length ? `<div class="post-tags">${tags.map(t => `<span class="post-tag tag-${escapeHtml(t)}">${escapeHtml(t)}</span>`).join('')}</div>` : '';
-            const aiBadge = p.enriched ? `<span style="font-size:10px;background:var(--surface3);color:var(--text2);padding:2px 6px;border-radius:4px;margin-left:6px">AI</span>` : '';
-            const repoLink = p.linkedRepo ? `<a href="${escapeHtml(p.linkedRepo)}" target="_blank" rel="noopener" style="font-size:12px;color:var(--text3);display:block;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="event.stopPropagation()">${escapeHtml(p.linkedRepo.replace(/^https?:\/\//, ''))}</a>` : '';
-            const enrichmentPanel = p.enriched ? `
-                <div id="enrich-${p.id}" class="enrich-panel" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px" onclick="event.stopPropagation()">
-                    <div id="brief-${p.id}"></div>
-                    <div id="prior-${p.id}" data-q="${escapeHtml(p.title)}" style="margin-top:12px"></div>
-                    <form class="comment-input-row" onsubmit="checkName('${p.id}', this.elements.tmname.value); return false">
-                        <input name="tmname" placeholder="Got a name? Check US trademarks" maxlength="60">
-                        <button class="btn">Check</button>
-                    </form>
-                    <div id="tm-${p.id}" style="font-size:12px;color:var(--text2);margin-top:6px"></div>
-                    <a href="${API_BASE}/api/ai?type=notes&id=${p.id}" style="font-size:12px;color:var(--text3);margin-top:10px;display:inline-block" onclick="event.stopPropagation()">Export to markdown</a>
-                </div>` : '';
-            const enrichBtn = isLoggedIn() && !p.enriched
-                ? `<button class="vote-btn" style="font-size:11px;width:auto;padding:0 10px;border-radius:6px" onclick="requestEnrich('${p.id}'); event.stopPropagation();">AI</button>`
-                : p.enriched ? `<button class="vote-btn" style="font-size:11px;width:auto;padding:0 10px;border-radius:6px" onclick="toggleEnrichPanel('${p.id}'); event.stopPropagation();">View</button>` : '';
-            const dateTimeHtml = p.date ? `${escapeHtml(p.date)}${p.time ? ' ' + escapeHtml(p.time) : ''}` : '';
-            const dateTimeDisplay = dateTimeHtml ? ` &bull; ${dateTimeHtml}` : '';
             return `
-                <div class="idea" data-tags="${escapeHtml(tags.join(','))}" onclick="toggleComments('${p.id}', event)">
-                    <div class="idea-meta">
-                        <span>${escapeHtml(p.category).toUpperCase()} &bull; @${escapeHtml(p.author?.username || 'unknown')}${aiBadge}${dateTimeDisplay}</span>
-                        <span class="comment-count" id="count-${p.id}">${commentLabel(commentCount)}</span>
-                    </div>
-                    ${tagsHtml}
+                <div class="idea" onclick="toggleComments('${p.id}', event)">
                     <h3>${escapeHtml(p.title)}</h3>
                     <p>${escapeHtml(p.content)}</p>
-                    ${repoLink}
-                    ${enrichmentPanel}
                     <div class="votes">
                         <button class="vote-btn" onclick="vote('${p.id}','up'); event.stopPropagation();" ${!isLoggedIn() ? 'disabled' : ''}>&#9650;</button>
-                        <span style="font-weight:600">${score}${tierHtml}</span>
+                        <span style="font-weight:600">${p.score || 0}</span>
                         <button class="vote-btn" onclick="vote('${p.id}','down'); event.stopPropagation();" ${!isLoggedIn() ? 'disabled' : ''}>&#9660;</button>
-                        ${enrichBtn}
+                        <span class="comment-count" id="count-${p.id}">${commentLabel(commentCount)}</span>
                     </div>
                     <div class="comments-section" id="comments-${p.id}" onclick="event.stopPropagation()">
+                        <div id="prior-${p.id}" data-q="${escapeHtml(p.title)}" style="margin-bottom:16px"></div>
                         <div id="comments-list-${p.id}"></div>
                         ${isLoggedIn() ? `
                         <div class="comment-input-row">
@@ -707,25 +545,6 @@
                     </div>
                 </div>
             `;
-        }
-
-        function toggleEnrichPanel(id) {
-            const panel = document.getElementById('enrich-' + id);
-            if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            if (panel && panel.style.display === 'block') { loadBrief(id); loadPriorArt(id); }
-        }
-
-        // The feed list leaves spec and plan out to stay small; fetch them when the brief opens.
-        async function loadBrief(id) {
-            const box = document.getElementById('brief-' + id);
-            if (!box || box.dataset.loaded) return;
-            box.dataset.loaded = '1';
-            try {
-                const d = await (await fetch(`${API_BASE}/api/posts/${encodeURIComponent(id)}`)).json();
-                const p = d.post || d;
-                const part = (label, text, last) => text ? `<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">${label}</div><div style="font-size:12px;color:var(--text2);white-space:pre-wrap${last ? '' : ';margin-bottom:12px'}">${escapeHtml(text)}</div>` : '';
-                box.innerHTML = part('SPEC', p.enrichmentSpec) + part('PLAN', p.enrichmentPlan, true);
-            } catch { delete box.dataset.loaded; }
         }
 
         // Similar apps already on the App Store, fetched once per idea when its brief opens.
@@ -750,38 +569,6 @@
             } catch {
                 box.innerHTML = '';
             }
-        }
-
-        // Live US trademarks on a name. ponytail: USPTO's own search backend, keyless but undocumented; if it moves, this says so instead of guessing.
-        async function checkName(id, name) {
-            const box = document.getElementById('tm-' + id);
-            name = name.trim();
-            if (!box || !name) return;
-            box.textContent = 'Checking USPTO...';
-            try {
-                const r = await fetch('https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: { bool: { must: [{ match_phrase: { wordmark: name } }], filter: [{ term: { alive: true } }] } }, size: 3, _source: ['wordmark', 'ownerName'] })
-                });
-                // ownerName lists every owner on record; the current one is last.
-                const rows = [...new Set((await r.json()).hits.hits.map(({ source: h }) =>
-                    `<div><strong style="color:var(--text)">${escapeHtml(h.wordmark || name)}</strong> &middot; ${escapeHtml((h.ownerName?.at(-1) || '').replace(/\s*\(.*$/, ''))}</div>`))];
-                box.innerHTML = rows.length ? rows.join('') : 'No live US trademark on that name.';
-            } catch {
-                box.textContent = "Couldn't reach USPTO. Try again later.";
-            }
-        }
-
-        async function requestEnrich(id) {
-            if (!isLoggedIn()) { showAuthModal(); return; }
-            try {
-                await fetch(`${API_BASE}/api/ai?type=enrich`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
-                    body: JSON.stringify({ id })
-                });
-                alert('AI write-up queued. Check back in a few minutes.');
-            } catch (e) { alert('Network error: ' + e.message); }
         }
 
         const FEED_BATCH_SIZE = 20;
@@ -821,14 +608,6 @@
                 const data = await res.json();
                 if (data.posts && data.posts.length > 0) {
                     let posts = data.posts;
-                    // Filter by category
-                    if (window.currentFilter && window.currentFilter !== 'all') {
-                        posts = posts.filter(p => p.category === window.currentFilter);
-                    }
-                    // Filter by tag
-                    if (window.currentTagFilter && window.currentTagFilter !== 'all') {
-                        posts = posts.filter(p => p.tags && p.tags.includes(window.currentTagFilter));
-                    }
                     window.feedPosts = (window.feedPosts || []).concat(posts);
                     window.feedOffset = offset + limit;
                     window.feedHasMore = posts.length === limit;
@@ -853,16 +632,6 @@
                     return;
                 }
                 let posts = data.posts;
-
-                // Filter by category
-                if (window.currentFilter && window.currentFilter !== 'all') {
-                    posts = posts.filter(p => p.category === window.currentFilter);
-                }
-
-                // Filter by tag
-                if (window.currentTagFilter && window.currentTagFilter !== 'all') {
-                    posts = posts.filter(p => p.tags && p.tags.includes(window.currentTagFilter));
-                }
 
                 // Sort: trending (decay) or new (by date desc)
                 if (window.sortMode === 'new') {
@@ -925,23 +694,17 @@
         async function submitIdea() {
             const title = document.getElementById('title').value.trim();
             const content = document.getElementById('content').value.trim();
-            const category = document.getElementById('category').value;
-            const tags = getSelectedTags();
-            const linked_repo = document.getElementById('linked_repo').value.trim() || null;
-            const date = document.getElementById('idea_date').value || null;
-            const time = document.getElementById('idea_time').value || null;
-            const autoEnrich = document.getElementById('auto_enrich').checked;
             const errorEl = document.getElementById('ideaError');
             if (!title || !content) { errorEl.textContent = 'Please enter both title and description'; return; }
             try {
                 const res = await fetch(`${API_BASE}/api/posts`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
-                    body: JSON.stringify({ title, content, category, tags, linked_repo, date, time })
+                    body: JSON.stringify({ title, content })
                 });
                 const data = await res.json();
                 if (!res.ok) { errorEl.textContent = data.error || 'Failed to post idea'; return; }
-                if (autoEnrich && data.post && data.post.id) {
+                if (data.post && data.post.id) {
                     fetch(`${API_BASE}/api/ai?type=enrich`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
@@ -950,10 +713,6 @@
                 }
                 document.getElementById('title').value = '';
                 document.getElementById('content').value = '';
-                document.getElementById('linked_repo').value = '';
-                document.getElementById('idea_date').value = '';
-                document.getElementById('idea_time').value = '';
-                document.querySelectorAll('#tagSelector .tag-pill').forEach(p => p.classList.remove('selected'));
                 closeIdeaModal();
                 load();
             } catch (e) { errorEl.textContent = 'Network error: ' + e.message; }
@@ -980,44 +739,13 @@
         }
 
         // Filter and sort state
-        window.currentFilter = 'all';
-        window.currentTagFilter = 'all';
         window.sortMode = 'new';
-
-        function filterByCategory(cat, e) {
-            window.currentFilter = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            (e || event).target.classList.add('active');
-            load();
-        }
 
         function setSortMode(mode, e) {
             window.sortMode = mode;
             document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
             (e || event).target.classList.add('active');
             load();
-        }
-
-        function filterByTag(tag, e) {
-            window.currentTagFilter = tag;
-            document.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
-            (e || event).target.classList.add('active');
-            load();
-        }
-
-        // Tag selector in form
-        function toggleTag(el) {
-            if (el.classList.contains('selected')) {
-                el.classList.remove('selected');
-                return;
-            }
-            const selected = document.querySelectorAll('#tagSelector .tag-pill.selected');
-            if (selected.length >= 3) return;
-            el.classList.add('selected');
-        }
-
-        function getSelectedTags() {
-            return Array.from(document.querySelectorAll('#tagSelector .tag-pill.selected')).map(el => el.dataset.tag);
         }
 
         // Forgot password
@@ -1078,7 +806,8 @@
             const section = document.getElementById('comments-' + postId);
             if (!section) return;
             const isOpen = section.classList.toggle('open');
-            if (isOpen) loadComments(postId);
+            section.closest('.idea').classList.toggle('open', isOpen);
+            if (isOpen) { loadComments(postId); loadPriorArt(postId); }
         }
 
         async function loadComments(postId) {
@@ -1283,24 +1012,6 @@
             }
         })();
 
-        async function loadRfs() {
-            const strip = document.getElementById('rfsStrip');
-            try {
-                const res = await fetch(`${API_BASE}/api/ai?type=rfs`);
-                const data = await res.json();
-                if (!data.rfs || !data.rfs.length) return;
-                const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-                strip.innerHTML = data.rfs.map(r => `
-                    <a class="rfs-card" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">
-                        <div class="rfs-label">YC RFS &middot; ${esc(r.author)}</div>
-                        <h4>${esc(r.title)}</h4>
-                        <p>${esc(r.description.slice(0, 160))}</p>
-                    </a>
-                `).join('');
-                strip.classList.remove('hidden');
-            } catch (e) { /* inspiration strip is non-critical, fail silently */ }
-        }
-
         // First-run onboarding. Shows once, right after registration.
         if (Onboarding.start({
             key: 'spark',
@@ -1313,7 +1024,7 @@
                   body: 'Every idea can be upvoted and argued about in the comments. The best rise to the top of the feed.',
                   art: '<svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>' },
                 { title: 'Build one for real',
-                  body: 'Claim an idea, track what you ship, and let the rest of the jar follow along.',
+                  body: 'Claim an idea, track what you ship, and let the rest of the pond follow along.',
                   art: '<svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg>' }
             ]
         })) {
@@ -1324,7 +1035,6 @@
         // Initialize
         updateAuthUI();
         load();
-        loadRfs();
         setInterval(load, 30000);
 
         if ('serviceWorker' in navigator) {

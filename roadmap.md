@@ -25,5 +25,4 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
-- [ ] "Already on the App Store" is built and checked on iOS and Mac (AppStoreMatches.swift); it ships in 3.2 once 3.1 clears review.
-- [ ] Trademark check is live on the web: type a name in a brief, see live US marks (`checkName` in app.html, USPTO's keyless but undocumented `tmsearch` backend). Port it to iOS and Mac next to AppStoreMatches for 3.2.
+- [ ] 3.2 on iOS and Mac: match the simpler web feed. Cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store" (AppStoreMatches.swift, built and checked) and then comments. Ships once 3.1 clears review.
