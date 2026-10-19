@@ -1,6 +1,6 @@
 # Thinkpond
 
-Version: v3.0.0 (web, iOS, macOS share one version from 3.0 on)
+Version: v3.0.1 (web, iOS, macOS share one version from 3.0 on)
 
 Was Sparkjar, then Hotaru for a day, Thinkpond since 2026-10-04. Open work lives in `roadmap.md`.
 

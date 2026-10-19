@@ -27,7 +27,11 @@ launch() { # tab: 0 feed, 1 create, 2 profile, 3 ideas
     xcrun simctl terminate "$U" "$BID" 2>/dev/null || true
     SIMCTL_CHILD_UITEST_TAB=$1 xcrun simctl launch "$U" "$BID" UITEST_SNAPSHOT >/dev/null
 }
-shot() { xcrun simctl io "$U" screenshot --type=png "$OUT/$1.png" >/dev/null 2>&1; }
+# App Store Connect refuses PNGs with alpha, so every shot lands as JPEG.
+shot() {
+    xcrun simctl io "$U" screenshot --type=png "$OUT/$1.png" >/dev/null 2>&1
+    sips -s format jpeg -s formatOptions 92 "$OUT/$1.png" --out "$OUT/$1.jpg" >/dev/null && rm "$OUT/$1.png"
+}
 tap_label() { axe tap --label "$1" --udid "$U" --wait-timeout "${2:-6}" >/dev/null 2>&1 || true; }
 
 # Center of the first feed card, in points.

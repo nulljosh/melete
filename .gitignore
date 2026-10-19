@@ -24,3 +24,4 @@ dist/
 **/.asc/reports/
 .asc/web-review/
 .env
+widgets-ios/*.xcodeproj/
