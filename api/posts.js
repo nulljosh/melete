@@ -3,7 +3,7 @@ const { sparkRequest, sparkRpc } = require('./_lib/spark');
 const { getIp, checkRateLimit } = require('./_lib/ratelimit');
 
 // Minimal seed data kept only as offline fallback when spark-api is unreachable.
-// The canonical seed data lives in schema.sql. This array is never written to the DB.
+// Shown only when the D1 table is empty or unreachable. Never written to the DB.
 const seedPosts = [
   { id: 'seed-1', title: 'A simple app that reminds you to use stuff you already own', content: 'I have books I bought and never read, a guitar collecting dust, a gym membership I forget about. Just a list of things you own with gentle nudges to actually use them.', category: 'productivity', author_username: 'spark', author_user_id: 'system', score: 247, created_at: '2026-01-10T09:20:00Z' },
   { id: 'seed-2', title: 'Shared grocery list for roommates that tracks who bought what', content: 'Splitwise but specifically for groceries. Add items to a shared list, check them off when you buy them, and it keeps a running tab so nobody feels ripped off.', category: 'finance', author_username: 'spark', author_user_id: 'system', score: 189, created_at: '2026-01-16T14:00:00Z' },
@@ -65,7 +65,7 @@ async function getPostsFromDataSource({ limit, offset } = {}) {
   const rows = await sparkRequest(query);
 
   if (!Array.isArray(rows) || rows.length === 0) {
-    // DB is empty -- schema.sql seeds should have run.
+    // DB is empty: fall back to the seed list above.
     // Trigger seed endpoint or return fallback. Don't maintain a second copy of seed inserts here.
     return { posts: offset ? [] : seedPosts.map(rowToPost) };
   }
