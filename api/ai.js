@@ -202,12 +202,41 @@ async function handleIdeaBase(req, res) {
       return res.status(429).json({ error: 'Too many requests' });
     }
 
-    const { topic, description, post_ids } = req.body || {};
+    const { topic, description } = req.body || {};
     if (!topic || typeof topic !== 'string' || topic.length > 200) {
       return res.status(400).json({ error: 'topic required (max 200 chars)' });
     }
-    if (!Array.isArray(post_ids)) {
-      return res.status(400).json({ error: 'post_ids array required' });
+
+    // The daemon that used to fill a queued topic is gone, so write the ideas now:
+    // three in one call, posted as gemma, and the base links them.
+    const text = await callGemma(
+      `Topic: ${topic}\n${description ? `Context: ${String(description).slice(0, 500)}\n` : ''}` +
+      `Invent three different software ideas on this topic. Each starts from a specific group of people and one annoying job they do by hand today. Not a generic tracker, list, calendar or "shared X".\n` +
+      `Title under 8 words, no colon. Content two sentences, under 45 words: the pain, then what the app does. Plain words, no hype.\n` +
+      `Reply with ONLY JSON: {"ideas": [{"title": "...", "content": "..."}]}`,
+      2000
+    );
+    const ideas = ((parseJsonish(text) || {}).ideas || []).filter(i => i && i.title && i.content).slice(0, 3);
+    if (!ideas.length) return res.status(422).json({ error: 'Model returned no ideas', raw: String(text).slice(0, 300) });
+
+    const post_ids = [];
+    for (const idea of ideas) {
+      const id = 'post-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+      await sparkRequest('posts', {
+        method: 'POST',
+        body: {
+          id,
+          title: String(idea.title).slice(0, 200),
+          content: String(idea.content).slice(0, 2000),
+          category: 'tech',
+          author_username: 'gemma',
+          author_user_id: 'system',
+          score: 0,
+          created_at: new Date().toISOString()
+        },
+        useServiceRole: true
+      });
+      post_ids.push(id);
     }
 
     const rows = await sparkRequest('idea_bases', {
