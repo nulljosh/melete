@@ -13,8 +13,8 @@ One bold flat white glyph on an accent gradient tile. No text, no outline, no em
 ## Colour
 | Role | Value |
 |---|---|
-| Accent | `#e3640c` |
-| Gradient top | `#ffa24d` |
+| Accent | `#4d7c45` |
+| Gradient top | `#8fc286` |
 | Text | `#1d1d1f` light, `#f5f5f7` dark |
 | Background | `#ffffff` light, `#000000` dark |
 | Surface | `#f5f5f7` light, `#1c1c1e` dark |

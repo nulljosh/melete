@@ -107,9 +107,9 @@ struct ErrorBanner: View {
 // MARK: - Color Extension
 
 extension Color {
-    // ponytail: old name kept, value is the terracotta accent (#b5502c light, #e07856 dark)
+    // ponytail: old name kept, value is the lily-pad green accent (#4d7c45 light, #8fc286 dark)
     static let sparkBlue = Color(nsColor: NSColor(name: nil) { a in
-        a.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(srgbRed: 0.878, green: 0.471, blue: 0.337, alpha: 1) : NSColor(srgbRed: 0.710, green: 0.314, blue: 0.173, alpha: 1)
+        a.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(srgbRed: 0.561, green: 0.761, blue: 0.525, alpha: 1) : NSColor(srgbRed: 0.302, green: 0.486, blue: 0.271, alpha: 1)
     })
     static let bulb = sparkBlue
     static let onAccent = Color(nsColor: NSColor(name: nil) { a in
@@ -128,7 +128,7 @@ extension Color {
     }
 }
 
-// The primary action everywhere: flat terracotta, same as iOS and the landing.
+// The primary action everywhere: flat lily-pad green, same as iOS and the landing.
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 

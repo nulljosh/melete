@@ -849,7 +849,7 @@ struct BadgeLabelStyle: LabelStyle {
     }
 }
 
-// The primary action everywhere: flat terracotta, white label (ink in dark), same as the landing.
+// The primary action everywhere: flat lily-pad green, white label (ink in dark), same as the landing.
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 
@@ -901,7 +901,7 @@ struct FireflyLoader: View {
 extension Color {
     // House palette, same values as heyitsmejosh.com/tokens.css (Orchard).
     // ponytail: sparkBlue keeps its old name, it is the clay accent now.
-    static let sparkBlue = Color(light: "b5502c", dark: "e07856")
+    static let sparkBlue = Color(light: "4d7c45", dark: "8fc286")
     static let paper = Color(light: "fafaf8", dark: "1c1a17")
     static let card = Color(light: "ffffff", dark: "26231f")
     static let hairline = Color(light: "e4e2dc", dark: "35312b")

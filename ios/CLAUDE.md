@@ -3,7 +3,7 @@ v3.0
 ## Rules
 - Portrait-only, UIRequiresFullScreen
 - Apple Liquid Glass: .ultraThinMaterial, blur, rounded corners, system font
-- Palette: paper #fafaf8, warm ink #1c1a17, one accent terracotta #b5502c (#e07856 in dark). No cream, no yellow. Primary buttons use PrimaryButtonStyle.
+- Palette: paper #fafaf8, warm ink #1c1a17, one accent lily-pad green #4d7c45 (#8fc286 in dark). No cream, no yellow. Primary buttons use PrimaryButtonStyle.
 - No emojis
 - Error banner system for auth and API failures
 - Optimistic voting with debounce and error revert
