@@ -23,7 +23,7 @@ xcrun simctl status_bar "$U" override --time 9:41 --batteryState charged \
 xcrun simctl uninstall "$U" "$BID" 2>/dev/null || true
 xcrun simctl install "$U" "$APP"
 
-launch() { # tab: 0 feed, 1 create, 2 profile, 3 ideas
+launch() { # tab: 0 feed, 1 create, 2 profile
     xcrun simctl terminate "$U" "$BID" 2>/dev/null || true
     SIMCTL_CHILD_UITEST_TAB=$1 xcrun simctl launch "$U" "$BID" UITEST_SNAPSHOT >/dev/null
 }
@@ -62,7 +62,7 @@ print(int(f["width"]), int(f["height"]))
 '
 }
 
-# First launch on a fresh install: notification prompt, then the What's New sheet.
+# First launch on a fresh install: a notification prompt may appear; What's New and the tour are skipped under UITEST_SNAPSHOT.
 launch 0
 sleep 4
 tap_label "Allow" 8
@@ -87,19 +87,12 @@ launch 1
 sleep 4
 shot 04-create
 
-launch 3
-sleep 5
-shot 05-ideas
-
-# Same tab, scrolled to the topic form at the bottom.
-read -r W H <<<"$(screen_size)"
-for _ in 1 2 3; do
-    axe swipe --start-x $((W / 2)) --start-y $((H * 3 / 4)) --end-x $((W / 2)) --end-y $((H / 6)) \
-        --udid "$U" >/dev/null
-    sleep 1
-done
-sleep 1
-shot 05b-ideas-generate
+# Create's Brainstorm half: a topic in, three ideas out.
+launch 1
+sleep 4
+tap_label "Brainstorm"
+sleep 3
+shot 05-brainstorm
 
 launch 2
 sleep 4

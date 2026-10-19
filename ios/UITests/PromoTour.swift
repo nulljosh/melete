@@ -31,9 +31,13 @@ final class PromoTour: XCTestCase {
             app.navigationBars.buttons.element(boundBy: 0).tap()
             sleep(1)
         }
-        for tab in ["Ideas", "Create", "Profile", "Feed"] {
+        for tab in ["Create", "Profile", "Feed"] {
             app.tabBars.buttons[tab].tap()
             sleep(2)
+            if tab == "Create", app.buttons["Brainstorm"].exists {
+                app.buttons["Brainstorm"].tap()
+                sleep(2)
+            }
         }
     }
 }

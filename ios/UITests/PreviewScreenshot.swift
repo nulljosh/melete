@@ -40,13 +40,11 @@ final class PreviewScreenshot: XCTestCase {
         snapshot("04-profile")
         profile.terminate()
 
-        let ideas = launchApp(tab: 3)
+        let brainstorm = launchApp(tab: 1)
         sleep(3)
-        ideas.swipeUp()
-        ideas.swipeUp()
-        ideas.swipeUp()
-        sleep(1)
-        snapshot("05-ideas")
-        ideas.terminate()
+        brainstorm.buttons["Brainstorm"].tap()
+        sleep(2)
+        snapshot("05-brainstorm")
+        brainstorm.terminate()
     }
 }
