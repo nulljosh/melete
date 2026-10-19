@@ -115,7 +115,7 @@ struct FeedView: View {
                 }
             }
             .background(Color.paper)
-            .navigationTitle("Thinkpond")
+            .navigationTitle("Melete")
             .navigationDestination(for: Post.self) { post in
                 PostDetailView(post: post)
             }
@@ -646,16 +646,16 @@ struct SettingsSection: View {
             .onChange(of: dailyIdea) { _, on in
                 Task { on ? await DailyIdea.schedule() : DailyIdea.cancel() }
             }
-            Link(destination: URL(string: "https://thinkpond.jaybulb.com/support.html")!) {
+            Link(destination: URL(string: "https://melete.jaybulb.com/support.html")!) {
                 Label("Support", systemImage: "questionmark.circle")
             }
-            Link(destination: URL(string: "https://thinkpond.jaybulb.com/tos.html")!) {
+            Link(destination: URL(string: "https://melete.jaybulb.com/tos.html")!) {
                 Label("Terms and Privacy", systemImage: "doc.text")
             }
         } header: {
             Text("Settings")
         } footer: {
-            Text("Thinkpond \(version)")
+            Text("Melete \(version)")
                 .frame(maxWidth: .infinity)
                 .padding(.top, 12)
         }

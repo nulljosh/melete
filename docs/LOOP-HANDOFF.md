@@ -1,8 +1,8 @@
-# Thinkpond loop handoff (2026-10-19, evening)
+# Melete loop handoff (2026-10-19, evening)
 
 ## What the loop is
 
-The loop works the roadmap toward thinkpond v5, then v10, one small slice per tick. Each slice is built on the web first, then iOS and Mac, then checked by eye on a screenshot. A slice ends with tests green, a commit by exact path, a push, and CI checked.
+The loop works the roadmap toward melete v5, then v10, one small slice per tick. Each slice is built on the web first, then iOS and Mac, then checked by eye on a screenshot. A slice ends with tests green, a commit by exact path, a push, and CI checked.
 
 Each tick, in order: `asc versions list --app 6785162492` (a rejection jumps the queue), `gh run list --limit 3` (a red run on main jumps the queue), `git status` (anything unexpected in the tree is somebody else's work until proven otherwise), then the next item below.
 
@@ -16,7 +16,7 @@ Rules that bite:
 
 ## Where things stand
 
-- Repo: main at 00fce44, pushed. Web feed is simplified and live on thinkpond.jaybulb.com: cards are title, pitch and votes, one New/Trending switch, opening a card shows the closest App Store apps, then comments. The app page colours are back on the brand kit.
+- Repo: main at 00fce44, pushed. Web feed is simplified and live on melete.jaybulb.com: cards are title, pitch and votes, one New/Trending switch, opening a card shows the closest App Store apps, then comments. The app page colours are back on the brand kit.
 - Store: iOS 3.1 and Mac 3.1 are WAITING_FOR_REVIEW, submitted 2026-10-19.
 - 3.2 on iOS and Mac carries the same simpler feed. Both build and the tests pass. It is committed but not submitted.
 - Daily ideas: the cron writes one idea a day on gpt-oss-120b. The first run is 09:00 UTC 2026-10-20. If it posts nothing, `npx wrangler tail sparkjar-cron` says why.
@@ -34,5 +34,5 @@ Rules that bite:
 ## Restart prompt
 
 ```
-/loop thinkpond to v5, then v10, and so on. Build out the roadmap. Read docs/LOOP-HANDOFF.md first, run the tick checks, and work "Next, in order" top down.
+/loop melete to v5, then v10, and so on. Build out the roadmap. Read docs/LOOP-HANDOFF.md first, run the tick checks, and work "Next, in order" top down.
 ```

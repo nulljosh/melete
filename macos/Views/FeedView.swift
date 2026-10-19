@@ -99,7 +99,7 @@ struct FeedView: View {
             }
             .frame(minWidth: 320, maxWidth: .infinity, maxHeight: .infinity)
         }
-        .navigationTitle("Thinkpond")
+        .navigationTitle("Melete")
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {

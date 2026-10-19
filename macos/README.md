@@ -1,10 +1,10 @@
-![Thinkpond macOS](../icon.svg)
+![Melete macOS](../icon.svg)
 
-# Thinkpond macOS
+# Melete macOS
 
 ![version](https://img.shields.io/badge/version-3.1-blue) ![license](https://img.shields.io/badge/license-MIT-green)
 
-Native Mac app for [Thinkpond](https://thinkpond.jaybulb.com), the idea forum. Built with SwiftUI for macOS 14 and later.
+Native Mac app for [Melete](https://melete.jaybulb.com), the idea forum. Built with SwiftUI for macOS 14 and later.
 
 ## Features
 

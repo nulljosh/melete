@@ -4,7 +4,7 @@ const { findUserByVerifyToken, markVerified } = require('../store');
 // Always redirects (this is opened in a browser, not by a client), and reveals
 // nothing about which tokens exist beyond success/failure.
 module.exports = async function handler(req, res) {
-  const base = process.env.APP_URL || 'https://thinkpond.jaybulb.com';
+  const base = process.env.APP_URL || 'https://melete.jaybulb.com';
   const token = (req.query || {}).token;
 
   let ok = false;

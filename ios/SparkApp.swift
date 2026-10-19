@@ -100,7 +100,7 @@ struct SplashView: View {
                 .frame(width: 200, height: 200)
 
                 VStack(spacing: 8) {
-                    Text("Thinkpond")
+                    Text("Melete")
                         .font(.system(size: 34, weight: .semibold))
                         .foregroundStyle(ink)
                     Text("Drop an idea in. Watch it ripple.")

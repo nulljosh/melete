@@ -1,21 +1,21 @@
-# Thinkpond API
+# Melete API
 
-Base URL: `https://thinkpond.jaybulb.com`
+Base URL: `https://melete.jaybulb.com`
 
 One Cloudflare Pages Function, `functions/api/[[route]].js`, takes every `/api/*` request and hands it to the matching handler in `api/`. Responses are JSON. Errors look like `{ "error": "message" }` with the matching status code.
 
-CORS allows only `https://thinkpond.jaybulb.com`. Server-to-server calls are not affected by that.
+CORS allows only `https://melete.jaybulb.com`. Server-to-server calls are not affected by that.
 
 ## Authentication
 
 Log in, then send the token as a bearer header.
 
 ```bash
-TOKEN=$(curl -s -X POST https://thinkpond.jaybulb.com/api/auth/login \
+TOKEN=$(curl -s -X POST https://melete.jaybulb.com/api/auth/login \
   -H 'Content-Type: application/json' \
   -d '{"username":"you","password":"..."}' | jq -r .token)
 
-curl -H "Authorization: Bearer $TOKEN" https://thinkpond.jaybulb.com/api/notifications
+curl -H "Authorization: Bearer $TOKEN" https://melete.jaybulb.com/api/notifications
 ```
 
 Routes marked **auth** return `401` without a token. Two routes are rate limited and return `429` when the limit is hit:
@@ -167,7 +167,7 @@ Says whether password reset and verification mail can go out. It sends nothing. 
 
 ## WebMCP
 
-With the app open, Thinkpond registers tools on `document.modelContext`. Each one reuses the token already in `localStorage`. Source: `webmcp.js`.
+With the app open, Melete registers tools on `document.modelContext`. Each one reuses the token already in `localStorage`. Source: `webmcp.js`.
 
 ### Read-only
 

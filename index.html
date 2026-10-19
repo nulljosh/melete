@@ -2,419 +2,264 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1c1a17">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1f2b1d">
 <script src="/theme.js"></script>
-<title>Thinkpond, Drop an idea in. Watch it ripple.</title>
-<meta name="description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-<meta property="og:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
-<meta property="og:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-<meta property="og:url" content="https://thinkpond.jaybulb.com">
-<meta property="og:image" content="https://thinkpond.jaybulb.com/og.png">
+<title>Melete, ideas worth thinking about</title>
+<meta name="description" content="A new idea every morning. Vote, see what is already on the App Store, and build the one nobody has. On the web, iPhone and Mac.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Melete">
+<meta property="og:title" content="Melete, ideas worth thinking about">
+<meta property="og:description" content="A new idea every morning. Vote, see what is already on the App Store, and build the one nobody has.">
+<meta property="og:url" content="https://melete.jaybulb.com/">
+<meta property="og:image" content="https://melete.jaybulb.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://thinkpond.jaybulb.com/og.png">
-  <meta name="apple-itunes-app" content="app-id=6785162492">
+<meta name="twitter:image" content="https://melete.jaybulb.com/og.png">
+<meta name="apple-itunes-app" content="app-id=6785162492">
+<link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="icon" href="/icon.svg">
-<link rel="stylesheet" href="tokens.css">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/brand/tokens.css">
 <style>
   :root {
-    --font: var(--font-body, -apple-system, BlinkMacSystemFont, system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif);
-    --font-display: var(--font);
-    --radius-pill: 999px;
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --wide: clamp(16px, 5vw, 64px);
   }
-  /* Thinkpond palette: near-white paper, warm ink, one lily-pad green accent. Overrides the shared tokens on purpose. */
+  /* Paper, warm ink and laurel green (brand/BRAND.md). The field is the same in both themes. */
   :root, :root[data-theme="light"] {
     --bg: #fafaf8; --bg2: #f0efec; --card: #ffffff; --border: #e4e2dc;
-    --text: #1c1a17; --text2: rgba(28,26,23,0.62); --text3: rgba(28,26,23,0.36);
-    --accent: #4d7c45; --link: #4d7c45; --bulb: #4d7c45; --on-accent: #ffffff;
-    --accent-tint: rgba(77,124,69,0.10);
-    --header-bg: color-mix(in srgb, var(--bg) 88%, transparent);
-    --subtle: color-mix(in srgb, var(--text) 4%, transparent);
+    --text: #1c1a17; --text2: rgba(28,26,23,0.66); --accent: #4d7c45; --on-accent: #ffffff;
   }
   :root[data-theme="dark"] {
     --bg: #1c1a17; --bg2: #221f1b; --card: #26231f; --border: #35312b;
-    --text: #f3ede0; --text2: rgba(243,237,224,0.62); --text3: rgba(243,237,224,0.36);
-    --accent: #8fc286; --link: #8fc286; --bulb: #8fc286; --on-accent: #1c1a17;
-    --accent-tint: rgba(143,194,134,0.16);
+    --text: #f3ede0; --text2: rgba(243,237,224,0.66); --accent: #8fc286; --on-accent: #1c1a17;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #1c1a17; --bg2: #221f1b; --card: #26231f; --border: #35312b;
-      --text: #f3ede0; --text2: rgba(243,237,224,0.62); --text3: rgba(243,237,224,0.36);
-      --accent: #8fc286; --link: #8fc286; --bulb: #8fc286; --on-accent: #1c1a17; --accent-tint: rgba(143,194,134,0.16);
+      --text: #f3ede0; --text2: rgba(243,237,224,0.66); --accent: #8fc286; --on-accent: #1c1a17;
     }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); overflow-x: hidden; transition: background 0.2s var(--ease), color 0.2s var(--ease); }
-  a { color: var(--link, var(--accent)); }
-  img { max-width: 100%; display: block; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.5 var(--font); overflow-x: hidden; }
+  a { color: inherit; }
+  svg { flex: none; }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  /* Buttons: 48 point capsules */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px;
+    border-radius: 999px; border: 1px solid transparent; font: 600 15px var(--font); text-decoration: none; cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s, transform .1s; white-space: nowrap; }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible, .icons a:focus-visible, .icons button:focus-visible { outline: 4px solid var(--accent-ring); outline-offset: 2px; }
+  .on-field .btn-solid { background: var(--on-field); color: var(--field); }
+  .on-field .btn-solid:hover { background: #fff; }
+  .on-field .btn-ghost { color: var(--on-field); border-color: rgba(238,243,234,.4); }
+  .on-field .btn-ghost:hover { border-color: var(--on-field); background: rgba(238,243,234,.08); }
+  .badge { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 24px;
+    background: #000; color: #fff; border: 1px solid #a6a6a6; font: 500 15px var(--font); text-decoration: none; }
+  .badge:hover { background: #1d1d1f; }
 
-  .eyebrow { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text3); margin-bottom: 0.75rem; }
-  h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; margin: 0; }
-  .btn { text-decoration: none; font-size: 0.9375rem; font-weight: 500; padding: 0.875rem 1.75rem; border-radius: var(--radius-pill); display: inline-block; transition: transform 0.2s var(--spring), opacity 0.2s var(--ease); border: none; cursor: pointer; }
-  /* Primary actions: flat lily-pad green. */
-  .btn-primary { background: var(--accent); color: var(--on-accent); }
-  .btn-primary:hover { transform: translateY(-2px); }
-  .btn-secondary { color: var(--text); border: 1px solid var(--border); background: var(--bg); }
-  .btn-secondary:hover { opacity: 0.7; }
+  /* Field: nav, hero and download band */
+  .on-field { background: var(--field); color: var(--on-field); }
+  nav.top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 28px; padding: 12px var(--wide); }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+  .links { display: flex; gap: 24px; }
+  .links a { font-size: 14px; text-decoration: none; color: var(--on-field-soft); }
+  .links a:hover { color: var(--on-field); }
+  .nav-cta { margin-left: auto; display: flex; gap: 8px; }
+  .nav-cta .btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
 
-  header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
-  .header-inner { max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-  .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; color: var(--text); }
-  .logo img { border-radius: 6px; width: 26px; height: 26px; }
-  nav.main-nav { display: flex; align-items: center; gap: 2rem; }
-  nav.main-nav a { text-decoration: none; color: var(--text2); font-size: 0.875rem; font-weight: 500; }
-  nav.main-nav a:hover { color: var(--text); }
-  .header-cta { background: var(--accent); color: var(--on-accent); font-size: 0.875rem; font-weight: 500; padding: 0.55rem 1.25rem; border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.2s var(--ease); }
-  .header-cta:hover { opacity: 0.85; }
-  .logo img { box-shadow: 0 0 0 1px var(--border); border-radius: 8px; }
-  .header-link { color: var(--text); font-size: 0.875rem; font-weight: 500; text-decoration: none; padding: 0.55rem 0.5rem; }
-  .header-link:hover { opacity: 0.7; }
-  .header-right { display: flex; align-items: center; gap: 0.75rem; }
-  .theme-btn { background: var(--subtle); color: var(--text); border: 1px solid var(--border); width: 34px; height: 34px; border-radius: var(--radius-pill); cursor: pointer; font-size: 0.9375rem; line-height: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: opacity 0.2s var(--ease); }
-  .theme-btn:hover { opacity: 0.7; }
-
-  .hero { max-width: 1080px; margin: 0 auto; padding: 6rem 1.5rem 5rem; text-align: center; }
-  .hero-copy { animation: fadeUp 0.8s var(--ease) backwards; max-width: 640px; margin: 0 auto; }
-  .hero-actions { justify-content: center; }
-  .hero h1 { font-size: clamp(2.75rem, 5.5vw, 4.25rem); line-height: 1.05; margin-bottom: 1.25rem; }
-  .hero p { font-size: 1.125rem; line-height: 1.6; color: var(--text2); margin: 0 0 2rem; }
-  .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-
-
-  /* a slow-drifting wall of idea titles, the feed itself as wallpaper */
-  .hero { position: relative; isolation: isolate; overflow: hidden; }
-  .hero-copy { position: relative; z-index: 2; transform: translate3d(0, calc(var(--sy, 0) * 0.15px), 0); opacity: calc(1 - var(--sy, 0) / 600); }
-  .hero-wall {
-    position: absolute; top: -8%; bottom: -30%; left: 50%; width: 100vw; transform: translate3d(-50%, calc(var(--sy, 0) * 0.4px), 0); z-index: 0;
-    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 14px;
-    opacity: 0.45; pointer-events: none; user-select: none;
+  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center;
+    padding: clamp(32px, 6vh, 72px) var(--wide) clamp(56px, 9vh, 104px); overflow: hidden; isolation: isolate; }
+  .kicker { margin: 0 0 18px; font-size: 15px; color: var(--on-field-soft); }
+  h1, h2, .serif { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.03em; }
+  h1 { font-size: clamp(52px, 7.6vw, 108px); line-height: .96; margin: 0 0 28px; max-width: 9ch; }
+  .lead { margin: 0 0 32px; max-width: 36ch; font-size: clamp(17px, 1.6vw, 19px); line-height: 1.55; color: rgba(238,243,234,.8); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .art { position: relative; margin: 0; justify-self: center; width: min(100%, 300px); }
+  .art svg { display: block; width: 100%; height: auto; color: var(--on-field); }
+  /* Rays behind the figure, like the engraved sunburst on the Themis page */
+  .art::before { content: ""; position: absolute; left: 50%; top: 40%; width: 260%; aspect-ratio: 1; z-index: -1; pointer-events: none;
+    background: repeating-conic-gradient(from 0deg, rgba(238,243,234,.16) 0deg .4deg, transparent .4deg 4.5deg);
+    -webkit-mask-image: radial-gradient(circle, transparent 10%, #000 22%, transparent 64%);
+    mask-image: radial-gradient(circle, transparent 10%, #000 22%, transparent 64%);
+    transform: translate(-50%, -50%) rotate(calc(var(--sy, 0) * 0.04deg)); }
+  @media (prefers-reduced-motion: no-preference) {
+    .art::before { animation: spin 200s linear infinite; }
+    .art svg { transform: translate3d(0, calc(var(--sy, 0) * 0.25px), 0); }
+    .hero-copy { transform: translate3d(0, calc(var(--sy, 0) * -0.08px), 0); opacity: calc(1 - var(--sy, 0) / 650); }
+    .hero-copy > * { animation: rise .6s ease-out both; }
+    .hero-copy > :nth-child(2) { animation-delay: .08s; } .hero-copy > :nth-child(3) { animation-delay: .16s; }
+    .hero-copy > :nth-child(4) { animation-delay: .24s; } .hero-copy > :nth-child(5) { animation-delay: .32s; }
   }
-  .wall-col { display: flex; min-width: 0; flex-direction: column; gap: 14px; }
-  .wall-col i.tile {
-    display: grid; place-items: center; width: 100%; aspect-ratio: 1; max-width: 76px; margin: 0 auto;
-    background: var(--card); border: 1px solid var(--border); border-radius: 18px; color: var(--text3);
+  @keyframes spin { to { rotate: 360deg; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+
+  /* Paper sections */
+  section.paper { padding: clamp(64px, 10vh, 112px) var(--wide); max-width: 1180px; margin: 0 auto; }
+  .big { font-size: clamp(48px, 7vw, 92px); line-height: 1; color: var(--accent); margin: 0 0 16px; }
+  .sub { margin: 0 0 40px; max-width: 46ch; color: var(--text2); }
+  .live { height: min(760px, 82vh); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--card); }
+  .live iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .card { border: 1px solid var(--border); border-radius: 16px; background: var(--card); padding: 24px 20px; transition: border-color .2s, transform .2s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .tag { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
+  .card h3 { font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em; color: var(--accent); margin: 0 0 8px; }
+  .card p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--text2); }
+
+  .download { text-align: center; padding: 96px var(--wide); }
+  .download h2 { font-size: clamp(44px, 6vw, 76px); line-height: 1; margin: 0 0 12px; }
+  .download > p { margin: 0 auto 48px; max-width: 44ch; color: rgba(238,243,234,.78); }
+  .plats { display: grid; grid-template-columns: repeat(3, minmax(0, 220px)); justify-content: center; gap: 32px; }
+  .plats div { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .plats small { font-size: 13px; color: var(--on-field-soft); }
+  .plats b { font-family: var(--font-display); font-weight: 400; font-size: 32px; margin-bottom: 8px; }
+  .download > .other { margin: 40px auto 0; max-width: 52ch; font-size: 15px; color: var(--on-field-soft); }
+
+  /* Footer: tiles, glyph buttons, the engraved wordmark */
+  footer { text-align: center; padding: 72px 16px 24px; }
+  .tiles { display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; }
+  .tiles img { width: 80px; height: 80px; border-radius: 16px; display: block; }
+  .icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .icons a, .icons button { width: 48px; height: 48px; border-radius: 24px; display: inline-grid; place-items: center; color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 9%, transparent); border: 0; cursor: pointer; font-size: 18px; transition: background .2s, color .2s; }
+  .icons a:hover, .icons button:hover { background: var(--accent); color: var(--bg); }
+  .band { width: 100%; height: clamp(150px, 24vw, 340px); margin-top: 24px; }
+  .band canvas { display: block; width: 100%; height: 100%; }
+  .fine { margin: 8px 0 0; font-size: 13px; color: var(--text2); text-wrap: balance; }
+
+  @media (max-width: 820px) {
+    .links { display: none; }
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .art { width: min(70%, 260px); }
+    .plats { grid-template-columns: minmax(0, 1fr); }
   }
-  .wall-col i.tile svg { width: 42%; height: 42%; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .wall-col i.tile.lit { color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-  .wall-col.up   { animation: wall-up   var(--dur) linear infinite; }
-  .wall-col.down { animation: wall-down var(--dur) linear infinite; }
-  @keyframes wall-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
-  @keyframes wall-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
-  @media (prefers-reduced-motion: reduce) { .wall-col { animation: none; } }
-  /* scrim: keeps the headline readable over the wall, in either theme */
-  .hero::after {
-    content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background:
-      radial-gradient(ellipse 65% 70% at 40% 45%, var(--bg) 25%, transparent 80%),
-      linear-gradient(var(--bg), transparent 25%, transparent 70%, var(--bg) 98%),
-      color-mix(in srgb, var(--bg) 45%, transparent);
+  @media (max-width: 480px) {
+    nav.top { gap: 12px; }
+    .nav-cta .btn-ghost { display: none; }
+    .cta .btn { flex: 1 1 100%; }
+    .icons { gap: 8px; } .icons a, .icons button { width: 44px; height: 44px; }
   }
-
-  section { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-  /* The real app, not a picture of it: same origin, no device frame. */
-  .try-lead { color: var(--text2); margin: 0.75rem 0 0; line-height: 1.55; }
-  .live-app { max-width: 960px; height: 720px; margin: 0 auto; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-  .live-app iframe { width: 100%; height: 100%; border: 0; display: block; }
-  @media (max-width: 600px) { .live-app { height: 640px; } }
-  .section-head { max-width: 480px; margin: 0 auto 3rem; text-align: center; }
-  .section-head h2 { font-size: 2rem; }
-
-  .icon-tile { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-tint); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--link, var(--accent)); font-size: 1.25rem; }
-
-  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-  .card { padding: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
-  .card-title { font-weight: 600; font-size: 1.0625rem; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
-  .card-desc { font-size: 0.875rem; line-height: 1.55; color: var(--text2); }
-
-  #how { background: var(--bg2); padding: 5rem 0; max-width: none; }
-  .how-inner { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
-  .step-num { font-family: var(--font-display); font-size: 2rem; color: var(--link, var(--accent)); margin-bottom: 0.5rem; }
-  .step h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.4rem; }
-  .step p { font-size: 0.875rem; color: var(--text2); line-height: 1.55; margin: 0; }
-
-  footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; }
-  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: var(--text3); font-size: 0.8125rem; }
-  footer a { color: var(--text3); text-decoration: none; }
-  footer a:hover { color: var(--text); }
-
-  @media (max-width: 800px) {
-    .hero { padding-top: 3rem; }
-    nav.main-nav { display: none; }
-    .features-grid { grid-template-columns: 1fr 1fr; }
-    .steps { grid-template-columns: 1fr; }
-  }
-
-/* footer directory, ported from Joshua Tree */
-footer { margin: 0; padding: 56px 0 0; border-top: 1px solid var(--border); text-align: left; font-size: 13px; }
-footer .foot-rule { display: flex; align-items: center; gap: 16px; max-width: 880px; margin: 0 auto; padding: 0 20px 28px; font-size: 13px; letter-spacing: .06em; font-weight: 500; color: var(--text2); }
-footer .foot-rule::before { content: ""; order: 1; flex: 1; height: 1px; background: var(--border); }
-footer .foot-rule > :first-child { order: 0; }
-footer .foot-rule > :last-child { order: 2; }
-@media (max-width: 520px) { footer .foot-rule { flex-wrap: wrap; justify-content: center; gap: 10px 16px; } footer .foot-rule::before { order: -1; flex-basis: 100%; } }
-.foot-dir { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 24px; max-width: 880px; margin: 0 auto; padding: 0 20px 28px; text-align: left; }
-.foot-col h3 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
-.foot-col ul { list-style: none; margin: 0; padding: 0; }
-.foot-col a { position: relative; display: inline-block; padding: 5px 0; margin: 0; color: var(--text2); text-decoration: none; font-size: 13px; line-height: 1.35; }
-.foot-col a::after { content: ""; position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: 44px; min-width: 44px; }
-.foot-col a:hover { color: var(--text); text-decoration: underline; }
-.foot-bar { max-width: 880px; margin: 0 auto; padding: 18px 20px 0; border-top: 1px solid var(--border); }
-.foot-bar .foot-meta { margin: 0; text-align: left; color: var(--text2); font-size: 12.5px; line-height: 1.9; }
-.foot-bar .foot-meta a { color: var(--text2); }
-.foot-band { display: block; width: 100%; height: clamp(200px, 28vw, 360px); margin-top: 40px; }
-@media (max-width: 700px) { .foot-dir { grid-template-columns: repeat(2, 1fr); } }
 </style>
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Thinkpond">
-    <meta property="og:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
-    <meta property="og:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-    <meta property="og:url" content="https://thinkpond.jaybulb.com/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
-    <meta name="twitter:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-  </head>
+</head>
 <body id="top">
-<header>
-  <div class="header-inner">
-    <a href="/" class="logo"><img src="/icon.svg" alt=""> Thinkpond</a>
-    <nav class="main-nav">
-      <a href="#try">Try it</a>
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-    </nav>
-    <div class="header-right">
-      <button class="theme-btn" data-theme-toggle type="button" title="Switch to light mode" aria-label="Switch to light mode">&#9790;</button>
-      <a href="/app.html?auth=login" class="header-link">Log in</a>
-      <a href="/app.html?auth=register" class="header-cta">Sign up</a>
-    </div>
+
+<nav class="top on-field" aria-label="Site">
+  <a class="logo" href="/" aria-label="Melete home"><svg width="26" height="26" aria-hidden="true"><use href="/brand/mark.svg#m" width="26" height="26"/></svg><span>Melete</span></a>
+  <div class="links"><a href="#feed">Feed</a><a href="#features">Features</a><a href="#download">Download</a></div>
+  <div class="nav-cta">
+    <a class="btn btn-ghost" href="/app.html?auth=login">Log in</a>
+    <a class="btn btn-solid" href="/app.html?auth=register">Sign up</a>
   </div>
+</nav>
+
+<header class="hero on-field">
+  <div class="hero-copy">
+    <p class="kicker">Named for Melete, the Muse of thought</p>
+    <h1>Ideas worth thinking about.</h1>
+    <p class="lead">A new idea lands every morning. Vote, see what is already on the App Store, and build the one nobody has. On the web, iPhone and Mac.</p>
+    <div class="cta">
+      <a class="btn btn-solid" href="/app.html?auth=register">Sign up free</a>
+      <a class="btn btn-ghost" href="/app.html">Browse the feed</a>
+    </div>
+    <a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path id="apl" fill="currentColor" d="M16.37 12.74c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.61 2.25 2.75 2.21 1.1-.04 1.52-.71 2.86-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.15.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.34-3.55zM14.18 6.27c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23z"/></svg><span>Download on the App Store</span></a>
+  </div>
+  <figure class="art"><svg viewBox="0 0 1684 3440" role="img" aria-label="A Muse deep in thought, finger to her lips, crowned with laurel. A 19th-century wood engraving."><use href="/melete.svg#art"/></svg></figure>
 </header>
 
-<div class="hero">
-  <div class="hero-wall" id="heroWall" aria-hidden="true"></div>
-  <script>
-  // Parallax: the wall of ideas drifts at 40% of scroll, the headline at 15% and fades out.
-  (function(){
-    var hero=document.currentScript.parentNode,ticking=false;
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    addEventListener('scroll',function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){hero.style.setProperty('--sy',Math.min(scrollY,900));ticking=false;});},{passive:true});
-  })();
-  </script>
-  <div class="hero-copy">
-    <div class="eyebrow">Thinkpond, the pond that thinks</div>
-    <h1>Drop an idea in. Watch it ripple.</h1>
-    <p>A new idea lands every morning. Drop in your own, vote, and the good ones float to the top.</p>
-    <div class="hero-actions">
-      <a href="/app.html?auth=register" class="btn btn-primary">Sign up free</a>
-      <a href="/app.html" class="btn btn-secondary">Browse the feed</a>
-      <a href="https://apps.apple.com/app/id6785162492" class="btn btn-secondary" target="_blank" rel="noopener">App Store</a>
-    </div>
-  </div>
-</div>
-
-<section id="try">
-  <div class="section-head">
-    <div class="eyebrow">Try it here</div>
-    <h2>This is the real feed</h2>
-    <p class="try-lead">Vote, open a brief, read the comments. Sign in to post your own.</p>
-  </div>
-  <div class="live-app"><iframe src="/app.html?embed" title="Thinkpond, live" loading="lazy"></iframe></div>
+<section class="paper" id="feed">
+  <h2 class="big">The real feed</h2>
+  <p class="sub">Vote, open an idea, read the comments. Sign in to post your own.</p>
+  <div class="live"><iframe src="/app.html?embed" title="Melete, live" loading="lazy"></iframe></div>
 </section>
 
-<section id="features">
-  <div class="section-head">
-    <div class="eyebrow">Why Thinkpond</div>
-    <h2>Built for finding the next thing</h2>
-  </div>
-  <div class="features-grid">
-    <div class="card">
-      <div class="icon-tile">↑</div>
-      <div class="card-title">Vote on ideas</div>
-      <div class="card-desc">Upvote or downvote, the best ideas rise to the top of the feed.</div>
-    </div>
-    <div class="card">
-      <div class="icon-tile">✎</div>
-      <div class="card-title">Comment &amp; discuss</div>
-      <div class="card-desc">Add context, feedback, or a reason it will or won't work.</div>
-    </div>
-    <div class="card">
-      <div class="icon-tile">✦</div>
-      <div class="card-title">See who got there first</div>
-      <div class="card-desc">Open an idea and the closest apps already on the App Store show up under it.</div>
-    </div>
-    <div class="card">
-      <div class="icon-tile">⇄</div>
-      <div class="card-title">New or trending</div>
-      <div class="card-desc">One switch. Fresh ideas first, or the ones people are voting up right now.</div>
-    </div>
+<section class="paper" id="features">
+  <h2 class="big">Features</h2>
+  <div class="cards">
+    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Daily</div><h3>One idea at nine</h3><p>A fresh idea lands every morning, with a write-up of what to build first.</p></article>
+    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Vote</div><h3>The good ones rise</h3><p>One vote each. Switch between New and Trending.</p></article>
+    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>Check</div><h3>Who got there first</h3><p>Open an idea and the closest apps already on the App Store show up under it.</p></article>
+    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Brainstorm</div><h3>Three from a topic</h3><p>Give it a topic and it writes three ideas into the feed.</p></article>
   </div>
 </section>
 
-<section id="how">
-  <div class="how-inner">
-    <div class="section-head">
-      <div class="eyebrow">How it works</div>
-      <h2>Three steps, no friction</h2>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Browse the feed</h3>
-        <p>New ideas land daily, no account needed to read.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Vote &amp; comment</h3>
-        <p>Sign up free to upvote, downvote, and add your take.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Build it</h3>
-        <p>Pick the one nobody has built yet and go make it real.</p>
-      </div>
-    </div>
+<section class="download on-field" id="download">
+  <h2>Download Melete</h2>
+  <p>The same feed everywhere, synced through your account.</p>
+  <div class="plats">
+    <div><small>iOS 17+</small><b>iPhone</b><a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg><span>App Store</span></a></div>
+    <div><small>macOS 14+</small><b>Mac</b><a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg><span>Mac App Store</span></a></div>
+    <div><small>Any browser</small><b>Web</b><a class="btn btn-solid" href="/app.html">Open the web app</a></div>
   </div>
-</section>
-
-
-<style>
-#install-anywhere{padding:5rem 0;}
-#install-anywhere .xp-wrap{max-width:960px;margin:0 auto;padding:0 1.5rem;}
-#install-anywhere .section-head p{color:var(--text2);line-height:1.55;margin:0;}
-#install-anywhere .xp-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
-#install-anywhere .xp-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;}
-#install-anywhere .xp-card h3{margin:0;font-size:1rem;letter-spacing:-.01em;}
-#install-anywhere .xp-card p{margin:0;font-size:.875rem;line-height:1.55;color:var(--text2);flex:1;}
-#install-anywhere .xp-card a{margin-top:.5rem;font-size:.875rem;font-weight:500;color:var(--accent,currentColor);text-decoration:none;}
-#install-anywhere .xp-card a:hover{text-decoration:underline;}
-</style>
-
-<section id="install-anywhere">
-  <div class="xp-wrap">
-    <div class="section-head">
-      <div class="eyebrow">Every platform</div>
-      <h2>Install it anywhere</h2>
-      <p>Native on iPhone, iPad and Mac. On Windows, Linux and Android it installs straight from the browser, gets its own window and icon, and keeps working offline.</p>
-    </div>
-    <div class="xp-grid">
-    <div class="xp-card">
-      <h3>iPhone &amp; iPad</h3>
-      <p>A native app, not a wrapped web page.</p>
-      <a href="https://apps.apple.com/app/id6785162492">App Store &rarr;</a>
-    </div>
-    <div class="xp-card">
-      <h3>Mac</h3>
-      <p>Native, universal binary. Runs on Apple silicon and Intel.</p>
-      <a href="https://apps.apple.com/app/id6785162492">App Store &rarr;</a>
-    </div>
-    <div class="xp-card">
-      <h3>Windows</h3>
-      <p>Open the web app in Edge or Chrome, then <strong>Install Thinkpond</strong> from the address bar. It lands in the Start Menu like any other app.</p>
-      <a href="https://thinkpond.jaybulb.com">Open &amp; install &rarr;</a>
-    </div>
-    <div class="xp-card">
-      <h3>Android</h3>
-      <p>Open the web app in Chrome, then <strong>Add to Home screen</strong>. Full screen, no browser chrome, works offline.</p>
-      <a href="https://thinkpond.jaybulb.com">Open &amp; install &rarr;</a>
-    </div>
-    <div class="xp-card">
-      <h3>Linux</h3>
-      <p>Same as Windows: install the web app from Chrome or Chromium and it runs in its own window.</p>
-      <a href="https://thinkpond.jaybulb.com">Open &amp; install &rarr;</a>
-    </div>
-    <div class="xp-card">
-      <h3>Web</h3>
-      <p>Nothing to install. The same app, in any modern browser.</p>
-      <a href="https://thinkpond.jaybulb.com">Open the web app &rarr;</a>
-    </div>
-    </div>
-  </div>
+  <p class="other">On Windows, Linux and Android, open the web app and install it from the browser. It gets its own window and keeps working offline.</p>
 </section>
 
 <footer>
-  <div class="foot-rule" aria-hidden="true"><span>Thinkpond</span><span>Ideas worth keeping</span></div>
-  <nav class="foot-dir" aria-label="Footer">
-    <div class="foot-col">
-      <h3>Thinkpond</h3>
-      <ul>
-        <li><a href="https://apps.apple.com/app/id6785162492">Mac App Store</a></li>
-        <li><a href="/app.html">Open the web app</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/CHANGELOG.md">Changelog</a></li>
-        <li><a href="/support.html">Support</a></li>
-      </ul>
-    </div>
-    <div class="foot-col">
-      <h3>Explore</h3>
-      <ul>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#install-anywhere">Install anywhere</a></li>
-        <li><a href="https://jaybulb.com/docs.html#thinkpond">Docs</a></li>
-      </ul>
-    </div>
-    <div class="foot-col">
-      <h3>Developers</h3>
-      <ul>
-        <li><a href="https://github.com/nulljosh/thinkpond">Source</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/docs/API.md">API reference</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/docs/ARCHITECTURE.md">Architecture</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/issues">Report a bug</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/CONTRIBUTING.md">Contributing</a></li>
-      </ul>
-    </div>
-    <div class="foot-col">
-      <h3>Project</h3>
-      <ul>
-        <li><a href="/tos.html">Terms</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/SECURITY.md">Security</a></li>
-        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/LICENSE">License (MIT)</a></li>
-        <li><a href="https://jaybulb.com">Portfolio</a></li>
-        <li><a href="#top">Back to top</a></li>
-      </ul>
-    </div>
+  <div class="tiles" aria-hidden="true"><img src="/mt-head.webp" alt="" width="80" height="80"><img src="/mt-hand.webp" alt="" width="80" height="80"><img src="/mt-folds.webp" alt="" width="80" height="80"></div>
+  <nav class="icons" aria-label="Footer">
+    <a href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener" title="App Store" aria-label="App Store"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg></a>
+    <a href="/app.html?auth=register" title="Sign up" aria-label="Sign up"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a>
+    <a href="/support.html" title="Support" aria-label="Support"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg></a>
+    <a href="/tos.html" title="Terms and privacy" aria-label="Terms and privacy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></a>
+    <a href="https://github.com/nulljosh/melete" title="Source" aria-label="Source"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></a>
+    <a href="https://jaybulb.com" title="Portfolio" aria-label="Portfolio"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+    <button type="button" data-theme-toggle title="Switch theme" aria-label="Switch theme">&#9790;</button>
+    <a href="#top" title="Back to top" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
   </nav>
-  <div class="foot-bar">
-    <p class="foot-meta">Thinkpond <span id="footver"></span> &middot; MIT License &middot; &copy; 2026 Joshua Trommel &middot; Made with <span aria-hidden="true">&hearts;</span> in Vancouver, BC</p>
-  </div>
-  <canvas class="foot-band" id="pondShader" aria-hidden="true"></canvas>
+  <div class="band" aria-hidden="true"><canvas id="word"></canvas></div>
+  <p class="fine">Melete <span id="ver"></span> &middot; <a href="https://github.com/nulljosh/melete/blob/main/LICENSE">MIT</a> &middot; &copy; 2026 Jaybulb &middot; Made in Vancouver, BC</p>
 </footer>
+
 <script>
-// Footer shader: the pond. Drops land at random and ring outward over a slow swell,
-// page colour at the top deepening to the accent at the bottom. Runs only while on
-// screen, one still frame under reduced motion; without WebGL the band stays empty.
+// Hero parallax: the figure drifts, the rays turn, the copy rises and fades. Off under reduced motion.
 (function () {
-  var canvas = document.getElementById('pondShader');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var hero = document.querySelector('.hero'), ticking = false;
+  addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { hero.style.setProperty('--sy', Math.min(scrollY, 900)); ticking = false; });
+  }, { passive: true });
+})();
+fetch('/package.json').then(function (r) { return r.json(); }).then(function (p) { if (p.version) document.getElementById('ver').textContent = 'v' + p.version; }).catch(function () {});
+</script>
+<script>
+// Footer wordmark: a giant "Melete" in the system serif, shaded like a line engraving (after the Themis
+// footer). Horizontal rules thicken inside the letters on the side away from a slowly drifting light.
+// Colours follow the theme. Runs only while on screen; one still frame under reduced motion.
+(function () {
+  var canvas = document.getElementById('word');
   var gl = canvas && canvas.getContext('webgl', { antialias: false });
-  if (!gl) return;
+  if (!gl || !gl.getExtension('OES_standard_derivatives')) return;
   var FRAG = [
+    '#extension GL_OES_standard_derivatives : enable',
     'precision mediump float;',
-    'uniform vec2 res; uniform float time; uniform vec3 bg; uniform vec3 ink;',
-    'float rnd(float n){ return fract(sin(n * 127.1) * 43758.5453); }',
+    'varying vec2 uv;',
+    'uniform sampler2D word; uniform sampler2D soft;',
+    'uniform vec2 res; uniform float time; uniform vec3 bg; uniform vec3 ink; uniform float pitch;',
     'void main(){',
-    '  vec2 uv = gl_FragCoord.xy / res; float asp = res.x / res.y;',
-    '  vec2 p = vec2(uv.x * asp, uv.y);',
-    '  float h = 0.18 * sin(p.x * 2.3 + time * 0.35) * sin(p.y * 4.0 - time * 0.27);',
-    '  for (int i = 0; i < 6; i++) {',
-    '    float fi = float(i), t = time * 0.5 + fi * 1.9, n = floor(t / 5.0), lt = mod(t, 5.0);',
-    '    vec2 c = vec2(rnd(n + fi * 7.0) * asp, 0.15 + 0.7 * rnd(n * 3.1 + fi));',
-    '    float d = length(p - c) - lt * 0.12;',
-    '    h += sin(d * 60.0) * exp(-abs(d) * 18.0) * (1.0 - lt / 5.0);',
-    '  }',
-    '  float depth = pow(1.0 - uv.y, 1.3);',
-    '  vec3 base = mix(bg, ink, depth);',
-    '  vec3 lit = mix(ink, bg, smoothstep(0.3, 0.85, depth));',
-    '  gl_FragColor = vec4(mix(base, lit, clamp(h, 0.0, 1.0) * 0.45), 1.0);',
+    '  vec2 t = vec2(uv.x, 1.0 - uv.y);',
+    '  float m = texture2D(word, t).r;',
+    '  vec2 e = vec2(2.0) / res;',
+    '  float hx = texture2D(soft, t + vec2(e.x, 0.0)).r - texture2D(soft, t - vec2(e.x, 0.0)).r;',
+    '  float hy = texture2D(soft, t + vec2(0.0, e.y)).r - texture2D(soft, t - vec2(0.0, e.y)).r;',
+    '  float a = 2.4 + 0.5 * sin(time * 0.25);',
+    '  float lit = clamp(0.5 + 6.0 * (hx * cos(a) + hy * sin(a)), 0.0, 1.0);',
+    '  float v = gl_FragCoord.y / pitch;',
+    '  float d = abs(fract(v) - 0.5);',
+    '  float w = fwidth(v);',
+    '  float dark = mix(0.05, mix(0.48, 0.12, lit), m);',
+    '  float line = 1.0 - smoothstep(dark * 0.5 - w, dark * 0.5 + w, d);',
+    '  float edge = smoothstep(0.35, 0.5, m) - smoothstep(0.5, 0.65, m);',
+    '  float fade = smoothstep(0.0, 0.25, uv.y);',
+    '  float k = clamp(line * mix(0.35, 0.95, m) + edge * 0.6, 0.0, 1.0) * fade;',
+    '  gl_FragColor = vec4(mix(bg, ink, k), 1.0);',
     '}'
   ].join('\n');
   function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
-  var vs = sh(gl.VERTEX_SHADER, 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }'), fs = sh(gl.FRAGMENT_SHADER, FRAG);
+  var vs = sh(gl.VERTEX_SHADER, 'attribute vec2 p; varying vec2 uv; void main(){ uv = p * 0.5 + 0.5; gl_Position = vec4(p, 0.0, 1.0); }'), fs = sh(gl.FRAGMENT_SHADER, FRAG);
   if (!vs || !fs) return;
   var prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
@@ -422,186 +267,58 @@ footer .foot-rule > :last-child { order: 2; }
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  var uRes = gl.getUniformLocation(prog, 'res'), uTime = gl.getUniformLocation(prog, 'time'), uBg = gl.getUniformLocation(prog, 'bg'), uInk = gl.getUniformLocation(prog, 'ink');
-  // Colours come from the live theme and are read again when it changes, never per frame.
+  var u = {};
+  ['res', 'time', 'bg', 'ink', 'pitch', 'word', 'soft'].forEach(function (n) { u[n] = gl.getUniformLocation(prog, n); });
+  gl.uniform1i(u.word, 0); gl.uniform1i(u.soft, 1);
+  function texture(unit) {
+    var t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+    [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(function (k) { gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE); });
+    [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER].forEach(function (k) { gl.texParameteri(gl.TEXTURE_2D, k, gl.LINEAR); });
+    return t;
+  }
+  var texWord = texture(0), texSoft = texture(1);
+  var FACE = getComputedStyle(document.documentElement).getPropertyValue('--font-display') || 'Georgia, serif';
+  function bake() {
+    var w = canvas.width, h = canvas.height, sharp = document.createElement('canvas'), blur = document.createElement('canvas');
+    sharp.width = blur.width = w; sharp.height = blur.height = h;
+    var c = sharp.getContext('2d'), size = h * 1.05;
+    c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+    c.font = '400 ' + size + 'px ' + FACE;
+    var m = c.measureText('Melete'), fit = (w * 0.9) / (m.actualBoundingBoxLeft + m.actualBoundingBoxRight || m.width);
+    if (fit < 1) { size *= fit; c.font = '400 ' + size + 'px ' + FACE; }
+    c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    c.fillText('Melete', w / 2, h * 0.86);
+    var b = blur.getContext('2d');
+    b.filter = 'blur(' + Math.max(2, h * 0.025) + 'px)'; b.drawImage(sharp, 0, 0);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texWord);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sharp);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texSoft);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, blur);
+  }
   function rgb(prop) {
-    var m = getComputedStyle(document.documentElement).getPropertyValue(prop).trim().match(/^#([0-9a-f]{6})$/i);
-    return m ? [0, 2, 4].map(function (i) { return parseInt(m[1].substr(i, 2), 16) / 255; }) : [0.3, 0.49, 0.27];
+    var probe = document.createElement('i'); probe.style.color = 'var(' + prop + ')'; document.body.appendChild(probe);
+    var m = getComputedStyle(probe).color.match(/[\d.]+/g); probe.remove();
+    return m ? [m[0] / 255, m[1] / 255, m[2] / 255] : [1, 1, 1];
   }
-  var bgc, inkc;
-  function colours() { bgc = rgb('--bg'); inkc = rgb('--accent'); }
+  var dpr = 1, bgc, inkc;
   function size() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(canvas.clientWidth * dpr); canvas.height = Math.round(canvas.clientHeight * dpr);
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.viewport(0, 0, canvas.width, canvas.height); bake();
   }
+  function colours() { bgc = rgb('--bg'); inkc = rgb('--accent'); }
   function draw(t) {
-    gl.uniform2f(uRes, canvas.width, canvas.height); gl.uniform1f(uTime, t / 1000);
-    gl.uniform3fv(uBg, bgc); gl.uniform3fv(uInk, inkc); gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.uniform2f(u.res, canvas.width, canvas.height); gl.uniform1f(u.time, t / 1000);
+    gl.uniform3fv(u.bg, bgc); gl.uniform3fv(u.ink, inkc); gl.uniform1f(u.pitch, 5 * dpr);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches, onScreen = false, frame = 0;
   function loop(t) { draw(t); frame = onScreen ? requestAnimationFrame(loop) : 0; }
   function kick() { if (!still && onScreen && !frame) frame = requestAnimationFrame(loop); }
-  colours(); size(); draw(4000);
+  colours(); size(); draw(0);
   addEventListener('resize', function () { size(); draw(performance.now()); });
   new MutationObserver(function () { colours(); draw(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; kick(); }).observe(canvas);
-})();
-</script>
-<script>fetch("/package.json").then(function(r){return r.json()}).then(function(p){if(p.version)document.getElementById("footver").textContent="v"+p.version}).catch(function(){})</script>
-<script>
-// Wallpaper of real idea titles from the feed; the sample list only shows if the API is down.
-(function () {
-  var samples = [
-    'A grocery app that only shows what is on sale', 'Rent your tools to your street',
-    'Podcast player that skips the ad reads', 'Split a taxi with whoever is going your way',
-    'Notebook that files itself', 'A map of every public piano',
-    'Price history on every listing', 'Compost pickup as a subscription',
-    'Library card that works in every city', 'Reminders that read your inbox',
-    'Ferry timetables that actually update', 'A bank account for a two-person business',
-    'Trade shifts without asking a manager', 'Find a doctor taking new patients',
-    'A gym that bills by the minute', 'Translate a lease into plain English',
-    'Second-hand furniture, delivered', 'A wiki for your apartment building',
-    'Track a bill through parliament', 'Meal plan from what is already in the fridge',
-    'Repair guides for the thing you own', 'A quiet-hours map of the city',
-    'Rate a landlord before you sign', 'Pool a car between four neighbours',
-    'A receipt scanner for a whole household', 'Learn a language from the news',
-    'Bike routes ranked by how safe they feel', 'A price alert for rent',
-    'Sell a domain the day it expires', 'One inbox for every delivery'
-  ];
-  var wall = document.getElementById('heroWall');
-  if (!wall) return;
-  fetch('/api/posts?limit=80').then(function (r) { return r.json(); }).then(function (d) {
-    var titles = (d.posts || []).map(function (p) { return p.title; }).filter(Boolean);
-    build(titles.length >= 12 ? titles : samples);
-  }).catch(function () { build(samples); });
-  // One stroked glyph per idea: a keyword picks the family, the title's hash picks
-  // a variant inside it, so a wall of similar ideas still reads as many things.
-  // ponytail: hand-drawn 24px strokes. SF Symbols are licensed for Apple platforms only.
-  var I = {
-    home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
-    sofa:'<path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M2 13a2 2 0 0 1 4 0v2h12v-2a2 2 0 0 1 4 0v5H2zM5 18v2M19 18v2"/>',
-    key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l3 3M14 9l2 2"/>',
-    bed:'<path d="M3 18V7M3 13h18v5M21 18v-3a3 3 0 0 0-3-3h-8v1"/><circle cx="7" cy="10" r="1.6"/>',
-    cart:'<path d="M3 4h2l2.4 11h11l2-8H6.2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/>',
-    bag:'<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
-    tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/>',
-    gift:'<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 13h18M12 9v12M12 9c-1-4-6-4-5-1 .5 1.2 3 1 5 1zM12 9c1-4 6-4 5-1-.5 1.2-3 1-5 1z"/>',
-    leaf:'<path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19l7-7"/>',
-    tree:'<path d="M12 3l6 8h-3l4 6H5l4-6H6zM12 17v4"/>',
-    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/>',
-    drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
-    cloud:'<path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/>',
-    bike:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l3 7"/>',
-    run:'<circle cx="14" cy="4.5" r="1.8"/><path d="M8 21l3-6 3 2v4M6 12l3-3 4 1 2 3 3 1M11 15l-1-5"/>',
-    dumbbell:'<path d="M3 10v4M6 7v10M18 7v10M21 10v4M6 12h12"/>',
-    car:'<path d="M4 16v-4l2-5h12l2 5v4z"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/>',
-    bus:'<rect x="5" y="3" width="14" height="15" rx="2"/><path d="M5 11h14M8 18v3M16 18v3"/><circle cx="8.5" cy="14.5" r=".8"/><circle cx="15.5" cy="14.5" r=".8"/>',
-    plane:'<path d="M2 13l8-1 5-8h2l-2 8 5 1 2-2h2l-1 4 1 4h-2l-2-2-5 1 2 8h-2l-5-8-8-1z"/>',
-    book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',
-    cap:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
-    globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
-    pencil:'<path d="M4 20l1-5L16 4l4 4L9 19z"/><path d="M14 6l4 4"/>',
-    chat:'<path d="M4 5h16v11H9l-5 4z"/>',
-    users:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14c3 0 5 2.2 5 5"/>',
-    phone:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
-    heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
-    pill:'<rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-35 12 12)"/><path d="M9.5 8.5l5 7"/>',
-    moon:'<path d="M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z"/>',
-    pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>',
-    lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
-    shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
-    eye:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-    pin:'<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/>',
-    map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
-    compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
-    cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
-    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-    bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
-    check:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/>',
-    coin:'<circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.5-1-1.4-1.5-2.5-1.5-1.5 0-2.5.8-2.5 2s1 1.6 2.5 2 2.5.8 2.5 2-1 2-2.5 2c-1.2 0-2.1-.6-2.6-1.6M12 6.5v1.5M12 16v1.5"/>',
-    chart:'<path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/>',
-    wallet:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/>',
-    receipt:'<path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21z"/><path d="M9 8h6M9 12h6"/>',
-    mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
-    send:'<path d="M21 3L3 11l7 3 3 7z"/><path d="M10 14l11-11"/>',
-    music:'<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
-    mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
-    camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
-    code:'<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
-    term:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/>',
-    cpu:'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/>',
-    box:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
-    wrench:'<path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2z"/>',
-    truck:'<path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
-    pet:'<circle cx="7" cy="9" r="1.8"/><circle cx="12" cy="6.5" r="1.8"/><circle cx="17" cy="9" r="1.8"/><path d="M8 17c0-2.5 1.8-4.5 4-4.5s4 2 4 4.5c0 1.4-1.6 2-4 2s-4-.6-4-2z"/>',
-    cup:'<path d="M5 8h12v6a5 5 0 0 1-10 0z"/><path d="M17 10h1.5a2 2 0 0 1 0 4H17M8 3v2M11 3v2M14 3v2"/>',
-    fork:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 2-2 7 0 8v10"/>',
-    bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
-    sparkle:'<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
-    rocket:'<path d="M12 3c4 2 6 6 5 11l-3 3h-4l-3-3c-1-5 1-9 5-11z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4 4-1M16 17l2 4-4-1"/>',
-    puzzle:'<path d="M4 8h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4H4v-4a2 2 0 1 0 0-4z"/>',
-    flask:'<path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/>',
-    palette:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-1.5-1-2.5 1-1.5 2-1.5h2a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/>',
-    star:'<path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.3l1-6.2L3 9.7l6.2-.9z"/>'
-  };
-  var RULES = [
-    [/apartment|rent|landlord|roommate|furnish|household|neighbo|home|house/i, ['home','sofa','key','bed']],
-    [/grocer|shop|cart|store|buy|sell|market|deal|price|marketplace/i, ['cart','bag','tag','gift']],
-    [/fridge|pantry|recipe|cook|meal|food|pizza|kitchen/i, ['fork','cup','cart']],
-    [/compost|recycl|plant|garden|green|carbon|tree|nature/i, ['leaf','tree','drop']],
-    [/rain|weather|solar|sun|water|energy/i, ['sun','cloud','drop']],
-    [/bike|run|walk|fitness|workout|posture|gym|standing/i, ['bike','run','dumbbell']],
-    [/\bcars?\b|taxi|\bride|parking|drive|transit|commute|bus/i, ['car','bus','map']],
-    [/travel|trip|flight|vacation/i, ['plane','globe','map']],
-    [/book|learn|study|language|read|course|school|kata|etymolog/i, ['book','cap','globe','pencil']],
-    [/chat|comment|standup|meeting|social|friend|forum|pair/i, ['chat','users','phone']],
-    [/health|sleep|mood|care|first-aid|medic|noise/i, ['heart','moon','pulse']],
-    [/pill|medicine|dose|cabinet/i, ['pill','heart']],
-    [/secur|password|privacy|auth|lock|scam/i, ['lock','shield','eye','key']],
-    [/map|route|local|city|place|lost|sighting/i, ['pin','map','compass']],
-    [/calendar|schedule|remind|habit|daily|week|streak|timer/i, ['cal','clock','bell','check']],
-    [/budget|money|expense|split|tip|tax|bill|invoice|finance|currency|loan|fee|cost|salary/i, ['coin','wallet','receipt','chart']],
-    [/mail|email|inbox|newsletter/i, ['mail','send']],
-    [/music|podcast|song|audio|playlist|voice/i, ['music','mic']],
-    [/photo|camera|video|image/i, ['camera','eye']],
-    [/code|api|app store|developer|bot|github|program|engineer|async/i, ['code','term','cpu']],
-    [/ai\b|model|llm|claude|gpt|embedding/i, ['sparkle','cpu','flask']],
-    [/inventory|tool|ship|deliver|pack|storage|shed|repair|maintenance/i, ['box','wrench','truck']],
-    [/pet|dog|\bcats?\b/i, ['pet','heart']],
-    [/design|art|draw|color|logo/i, ['palette','pencil','star']],
-    [/science|research|experiment|lab/i, ['flask','chart']],
-    [/business|startup|marketing|sales|analytics|r&d|legal|logistics|accounting/i, ['rocket','chart','puzzle','star']]
-  ];
-  var ANY = ['bulb','sparkle','rocket','puzzle','star','globe','check','bell'];
-  function hash(t) { var h = 0; for (var i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0; return Math.abs(h); }
-  function iconFor(title) {
-    var pool = ANY;
-    for (var i = 0; i < RULES.length; i++) if (RULES[i][0].test(title)) { pool = RULES[i][1]; break; }
-    return pool[hash(title) % pool.length];
-  }
-  function build(lines) {
-  for (var i = lines.length - 1; i > 0; i--) {  // shuffle so the wall differs each visit
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = lines[i]; lines[i] = lines[j]; lines[j] = t;
-  }
-  var cols = Math.max(4, Math.min(12, Math.ceil(window.innerWidth / 110)));
-  var per = Math.max(6, Math.floor(lines.length / cols));
-  for (var c = 0; c < cols; c++) {
-    var col = document.createElement('div');
-    col.className = 'wall-col ' + (c % 2 ? 'down' : 'up');
-    col.style.setProperty('--dur', (60 + c * 9) + 's');
-    var slice = lines.slice(c * per, (c + 1) * per);
-    if (!slice.length) slice = lines.slice(0, per);
-    slice.concat(slice).forEach(function (text, k) {  // doubled, so the loop is seamless
-      var el = document.createElement('i');
-      el.className = 'tile' + ((c * 7 + k) % 9 === 0 ? ' lit' : '');  // a few lily pads lit green
-      el.innerHTML = '<svg viewBox="0 0 24 24">' + I[iconFor(text)] + '</svg>';
-      col.appendChild(el);
-    });
-    wall.appendChild(col);
-  }
-  }
 })();
 </script>
 </body>

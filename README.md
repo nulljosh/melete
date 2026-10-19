@@ -1,12 +1,12 @@
-<img src="icon.svg" width="80" height="80" alt="Thinkpond icon">
+<img src="icon.svg" width="80" height="80" alt="Melete icon">
 
-![version](https://img.shields.io/badge/version-3.1-blue) [![tests](https://github.com/nulljosh/thinkpond/actions/workflows/test.yml/badge.svg)](https://github.com/nulljosh/thinkpond/actions/workflows/test.yml) ![license](https://img.shields.io/badge/license-MIT-green)
+![version](https://img.shields.io/badge/version-3.1-blue) [![tests](https://github.com/nulljosh/melete/actions/workflows/test.yml/badge.svg)](https://github.com/nulljosh/melete/actions/workflows/test.yml) ![license](https://img.shields.io/badge/license-MIT-green)
 
 Drop an idea in. Watch it ripple.
 
 A feed of ideas that people post, vote on and argue about. Every morning a new one shows up on its own, with a build spec and a plan already written.
 
-**[thinkpond.jaybulb.com →](https://thinkpond.jaybulb.com)**
+**[melete.jaybulb.com →](https://melete.jaybulb.com)**
 
 ## Features
 

@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 1024 1024"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fc286"/><stop offset="1" stop-color="#4d7c45"/></linearGradient></defs><rect width="1024" height="1024" rx="224" fill="url(#g)"/><defs>
-<mask id="brain" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><rect width="1024" height="1024" fill="#fff"/><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="none" stroke="#000" stroke-width="50" stroke-linecap="round"><path d="M512 560L440 140H584Z" fill="#000" stroke="none"/><path d="M512 540V720"/><path d="M170 470C260 470 300 450 330 395"/><path d="M854 470C764 470 724 450 694 395"/><path d="M200 650C280 640 330 670 380 615"/><path d="M824 650C744 640 694 670 644 615"/></g></mask>
-<mask id="pad" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><rect width="1024" height="1024" fill="#fff"/><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="#000" stroke="#000" stroke-width="80"><circle cx="512" cy="540" r="320"/><circle cx="802" cy="540" r="85"/><circle cx="763" cy="685" r="85"/><circle cx="261" cy="685" r="85"/><circle cx="222" cy="540" r="85"/><circle cx="261" cy="395" r="85"/><circle cx="367" cy="289" r="85"/><circle cx="512" cy="250" r="85"/><circle cx="657" cy="289" r="85"/><circle cx="763" cy="395" r="85"/></g><path d="M512 690L620 830L780 810Z" fill="#000"/></mask>
-</defs>
-<ellipse cx="512" cy="690" rx="410" ry="125" fill="#fff" mask="url(#pad)"/>
-<g mask="url(#brain)"><g transform="translate(512 440) scale(0.64 0.5) translate(-512 -540)" fill="#fff"><circle cx="512" cy="540" r="320"/><circle cx="802" cy="540" r="85"/><circle cx="763" cy="685" r="85"/><circle cx="261" cy="685" r="85"/><circle cx="222" cy="540" r="85"/><circle cx="261" cy="395" r="85"/><circle cx="367" cy="289" r="85"/><circle cx="512" cy="250" r="85"/><circle cx="657" cy="289" r="85"/><circle cx="763" cy="395" r="85"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 1024 1024"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f9a62"/><stop offset="1" stop-color="#3b6334"/></linearGradient></defs><rect width="1024" height="1024" rx="224" fill="url(#g)"/><g transform="translate(512 512) scale(0.84) translate(-513 -566)">
+  <g fill="#fff">
+    <path fill-rule="evenodd" d="M212 640C212 556 314 500 444 500C540 500 610 524 660 562L786 596C816 604 832 620 832 642C832 664 816 680 786 688L660 720C610 758 540 780 444 780C314 780 212 724 212 640ZM444 598a52 30 0 1 0 0.1 0Z"/>
+    <path d="M372 772H516L540 832H348Z"/>
+    <path d="M788 584C730 548 712 488 744 424C760 392 776 360 772 300C846 352 884 432 866 504C856 548 828 576 788 584Z"/>
+  </g>
+  <circle cx="200" cy="640" r="58" fill="none" stroke="#fff" stroke-width="40"/>
+</g></svg>

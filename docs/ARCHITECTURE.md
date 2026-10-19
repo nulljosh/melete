@@ -1,6 +1,6 @@
 # Architecture
 
-Thinkpond is an idea forum. People post ideas, vote and comment. A model writes a build spec and a plan for each idea, and a daily cron adds a new idea on its own. The web app is plain HTML, CSS and JavaScript with no build step. The iPhone, Mac and Apple Watch apps talk to the same API. Rows live in D1 and files in KV, behind the `jaybulb-api` Worker.
+Melete is an idea forum. People post ideas, vote and comment. A model writes a build spec and a plan for each idea, and a daily cron adds a new idea on its own. The web app is plain HTML, CSS and JavaScript with no build step. The iPhone, Mac and Apple Watch apps talk to the same API. Rows live in D1 and files in KV, behind the `jaybulb-api` Worker.
 
 ## How it runs
 
@@ -27,7 +27,7 @@ Thinkpond is an idea forum. People post ideas, vote and comment. A model writes 
 | `devices.css` | Device frame styles. Copied into `dist/`, but no page loads it. Candidate for removal. |
 | `manifest.json` | PWA manifest. |
 | `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon.svg`, `icon-192.svg`, `icon-512.svg`, `mark.svg` | Icons. `scripts/make-appicon.sh` builds the app icon PNGs from `icon.svg`. |
-| `Thinkpond.icon` | Icon Composer bundle for the app icon. |
+| `Melete.icon` | Icon Composer bundle for the app icon. |
 | `wrangler.toml` | Pages project settings. Project name `sparkjar`, output `dist`, the `AI` binding, and public variables such as `APPLE_CLIENT_ID`. Secrets are not stored here. |
 | `static/_headers` | Security headers for Pages. |
 | `package.json` | npm scripts: `test`, `build`, `dev`, `deploy`. The `name` field still reads `hikko`. |
@@ -140,7 +140,7 @@ Also generated from `project.yml`. Targets macOS 14 and later.
 | `Views/ProfileView.swift` | Own profile and sign out. |
 | `Views/AuthSheet.swift` | Sign-in sheet. |
 | `API/`, `Models/` | Same client and data shapes as iPhone. |
-| `Thinkpond.icon` | Icon Composer bundle for the Mac app. |
+| `Melete.icon` | Icon Composer bundle for the Mac app. |
 
 ## Apple Watch (`watchos/`)
 

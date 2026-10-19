@@ -1,7 +1,13 @@
-/* Thinkpond brand tokens. The accent is the only colour this app owns; spacing, radii and type come from the shared system. */
+/* Melete brand tokens. Laurel green is the only colour this app owns; spacing, radii and type come from the shared system. */
 :root {
   --accent: #4d7c45;
-  --accent-light: #8fc286;
-  --accent-deep: #4d7c45;
+  --accent-light: #6f9a62;
+  --accent-deep: #3b6334;
   --accent-ring: color-mix(in srgb, #4d7c45 30%, transparent);
+  /* The landing's field: deep laurel ink behind the engraving, the way Themis uses slate. */
+  --field: #1f2b1d;
+  --on-field: #eef3ea;
+  --on-field-soft: #a9c3a1;
+  /* Headlines only. The system serif (New York on Apple), never a bundled face. */
+  --font-display: ui-serif, "New York", "Iowan Old Style", Georgia, "Times New Roman", serif;
 }

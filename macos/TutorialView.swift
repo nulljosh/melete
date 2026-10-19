@@ -197,7 +197,7 @@ struct TutorialView: View {
 
     private var caption: some View {
         let (title, body): (String, String) = switch step {
-        case 0: ("A new idea every morning", "Thinkpond writes one at 9 each day. People drop theirs in too.")
+        case 0: ("A new idea every morning", "Melete writes one at 9 each day. People drop theirs in too.")
         case 1: ("Tap the arrow", "The good ones float to the top. Tap again to take your vote back.")
         case 2: ("Open it", "Every idea gets a build brief: what to make and how, written in seconds.")
         case 3: ("Stuck? Brainstorm", "Pick a topic and it writes three ideas for you.")

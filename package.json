@@ -1,7 +1,7 @@
 {
-  "name": "hikko",
+  "name": "melete",
   "version": "3.1.0",
-  "description": "Idea-sharing platform with filters, voting, auth",
+  "description": "Melete: a new idea every morning, voted on and checked against the App Store",
   "keywords": ["idea-sharing", "voting", "forum"],
   "main": "index.html",
   "scripts": {

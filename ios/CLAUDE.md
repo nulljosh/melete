@@ -1,4 +1,4 @@
-# Thinkpond iOS
+# Melete iOS
 v3.1
 ## Rules
 - Portrait-only, UIRequiresFullScreen

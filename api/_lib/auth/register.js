@@ -11,9 +11,9 @@ async function sendVerifyEmail(username, email) {
   const link = `${baseUrl()}/api/auth?action=verify-email&token=${token}`;
   await sendMail({
     to: email,
-    subject: 'Thinkpond: confirm your email',
-    text: `Welcome to Thinkpond.\n\nConfirm your email address:\n${link}\n\nIf you didn't create this account, ignore this email.`,
-    html: `<p>Welcome to Thinkpond.</p><p><a href="${link}">Confirm your email address</a></p><p>If you didn't create this account, ignore this email.</p>`,
+    subject: 'Melete: confirm your email',
+    text: `Welcome to Melete.\n\nConfirm your email address:\n${link}\n\nIf you didn't create this account, ignore this email.`,
+    html: `<p>Welcome to Melete.</p><p><a href="${link}">Confirm your email address</a></p><p>If you didn't create this account, ignore this email.</p>`,
   });
 }
 

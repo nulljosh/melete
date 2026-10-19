@@ -34,7 +34,7 @@ private data class PostResponse(val post: Post)
 // routes are public. Posting/commenting/voting are session-cookie
 // auth-gated (api/auth.js) and are a separate, real login-flow decision,
 // not attempted here. See roadmap.md.
-class SparkjarClient(private val baseUrl: String = "https://thinkpond.jaybulb.com") {
+class SparkjarClient(private val baseUrl: String = "https://melete.jaybulb.com") {
     private val http = HttpClient {
         install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
     }

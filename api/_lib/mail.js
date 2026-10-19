@@ -63,7 +63,7 @@ function _setClient(client) {
 }
 
 function from() {
-  return process.env.MAIL_FROM || 'Thinkpond <noreply@jaybulb.com>';
+  return process.env.MAIL_FROM || 'Melete <noreply@jaybulb.com>';
 }
 
 // No-ops when Resend is unconfigured so a missing env var degrades to "no email"
@@ -96,7 +96,7 @@ async function sendMail({ to, subject, text, html }) {
 }
 
 function baseUrl() {
-  return process.env.APP_URL || 'https://thinkpond.jaybulb.com';
+  return process.env.APP_URL || 'https://melete.jaybulb.com';
 }
 
 module.exports = { sendMail, baseUrl, from, hasTransport, _setClient };

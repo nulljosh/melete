@@ -1,10 +1,10 @@
-![Thinkpond iOS](icon.svg)
+![Melete iOS](icon.svg)
 
-# Thinkpond iOS
+# Melete iOS
 
 ![version](https://img.shields.io/badge/version-3.1-blue) ![license](https://img.shields.io/badge/license-MIT-green)
 
-Native iPhone app for [Thinkpond](https://thinkpond.jaybulb.com), the idea forum. Built with SwiftUI for iOS 17 and later.
+Native iPhone app for [Melete](https://melete.jaybulb.com), the idea forum. Built with SwiftUI for iOS 17 and later.
 
 ## Features
 
@@ -24,7 +24,7 @@ xcodegen generate
 open Spark.xcodeproj
 ```
 
-The app is part of the Thinkpond repo. The API it calls is described in [docs/API.md](../docs/API.md). The full layout is in [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md).
+The app is part of the Melete repo. The API it calls is described in [docs/API.md](../docs/API.md). The full layout is in [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md).
 
 ## License
 

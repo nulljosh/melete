@@ -1,4 +1,4 @@
-# Every idea on Thinkpond, ranked
+# Every idea on Melete, ranked
 
 97 posts as of 2026-10-19. Ranked on four things: a specific person with a specific pain, something no one does well yet, buildable by one person, and someone would pay or share it.
 

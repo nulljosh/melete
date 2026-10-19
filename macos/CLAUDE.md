@@ -1,4 +1,4 @@
-# Thinkpond macOS
+# Melete macOS
 v3.1
 ## Rules
 - macOS 14+, SwiftUI, @Observable
@@ -8,7 +8,7 @@ v3.1
 - Keyboard shortcuts: Cmd-N (new post), Cmd-R (refresh), Cmd-Return (submit post)
 - Error banner system for auth and API failures
 - Optimistic voting with debounce and error revert
-- Same API as iOS: https://thinkpond.jaybulb.com
+- Same API as iOS: https://melete.jaybulb.com
 ## Run
 ```bash
 cd macos && xcodegen generate && open SparkMac.xcodeproj

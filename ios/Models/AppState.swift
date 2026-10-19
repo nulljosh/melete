@@ -151,7 +151,7 @@ final class AppState {
 
         let context = LAContext()
         do {
-            try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Sign in to Thinkpond")
+            try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Sign in to Melete")
             guard let credentials = loadBiometricCredentials() else {
                 error = "No saved credentials found"
                 return
@@ -187,7 +187,7 @@ final class AppState {
     }
 
     func exportPostURL(postId: String) -> URL {
-        URL(string: "https://thinkpond.jaybulb.com/api/ai?type=notes&id=\(postId)")!
+        URL(string: "https://melete.jaybulb.com/api/ai?type=notes&id=\(postId)")!
     }
 
     func deletePost(id: String) async throws {

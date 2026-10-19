@@ -1,4 +1,4 @@
-# Launch checklist, Thinkpond
+# Launch checklist, Melete
 
 - [ ] Pick a launch day (Tue–Thu)
 - [ ] Pick a hunter

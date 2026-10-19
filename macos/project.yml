@@ -27,9 +27,9 @@ targets:
           - "fastlane"
           - "ExportOptions.plist"
           - "SparkWidgets-Info.plist"
-          - "Thinkpond.icon"
+          - "Melete.icon"
       # Icon Composer document, Liquid Glass layers. AppIcon.appiconset stays as the flat fallback.
-      - path: Thinkpond.icon
+      - path: Melete.icon
         type: file
         buildPhase: resources
     settings:
@@ -38,7 +38,7 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       MACOSX_DEPLOYMENT_TARGET: "14.0"
       CODE_SIGN_STYLE: Automatic
-      ASSETCATALOG_COMPILER_APPICON_NAME: Thinkpond
+      ASSETCATALOG_COMPILER_APPICON_NAME: Melete
       ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
       INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
       # iOS sets this in ios/Info.plist; macOS generates its plist, so without
@@ -50,8 +50,8 @@ targets:
       # on device as "SparkMac". "Mac" in a display name is an Apple trademark
       # violation (same rejection that hit Lexly Mac). Target/scheme/bundle ID
       # deliberately left alone — wiring, not branding.
-      INFOPLIST_KEY_CFBundleDisplayName: Thinkpond
-      PRODUCT_NAME: Thinkpond
+      INFOPLIST_KEY_CFBundleDisplayName: Melete
+      PRODUCT_NAME: Melete
     entitlements:
       path: SparkMac.entitlements
       properties:

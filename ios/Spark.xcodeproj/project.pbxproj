@@ -15,6 +15,7 @@
 		110A21C331C9C6EF1D8E6461 /* NewPostsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C29F6CD9F1775D89699528F /* NewPostsProvider.swift */; };
 		13956E653D003D1210154E9E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA0EC06F704242AF7E70B0 /* UserProfile.swift */; };
 		1821FA9110E0C2C3CBC5FE8D /* AuthResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D348ED375049F4C67B5FF78 /* AuthResponseTests.swift */; };
+		1BF0F0E138C630C82E0445F7 /* Melete.icon in Resources */ = {isa = PBXBuildFile; fileRef = DE13122BBDE74F1267B7DA2C /* Melete.icon */; };
 		1F51D19D0D3960BB3465082C /* MockSparkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097456B9B4019A62DAFD19A /* MockSparkAPI.swift */; };
 		28617124CC44BDFAF05DAAF3 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1FA48B378FBAE5DEC3C7E7 /* Post.swift */; };
 		28FD9EA8F9BB77D913CA88B1 /* WidgetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E258503065A71D2CA27D42 /* WidgetModels.swift */; };
@@ -42,7 +43,6 @@
 		BD2E236DE4521AB57EE48AB1 /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B965FAC4CDC7FEF516075210 /* CommentTests.swift */; };
 		C3308327E1F1154C3173124A /* VotingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898137529EC29A57F6260C07 /* VotingTests.swift */; };
 		D3123D41C0F32D9A96549332 /* PostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634073CA4721A8AA0746825 /* PostTests.swift */; };
-		D53AFC1EEB2AECFF89879F09 /* Thinkpond.icon in Resources */ = {isa = PBXBuildFile; fileRef = AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */; };
 		D96B6B932EA576313377BD54 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853643D321C111724EAABB6E /* PostDetailView.swift */; };
 		D9CE52F15DCEE57F1C52005E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6AE8F06520FF46047DC42 /* AppState.swift */; };
 		DE4910D8269C9AEAE75D98EA /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC9FCE7C2CE1C146107688 /* CommentsView.swift */; };
@@ -129,7 +129,6 @@
 		9C7A57A30FA41DBF976AE3B7 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		A548771F89593961D51C0506 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		A95B026567C272F91FC1DB10 /* SparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkApp.swift; sourceTree = "<group>"; };
-		AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Thinkpond.icon; sourceTree = "<group>"; };
 		B888EDFCBF793441DF737D48 /* UserProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTests.swift; sourceTree = "<group>"; };
 		B965FAC4CDC7FEF516075210 /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		C36144F6E413872BCE8C0CF6 /* WidgetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetAPI.swift; sourceTree = "<group>"; };
@@ -139,6 +138,7 @@
 		D097456B9B4019A62DAFD19A /* MockSparkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSparkAPI.swift; sourceTree = "<group>"; };
 		D7377E7C3D073081F7F4E862 /* StatsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWidget.swift; sourceTree = "<group>"; };
 		D9BF0680CE0AA4A14B68BFE5 /* PreviewScreenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewScreenshot.swift; sourceTree = "<group>"; };
+		DE13122BBDE74F1267B7DA2C /* Melete.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Melete.icon; sourceTree = "<group>"; };
 		DEDE7FBC9391B3EC90CE2136 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DF0AE766ACE7A24B15BEB2FF /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		E188B5AB14AB56062C850BD7 /* Spark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spark.entitlements; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 		3389F4D949ECD1C4C7A3FC0B = {
 			isa = PBXGroup;
 			children = (
-				AF84CD31C5C6D3A77E9ED97E /* Thinkpond.icon */,
+				DE13122BBDE74F1267B7DA2C /* Melete.icon */,
 				37A7F3C1514EFD03DEFEE1BA /* API */,
 				9999C470A131215DD71ABE5A /* ios */,
 				87226969E9F919EE002A3916 /* Models */,
@@ -443,8 +443,8 @@
 			files = (
 				FB8C3417091AAAFBD8BC6402 /* .swiftlint.yml in Resources */,
 				3AA8B6E58C3E58DFFB03C361 /* Assets.xcassets in Resources */,
+				1BF0F0E138C630C82E0445F7 /* Melete.icon in Resources */,
 				08125EF0204EB82912058BF8 /* PrivacyInfo.xcprivacy in Resources */,
-				D53AFC1EEB2AECFF89879F09 /* Thinkpond.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,13 +563,13 @@
 		33114364F6CE0401B88E8F82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = Thinkpond;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Melete;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spark.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Thinkpond;
+				INFOPLIST_KEY_CFBundleDisplayName = Melete;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -804,13 +804,13 @@
 		FFF81DE56A1C2039DCE38693 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = Thinkpond;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Melete;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spark.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Thinkpond;
+				INFOPLIST_KEY_CFBundleDisplayName = Melete;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -1,10 +1,10 @@
-# Thinkpond Technical Whitepaper
+# Melete Technical Whitepaper
 
 **v3.1** | October 2026
 
 Drop an idea in. Watch it ripple.
 
-Most ideas die at the same step. Somebody says "someone should build that," and nobody writes the plan. Thinkpond does the writing. People post ideas, vote on them and argue in the comments. A model writes a build spec and a plan for each idea, and a judge pass throws out the generic ones. Every morning the feed gets one new idea on its own, so it is never empty. It runs at [thinkpond.jaybulb.com](https://thinkpond.jaybulb.com), with iPhone, Mac and Apple Watch apps.
+Most ideas die at the same step. Somebody says "someone should build that," and nobody writes the plan. Melete does the writing. People post ideas, vote on them and argue in the comments. A model writes a build spec and a plan for each idea, and a judge pass throws out the generic ones. Every morning the feed gets one new idea on its own, so it is never empty. It runs at [melete.jaybulb.com](https://melete.jaybulb.com), with iPhone, Mac and Apple Watch apps.
 
 ## Core mechanic: write, judge, then plan
 
@@ -26,7 +26,7 @@ The feed sorts by New or Trending. Tags and categories filter it. When the datab
 
 ## App Store matches
 
-Each brief lists up to three App Store apps that are close to the idea. The browser asks Apple's iTunes Search API for software in the US, using the idea's search terms, with a limit of three. The iPhone and Mac apps make the same call. The lookup runs on the device, so Thinkpond's server never makes it.
+Each brief lists up to three App Store apps that are close to the idea. The browser asks Apple's iTunes Search API for software in the US, using the idea's search terms, with a limit of three. The iPhone and Mac apps make the same call. The lookup runs on the device, so Melete's server never makes it.
 
 ## Native apps
 

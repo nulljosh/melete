@@ -1,4 +1,4 @@
-# Thinkpond roadmap
+# Melete roadmap
 
 > Priority tier 1 (2026-10-17): live blocker, work first. Order: live blockers, ship pushes, active features, portfolio, exploratory. See ~/Documents/Code/LOOP-HANDOFF.md.
 
@@ -6,7 +6,7 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Waiting on Apple
 - [ ] iOS 3.1 (202610191030) and Mac 3.1 (202610191041) are waiting for review, submitted 2026-10-19. Check with `asc versions list --app 6785162492`.
-- [ ] Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to thinkpond.jaybulb.com/privacy when an editable App Info exists (next version).
+- [ ] Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
 
 ## Ship next
 - [ ] Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.

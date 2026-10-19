@@ -1,10 +1,10 @@
-# Contributing to Thinkpond
+# Contributing to Melete
 
 ## Setup
 
 ```
-git clone https://github.com/nulljosh/thinkpond.git
-cd thinkpond
+git clone https://github.com/nulljosh/melete.git
+cd melete
 npm install
 ```
 

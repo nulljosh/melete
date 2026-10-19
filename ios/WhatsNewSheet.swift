@@ -24,7 +24,7 @@ struct WhatsNewSheet: View {
             }
             .sheet(isPresented: $isPresented) {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("New in Thinkpond \(whatsNewVersion)")
+                    Text("New in Melete \(whatsNewVersion)")
                         .font(.title2.bold())
 
                     VStack(alignment: .leading, spacing: 16) {

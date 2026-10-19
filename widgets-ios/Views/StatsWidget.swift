@@ -9,7 +9,7 @@ struct StatsWidget: Widget {
             StatsWidgetView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("Thinkpond Stats")
+        .configurationDisplayName("Melete Stats")
         .description("Post counts at a glance.")
         .supportedFamilies([.systemSmall, .accessoryCircular, .accessoryInline])
     }
