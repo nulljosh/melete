@@ -1,6 +1,6 @@
 // v3: network-first. Read-first kept returning visitors on stale pages and
 // stale stylesheets after every deploy; the cache is now only the offline fallback.
-const CACHE = 'thinkpond-v4';
+const CACHE = 'thinkpond-v5';
 const ASSETS = ['/', '/index.html', '/theme.js', '/icon-192.svg', '/icon-512.svg'];
 
 self.addEventListener('install', e => {

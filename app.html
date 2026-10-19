@@ -197,7 +197,7 @@
         .comment-body { font-size: 14px; color: var(--text2); }
         .comment-input-row { display: flex; gap: 8px; margin-top: 10px; }
         .comment-input-row input { flex: 1; margin-bottom: 0; font-size: 14px; padding: 10px; }
-        .comment-input-row button { flex-shrink: 0; padding: 10px 16px; margin-bottom: 0; }
+        .comment-input-row button { flex-shrink: 0; width: auto; padding: 10px 16px; margin-bottom: 0; }
 
         .nav-pills {
             background: var(--surface);
@@ -668,6 +668,11 @@
                 <div id="enrich-${p.id}" class="enrich-panel" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px" onclick="event.stopPropagation()">
                     <div id="brief-${p.id}"></div>
                     <div id="prior-${p.id}" data-q="${escapeHtml(p.title)}" style="margin-top:12px"></div>
+                    <form class="comment-input-row" onsubmit="checkName('${p.id}', this.elements.tmname.value); return false">
+                        <input name="tmname" placeholder="Got a name? Check US trademarks" maxlength="60">
+                        <button class="btn">Check</button>
+                    </form>
+                    <div id="tm-${p.id}" style="font-size:12px;color:var(--text2);margin-top:6px"></div>
                     <a href="${API_BASE}/api/ai?type=notes&id=${p.id}" style="font-size:12px;color:var(--text3);margin-top:10px;display:inline-block" onclick="event.stopPropagation()">Export to markdown</a>
                 </div>` : '';
             const enrichBtn = isLoggedIn() && !p.enriched
@@ -744,6 +749,26 @@
                 ).join('') : '<div style="font-size:12px;color:var(--text3)">Nothing close. Open water.</div>');
             } catch {
                 box.innerHTML = '';
+            }
+        }
+
+        // Live US trademarks on a name. ponytail: USPTO's own search backend, keyless but undocumented; if it moves, this says so instead of guessing.
+        async function checkName(id, name) {
+            const box = document.getElementById('tm-' + id);
+            name = name.trim();
+            if (!box || !name) return;
+            box.textContent = 'Checking USPTO...';
+            try {
+                const r = await fetch('https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: { bool: { must: [{ match_phrase: { wordmark: name } }], filter: [{ term: { alive: true } }] } }, size: 3, _source: ['wordmark', 'ownerName'] })
+                });
+                // ownerName lists every owner on record; the current one is last.
+                const rows = [...new Set((await r.json()).hits.hits.map(({ source: h }) =>
+                    `<div><strong style="color:var(--text)">${escapeHtml(h.wordmark || name)}</strong> &middot; ${escapeHtml((h.ownerName?.at(-1) || '').replace(/\s*\(.*$/, ''))}</div>`))];
+                box.innerHTML = rows.length ? rows.join('') : 'No live US trademark on that name.';
+            } catch {
+                box.textContent = "Couldn't reach USPTO. Try again later.";
             }
         }
 

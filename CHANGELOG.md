@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Web: every brief lists the closest App Store apps, and takes a name to check against live US trademarks (straight from USPTO's search, in the browser). The comment box button no longer stretches across the row.
+
 - App Store screenshots for the iPhone 6.5-inch and iPad Pro 12.9-inch sets retaken on the 3.0 build after Apple's Guideline 2.3.3 note (they still showed Spark 2.1.1). `ios/scripts/appstore-shots.sh` captures them headlessly with simctl and AXe. iOS 3.0 resubmitted 2026-10-05, same build.
 
 ## [3.1.0] - 2026-10-19

@@ -26,4 +26,4 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Toward 4.0
 - [ ] "Already on the App Store" is built and checked on iOS and Mac (AppStoreMatches.swift); it ships in 3.2 once 3.1 clears review.
-- [ ] Trademark lookup on an idea's name. Source found: USPTO's own search backend, `POST https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch` (Elasticsearch body, `wordmark` field), keyless, CORS open, unofficial. Ideas have no name field yet, so this needs Joshua's yes first.
+- [ ] Trademark check is live on the web: type a name in a brief, see live US marks (`checkName` in app.html, USPTO's keyless but undocumented `tmsearch` backend). Port it to iOS and Mac next to AppStoreMatches for 3.2.
