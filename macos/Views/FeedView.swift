@@ -1,52 +1,22 @@
 import SwiftUI
 
 enum SortMode: String, CaseIterable {
-    case hot = "Hot"
     case new = "New"
+    case hot = "Trending"
 }
 
 struct FeedView: View {
     @Environment(AppState.self) private var appState
-    @State private var selectedCategory = "All"
-    @State private var searchText = ""
-    @State private var sortMode: SortMode = .hot
+    @State private var sortMode: SortMode = .new
     @State private var selectedPost: Post?
 
-    private let categories = ["All", "Technology", "Design", "Business", "Science", "Other"]
-
     private var filteredPosts: [Post] {
-        var result = appState.posts.filter { post in
-            matchesCategory(post.category) && matchesSearch(post)
-        }
         switch sortMode {
         case .hot:
-            break // API default sort
+            return appState.posts // API default sort
         case .new:
-            result.sort { a, b in
-                (a.createdAt ?? "") > (b.createdAt ?? "")
-            }
+            return appState.posts.sorted { ($0.createdAt ?? "") > ($1.createdAt ?? "") }
         }
-        return result
-    }
-
-    private func matchesCategory(_ category: String) -> Bool {
-        guard selectedCategory != "All" else { return true }
-        switch selectedCategory {
-        case "Technology":
-            return category.caseInsensitiveCompare("Technology") == .orderedSame ||
-                category.caseInsensitiveCompare("Tech") == .orderedSame
-        default:
-            return category.caseInsensitiveCompare(selectedCategory) == .orderedSame
-        }
-    }
-
-    private func matchesSearch(_ post: Post) -> Bool {
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else { return true }
-        return post.title.localizedCaseInsensitiveContains(query) ||
-            post.content?.localizedCaseInsensitiveContains(query) == true ||
-            post.category.localizedCaseInsensitiveContains(query) ||
-            (post.author?.username.localizedCaseInsensitiveContains(query) ?? false)
     }
 
     var body: some View {
@@ -68,30 +38,6 @@ struct FeedView: View {
                     .pickerStyle(.segmented)
                     .frame(width: 120)
 
-                    Spacer()
-
-                    Menu {
-                        ForEach(categories, id: \.self) { category in
-                            Button {
-                                selectedCategory = category
-                            } label: {
-                                HStack {
-                                    Text(category)
-                                    if selectedCategory == category {
-                                        Image(systemName: "checkmark")
-                                    }
-                                }
-                            }
-                        }
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                            Text(selectedCategory)
-                                .font(.caption)
-                        }
-                    }
-                    .menuStyle(.borderlessButton)
-                    .fixedSize()
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
@@ -120,18 +66,6 @@ struct FeedView: View {
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
-                } else if filteredPosts.isEmpty {
-                    VStack(spacing: 8) {
-                        Spacer()
-                        Image(systemName: "magnifyingglass")
-                            .font(.largeTitle)
-                            .foregroundStyle(.secondary)
-                        Text("No matches")
-                            .font(.headline)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity)
                 } else {
                     List(filteredPosts, selection: $selectedPost) { post in
                         PostRow(post: post)
@@ -151,7 +85,6 @@ struct FeedView: View {
                 }
             }
             .frame(minWidth: 280, idealWidth: 340, maxWidth: 500)
-            .searchable(text: $searchText, prompt: "Search posts")
 
             Group {
                 if let post = selectedPost {
@@ -210,16 +143,6 @@ struct PostRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                CategoryBadge(category: currentPost.category)
-                Spacer()
-                if let author = currentPost.author {
-                    Text(author.username)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
             Text(currentPost.title)
                 .font(.headline)
                 .lineLimit(2)
@@ -236,12 +159,6 @@ struct PostRow: View {
                     .contentTransition(.numericText(value: Double(currentPost.score)))
                     .animation(.spring(duration: 0.3), value: currentPost.score)
                 VoteButton(label: "down", icon: "arrow.down", postId: currentPost.id)
-                Spacer()
-                if let date = currentPost.createdAt {
-                    Text(relativeDate(date))
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
-                }
             }
         }
         .padding(.vertical, 4)
@@ -279,30 +196,4 @@ struct VoteButton: View {
         .buttonStyle(.plain)
         .disabled(!appState.isLoggedIn || isVoting)
     }
-}
-
-// MARK: - Date Helpers
-
-private nonisolated(unsafe) let isoFormatter: ISO8601DateFormatter = {
-    let fmt = ISO8601DateFormatter()
-    fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-    return fmt
-}()
-
-private nonisolated(unsafe) let isoFormatterNoFraction: ISO8601DateFormatter = {
-    let fmt = ISO8601DateFormatter()
-    fmt.formatOptions = [.withInternetDateTime]
-    return fmt
-}()
-
-private nonisolated(unsafe) let relativeFormatter: RelativeDateTimeFormatter = {
-    let fmt = RelativeDateTimeFormatter()
-    fmt.unitsStyle = .abbreviated
-    return fmt
-}()
-
-func relativeDate(_ iso: String) -> String {
-    guard let date = isoFormatter.date(from: iso)
-        ?? isoFormatterNoFraction.date(from: iso) else { return "" }
-    return relativeFormatter.localizedString(for: date, relativeTo: Date())
 }

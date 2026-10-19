@@ -6,14 +6,9 @@ struct CreateView: View {
 
     @State private var title = ""
     @State private var content = ""
-    @State private var category = "General"
-    @State private var linkedRepo = ""
-    @State private var autoEnrich = true
     @State private var isPosting = false
     @State private var errorMsg: String?
     @State private var brainstorm = false
-
-    let categories = ["General", "Tech", "Science", "Art", "Business", "Other"]
 
     var body: some View {
         if !appState.isLoggedIn {
@@ -75,19 +70,6 @@ struct CreateView: View {
                     }
                 }
 
-                Section("Category") {
-                    Picker("Category", selection: $category) {
-                        ForEach(categories, id: \.self) { Text($0) }
-                    }
-                    .pickerStyle(.menu)
-                }
-
-                Section("Options") {
-                    TextField("Repo URL (optional)", text: $linkedRepo)
-                        .textFieldStyle(.roundedBorder)
-                    Toggle("Request AI write-up", isOn: $autoEnrich)
-                }
-
                 if let err = errorMsg {
                     Section {
                         Text(err)
@@ -135,18 +117,10 @@ struct CreateView: View {
         errorMsg = nil
         Task {
             do {
-                let repo = linkedRepo.trimmingCharacters(in: .whitespaces)
-                let post = try await appState.createPost(
-                    title: title, content: content, category: category,
-                    linkedRepo: repo.isEmpty ? nil : repo
-                )
-                if autoEnrich {
-                    await appState.requestEnrichment(postId: post.id)
-                }
+                let post = try await appState.createPost(title: title, content: content, category: "General")
+                await appState.requestEnrichment(postId: post.id)
                 title = ""
                 content = ""
-                category = "General"
-                linkedRepo = ""
                 selectedItem = .feed
             } catch {
                 errorMsg = error.localizedDescription

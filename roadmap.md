@@ -25,4 +25,4 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
-- [ ] 3.2 on iOS and Mac: match the simpler web feed. Cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store" (AppStoreMatches.swift, built and checked) and then comments. Ships once 3.1 clears review.
+- [ ] 3.2 on iOS and Mac: the simpler feed is built and both apps compile (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description). Submit once 3.1 clears review.

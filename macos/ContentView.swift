@@ -149,22 +149,6 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
-// MARK: - Category Badge
-
-struct CategoryBadge: View {
-    let category: String
-
-    var body: some View {
-        Text(category)
-            .font(.caption2)
-            .fontWeight(.semibold)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(Color.sparkBlue.opacity(0.15), in: Capsule())
-            .foregroundStyle(Color.sparkBlue)
-    }
-}
-
 #Preview {
     ContentView()
         .environment(AppState())

@@ -21,11 +21,11 @@ final class AppState {
     var comments: [String: [Comment]] = [:]
     var commentCounts: [String: Int] = [:]
     var isLoadingComments: Bool = false
-    var sortMode: SortMode = .hot
+    var sortMode: SortMode = .new
 
     enum SortMode: String, CaseIterable {
-        case hot = "Hot"
         case new = "New"
+        case hot = "Trending"
     }
 
     var isLoggedIn: Bool { user != nil }

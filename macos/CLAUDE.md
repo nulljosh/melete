@@ -19,8 +19,8 @@ xcodebuild -scheme SparkMac -destination 'platform=macOS' build
 - ContentView.swift: Sidebar navigation (Feed/Create/Profile), error banner
 - Models/AppState.swift: Observable app state for auth, posts, voting
 - API/SparkAPI.swift: HTTP client for Spark APIs, JWT token via Keychain
-- Views/FeedView.swift: Post list with search, category filter, sort (hot/new)
-- Views/PostDetailView.swift: Full post view with voting, delete, share
-- Views/CreateView.swift: Create post form
+- Views/FeedView.swift: Post list with one New/Trending switch
+- Views/PostDetailView.swift: Title, pitch, votes, closest App Store apps, comments; delete and share
+- Views/CreateView.swift: Title and description; every post gets its write-up
 - Views/ProfileView.swift: User profile, own posts, logout
 - Views/AuthSheet.swift: Login/register sheet

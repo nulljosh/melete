@@ -47,7 +47,6 @@ struct ProfileView: View {
                                             .font(.subheadline.weight(.medium))
                                             .lineLimit(2)
                                         HStack {
-                                            CategoryBadge(category: post.category)
                                             Spacer()
                                             Label("\(post.score)", systemImage: "arrow.up")
                                                 .font(.caption)

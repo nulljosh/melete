@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- iOS and Mac (3.2): the same simpler feed as the web. Cards are a title, a pitch and votes; one New/Trending switch, New first. Opening an idea shows the closest App Store apps for every idea, then comments. Category badges, score badges, the spec and plan panels, the repo link and the category picker are gone.
+
 - Web: the feed is cut down to what matters. A card is a title, a pitch and votes. One switch picks New or Trending. Tap a card to open it and see the closest apps already on the App Store, then the comments. Gone: category and tag filters, tier badges, the YC strip, the trademark check, and every extra field on the new-idea form (it is a title and a description now). The comment button no longer stretches across the row.
 
 - App Store screenshots for the iPhone 6.5-inch and iPad Pro 12.9-inch sets retaken on the 3.0 build after Apple's Guideline 2.3.3 note (they still showed Spark 2.1.1). `ios/scripts/appstore-shots.sh` captures them headlessly with simctl and AXe. iOS 3.0 resubmitted 2026-10-05, same build.

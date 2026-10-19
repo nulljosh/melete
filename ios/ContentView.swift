@@ -77,68 +77,35 @@ struct ErrorBanner: View {
 
 struct FeedView: View {
     @Environment(AppState.self) private var appState
-    @State private var selectedCategory = "All"
-    @State private var searchText = ""
-
-    private let categories = ["All", "Technology", "Design", "Business", "Science", "Other"]
-
-    private var filteredPosts: [Post] {
-        appState.sortedPosts.filter { post in
-            matchesCategory(post.category) && matchesSearch(post)
-        }
-    }
-
-    private func matchesCategory(_ category: String) -> Bool {
-        guard selectedCategory != "All" else { return true }
-
-        switch selectedCategory {
-        case "Technology":
-            return category.caseInsensitiveCompare("Technology") == .orderedSame ||
-            category.caseInsensitiveCompare("Tech") == .orderedSame
-        default:
-            return category.caseInsensitiveCompare(selectedCategory) == .orderedSame
-        }
-    }
-
-    private func matchesSearch(_ post: Post) -> Bool {
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else { return true }
-
-        return post.title.localizedCaseInsensitiveContains(query) ||
-        post.content?.localizedCaseInsensitiveContains(query) == true ||
-        post.category.localizedCaseInsensitiveContains(query) ||
-        (post.author?.username.localizedCaseInsensitiveContains(query) ?? false)
-    }
 
     var body: some View {
+        @Bindable var state = appState
         NavigationStack {
             Group {
                 if appState.isFeedLoading && appState.posts.isEmpty {
                     FireflyLoader(label: "Catching ideas...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if appState.posts.isEmpty {
-                    ContentUnavailableView("The jar is empty", systemImage: "sparkles", description: Text("Be the first to share an idea."))
+                    ContentUnavailableView("The pond is empty", systemImage: "sparkles", description: Text("Be the first to share an idea."))
                 } else {
                     List {
-                        categoryFilterBar
-                            .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                        Picker("Sort", selection: $state.sortMode) {
+                            ForEach(AppState.SortMode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                        }
+                        .pickerStyle(.segmented)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .sensoryFeedback(.selection, trigger: appState.sortMode)
+
+                        ForEach(appState.sortedPosts) { post in
+                            NavigationLink(value: post) {
+                                PostCard(post: post)
+                            }
+                            .buttonStyle(PressableStyle())
+                            .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.clear)
-
-                        if filteredPosts.isEmpty {
-                            ContentUnavailableView("No matches", systemImage: "magnifyingglass", description: Text("No posts match the current filter."))
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(Color.clear)
-                        } else {
-                            ForEach(filteredPosts) { post in
-                                NavigationLink(value: post) {
-                                    PostCard(post: post)
-                                }
-                                .buttonStyle(PressableStyle())
-                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(Color.clear)
-                            }
                         }
                     }
                     .listStyle(.plain)
@@ -148,68 +115,11 @@ struct FeedView: View {
             }
             .background(Color.paper)
             .navigationTitle("Thinkpond")
-            .searchable(text: $searchText, prompt: "Search posts")
             .navigationDestination(for: Post.self) { post in
                 PostDetailView(post: post)
             }
             .task { await appState.loadPosts() }
         }
-    }
-
-    @Namespace private var chipNamespace
-
-    private var sortMenu: some View {
-        @Bindable var state = appState
-        return Menu {
-            Picker("Sort", selection: $state.sortMode) {
-                ForEach(AppState.SortMode.allCases, id: \.self) { mode in
-                    Label(mode.rawValue, systemImage: mode == .hot ? "flame" : "clock").tag(mode)
-                }
-            }
-        } label: {
-            Label(appState.sortMode.rawValue, systemImage: appState.sortMode == .hot ? "flame.fill" : "clock.fill")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Capsule().strokeBorder(Color.sparkBlue.opacity(0.5)))
-                .foregroundStyle(Color.sparkBlue)
-                .contentTransition(.symbolEffect(.replace))
-        }
-        .accessibilityLabel("Sort by \(appState.sortMode.rawValue)")
-    }
-
-    private var categoryFilterBar: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                sortMenu
-                ForEach(categories, id: \.self) { category in
-                    let selected = selectedCategory == category
-                    Button {
-                        withAnimation(.spring(duration: 0.35, bounce: 0.3)) { selectedCategory = category }
-                    } label: {
-                        Label(category, systemImage: categoryIcon(category))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background {
-                                if selected {
-                                    Capsule().fill(Color.bulb)
-                                        .matchedGeometryEffect(id: "chip", in: chipNamespace)
-                                } else {
-                                    Capsule().fill(Color.secondary.opacity(0.12))
-                                }
-                            }
-                            .foregroundStyle(selected ? Color.onAccent : .primary)
-                            .symbolEffect(.bounce, value: selected)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(.horizontal, 16)
-        }
-        .sensoryFeedback(.selection, trigger: selectedCategory)
     }
 }
 
@@ -219,16 +129,6 @@ struct PostCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                CategoryBadge(category: post.category)
-                Spacer()
-                if let author = post.author {
-                    Text(author.username)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
             Text(post.title)
                 .font(.headline)
                 .foregroundStyle(.primary)
@@ -247,19 +147,6 @@ struct PostCard: View {
                     .contentTransition(.numericText(value: Double(post.score)))
                     .animation(.spring(duration: 0.3), value: post.score)
                 VoteButton(label: "down", icon: "arrow.down", postId: post.id)
-                ScoreBadge(score: post.score)
-
-                if post.enriched == true {
-                    Image(systemName: "sparkles")
-                        .font(.caption2)
-                        .foregroundStyle(Color.bulbDeep)
-                        .accessibilityLabel("AI enriched")
-                } else if post.enrichmentRequestedAt != nil {
-                    Image(systemName: "clock")
-                        .font(.caption2)
-                        .foregroundStyle(.orange)
-                        .accessibilityLabel("Enrichment pending")
-                }
 
                 Spacer()
 
@@ -269,20 +156,14 @@ struct PostCard: View {
                         .foregroundStyle(.secondary)
                         .accessibilityLabel("\(count) comment\(count == 1 ? "" : "s")")
                 }
-                if let date = post.createdAt {
-                    Text(DateFormatting.relativeDate(date))
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
-                }
             }
         }
         .padding(14)
         .background(Color.card, in: RoundedRectangle(cornerRadius: 16))
         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.hairline))
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(post.title) by \(post.author?.username ?? "unknown"), \(post.score) votes, \(post.category)")
+        .accessibilityLabel("\(post.title), \(post.score) votes")
     }
-
 }
 
 struct VoteButton: View {
@@ -319,22 +200,6 @@ struct VoteButton: View {
     }
 }
 
-struct CategoryBadge: View {
-    @Environment(\.colorScheme) private var colorScheme
-    let category: String
-
-    var body: some View {
-        Label(category, systemImage: categoryIcon(category))
-            .labelStyle(BadgeLabelStyle())
-            .font(.caption2)
-            .fontWeight(.semibold)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(Color.sparkBlue.opacity(colorScheme == .dark ? 0.25 : 0.15), in: Capsule())
-            .foregroundStyle(Color.sparkBlue)
-    }
-}
-
 // MARK: - Create
 
 struct CreateView: View {
@@ -343,14 +208,9 @@ struct CreateView: View {
 
     @State private var title = ""
     @State private var content = ""
-    @State private var category = "General"
-    @State private var linkedRepo = ""
-    @State private var autoEnrich = true
     @State private var isPosting = false
     @State private var errorMsg: String?
     @State private var brainstorm = false
-
-    let categories = ["General", "Tech", "Science", "Art", "Business", "Other"]
 
     var body: some View {
         NavigationStack {
@@ -369,19 +229,6 @@ struct CreateView: View {
                             .font(.caption)
                             .foregroundStyle(content.count > 500 ? .red : .secondary)
                     }
-                }
-                Section("Category") {
-                    Picker("Category", selection: $category) {
-                        ForEach(categories, id: \.self) { Text($0) }
-                    }
-                    .pickerStyle(.menu)
-                }
-                Section("Repository (optional)") {
-                    TextField("Git URL", text: $linkedRepo)
-                        .keyboardType(.URL)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                    Toggle("Request AI write-up", isOn: $autoEnrich)
                 }
                 if let err = errorMsg {
                     Section {
@@ -449,17 +296,14 @@ struct CreateView: View {
                 try await appState.createPost(
                     title: title,
                     content: content,
-                    category: category,
-                    linkedRepo: linkedRepo.isEmpty ? nil : linkedRepo
+                    category: "General"
                 )
-                if autoEnrich, let post = appState.posts.first {
+                if let post = appState.posts.first {
                     try? await appState.requestEnrichment(postId: post.id)
                 }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 title = ""
                 content = ""
-                category = "General"
-                linkedRepo = ""
                 selectedTab = 0
             } catch {
                 errorMsg = error.localizedDescription
@@ -517,7 +361,6 @@ struct ProfileView: View {
                                         .font(.subheadline.weight(.medium))
                                         .lineLimit(2)
                                     HStack {
-                                        CategoryBadge(category: post.category)
                                         Spacer()
                                         Label("\(post.score)", systemImage: "arrow.up")
                                             .font(.caption)
@@ -755,35 +598,6 @@ struct AuthSheet: View {
 
 // MARK: - Auth Toolbar Button
 
-// MARK: - Score Badge
-
-struct ScoreBadge: View {
-    let score: Int
-
-    private var tier: (String, Color)? {
-        if score >= 1_000_000 { return ("star.fill", .yellow) }
-        if score >= 1_000 { return ("star.fill", Color(.systemGray3)) }
-        if score >= 100 { return ("star.fill", .orange) }
-        return nil
-    }
-
-    var body: some View {
-        if let (icon, color) = tier {
-            Image(systemName: icon)
-                .font(.caption)
-                .foregroundStyle(color)
-                .accessibilityLabel(badgeLabel)
-        }
-    }
-
-    private var badgeLabel: String {
-        if score >= 1_000_000 { return "Gold badge" }
-        if score >= 1_000 { return "Silver badge" }
-        if score >= 100 { return "Bronze badge" }
-        return ""
-    }
-}
-
 // MARK: - Date Formatting
 
 enum DateFormatting {
@@ -848,30 +662,6 @@ struct SettingsSection: View {
 }
 
 // MARK: - Icons and motion
-
-func categoryIcon(_ category: String) -> String {
-    switch category.lowercased() {
-    case "all": "square.grid.2x2"
-    case "technology", "tech": "cpu"
-    case "design", "art": "paintbrush.pointed"
-    case "business", "finance": "briefcase"
-    case "science": "atom"
-    case "productivity": "checkmark.circle"
-    case "health": "heart"
-    case "sustainability": "leaf"
-    case "general": "lightbulb"
-    default: "sparkle"
-    }
-}
-
-struct BadgeLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 4) {
-            configuration.icon.imageScale(.small)
-            configuration.title
-        }
-    }
-}
 
 // The primary action everywhere: flat lily-pad green, white label (ink in dark), same as the landing.
 struct PrimaryButtonStyle: ButtonStyle {
