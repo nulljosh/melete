@@ -12,6 +12,7 @@ final class AppState {
     var isFeedLoading: Bool = false
     var error: String?
     var errorBanner: String?
+    var comments: [String: [Comment]] = [:]
 
     var isLoggedIn: Bool { user != nil }
 
@@ -195,6 +196,19 @@ final class AppState {
         }
 
         votingPostIds.remove(postId)
+    }
+
+    func loadComments(postId: String) async {
+        do {
+            comments[postId] = try await api.fetchComments(postId: postId)
+        } catch {
+            errorBanner = error.localizedDescription
+        }
+    }
+
+    func addComment(postId: String, content: String) async throws {
+        let comment = try await api.addComment(postId: postId, content: content)
+        comments[postId, default: []].append(comment)
     }
 
     func dismissError() {

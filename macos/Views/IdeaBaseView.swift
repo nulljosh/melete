@@ -15,14 +15,14 @@ struct IdeaBaseView: View {
     var body: some View {
         HSplitView {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Idea Bases")
+                Text("Recent topics")
                     .font(.headline)
                     .padding()
 
                 if isLoading {
                     ProgressView().padding()
                 } else if ideaBases.isEmpty {
-                    Text("No idea bases yet.")
+                    Text("No topics yet.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .padding()
@@ -56,7 +56,7 @@ struct IdeaBaseView: View {
             .frame(minWidth: 200, idealWidth: 240)
 
             Form {
-                Section("Generate Ideas") {
+                Section("Brainstorm a topic") {
                     TextField("Topic", text: $topic)
                         .textFieldStyle(.roundedBorder)
                     TextField("Description (optional)", text: $description)
@@ -80,7 +80,7 @@ struct IdeaBaseView: View {
                 }
 
                 if !rfs.isEmpty {
-                    Section("Inspiration \u{2014} YC Requests for Startups") {
+                    Section("Inspiration from YC") {
                         ForEach(rfs) { entry in
                             Link(destination: URL(string: entry.url)!) {
                                 VStack(alignment: .leading, spacing: 4) {

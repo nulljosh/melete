@@ -3,7 +3,6 @@ import SwiftUI
 enum SidebarItem: String, CaseIterable, Identifiable {
     case feed = "Feed"
     case create = "Create"
-    case ideaBases = "Idea Bases"
     case profile = "Profile"
 
     var id: String { rawValue }
@@ -12,7 +11,6 @@ enum SidebarItem: String, CaseIterable, Identifiable {
         switch self {
         case .feed: return "flame"
         case .create: return "plus.circle"
-        case .ideaBases: return "lightbulb"
         case .profile: return "person.circle"
         }
     }
@@ -40,8 +38,6 @@ struct ContentView: View {
                     FeedView()
                 case .create:
                     CreateView(selectedItem: $selectedItem)
-                case .ideaBases:
-                    IdeaBaseView()
                 case .profile:
                     ProfileView()
                 }

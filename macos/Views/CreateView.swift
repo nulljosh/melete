@@ -11,7 +11,7 @@ struct CreateView: View {
     @State private var autoEnrich = true
     @State private var isPosting = false
     @State private var errorMsg: String?
-    @State private var showSuccess = false
+    @State private var brainstorm = false
 
     let categories = ["General", "Tech", "Science", "Art", "Business", "Other"]
 
@@ -34,6 +34,18 @@ struct CreateView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
+            VStack(spacing: 0) {
+            Picker("Mode", selection: $brainstorm) {
+                Text("Write").tag(false)
+                Text("Brainstorm").tag(true)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .frame(maxWidth: 260)
+            .padding(.top, 12)
+            if brainstorm {
+                IdeaBaseView()
+            } else {
             Form {
                 Section("Idea") {
                     TextField("Title", text: $title)
@@ -97,11 +109,10 @@ struct CreateView: View {
                 }
             }
             .formStyle(.grouped)
-            .navigationTitle("Create")
-            .alert("Posted!", isPresented: $showSuccess) {
-                Button("OK") { selectedItem = .feed }
-            }
             .padding()
+            }
+            }
+            .navigationTitle("Create")
         }
     }
 
@@ -127,7 +138,7 @@ struct CreateView: View {
                 content = ""
                 category = "General"
                 linkedRepo = ""
-                showSuccess = true
+                selectedItem = .feed
             } catch {
                 errorMsg = error.localizedDescription
             }

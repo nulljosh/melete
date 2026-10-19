@@ -26,6 +26,9 @@ protocol SparkAPIProtocol: Sendable {
     func appleSignIn(identityToken: String, givenName: String?, familyName: String?, email: String?) async throws -> AuthResponse
     func deleteAccount() async throws
     func fetchPosts() async throws -> [Post]
+    func fetchComments(postId: String) async throws -> [Comment]
+    func addComment(postId: String, content: String) async throws -> Comment
+    func fetchUserPosts(username: String) async throws -> [Post]
     func fetchPost(id: String) async throws -> Post
     func createPost(title: String, content: String, category: String, linkedRepo: String?) async throws -> Post
     func vote(postId: String, type: String) async throws
@@ -176,6 +179,32 @@ final class SparkAPI: SparkAPIProtocol, Sendable {
     }
 
     // MARK: - Posts
+
+    func fetchComments(postId: String) async throws -> [Comment] {
+        let req = try request("/api/comments?post_id=\(try encodedId(postId))")
+        struct Resp: Decodable { let comments: [Comment] }
+        let result: Resp = try await perform(req)
+        return result.comments
+    }
+
+    func addComment(postId: String, content: String) async throws -> Comment {
+        let body = try JSONSerialization.data(withJSONObject: ["post_id": postId, "content": content])
+        let req = try request("/api/comments", method: "POST", body: body, auth: true)
+        struct Resp: Decodable { let comment: Comment }
+        let result: Resp = try await perform(req)
+        return result.comment
+    }
+
+    /// Every idea one person posted. The feed only holds one page, so Profile asks for these.
+    func fetchUserPosts(username: String) async throws -> [Post] {
+        guard let encoded = username.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            throw APIError.invalidURL
+        }
+        let req = try request("/api/user?username=\(encoded)")
+        struct Resp: Decodable { let posts: [Post] }
+        let result: Resp = try await perform(req)
+        return result.posts
+    }
 
     func fetchPosts() async throws -> [Post] {
         let req = try request("/api/posts")

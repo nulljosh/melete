@@ -4,10 +4,12 @@ struct ProfileView: View {
     @Environment(AppState.self) private var appState
     @State private var postToDelete: Post?
     @State private var confirmingDeleteAccount = false
+    @State private var serverPosts: [Post]?
 
+    // The feed only holds one page, so your own ideas come from /api/user.
     var myPosts: [Post] {
         guard let username = appState.user?.username else { return [] }
-        return appState.posts.filter { $0.author?.username == username }
+        return serverPosts ?? appState.posts.filter { $0.author?.username == username }
     }
 
     var body: some View {
@@ -37,7 +39,7 @@ struct ProfileView: View {
                     }
 
                     if !myPosts.isEmpty {
-                        Section("Your Posts") {
+                        Section("Your Ideas") {
                             ForEach(myPosts) { post in
                                 HStack {
                                     VStack(alignment: .leading, spacing: 4) {
@@ -101,6 +103,12 @@ struct ProfileView: View {
             }
         }
         .navigationTitle("Profile")
+        .task(id: "\(appState.user?.username ?? "")-\(appState.posts.count)") {
+            guard let username = appState.user?.username else { serverPosts = nil; return }
+            if let posts = try? await appState.api.fetchUserPosts(username: username) {
+                serverPosts = posts
+            }
+        }
         .confirmationDialog(
             "Delete post?",
             isPresented: Binding(
@@ -114,6 +122,7 @@ struct ProfileView: View {
                 Task {
                     do {
                         try await appState.deletePost(id: post.id)
+                            serverPosts?.removeAll { $0.id == post.id }
                     } catch {
                         appState.errorBanner = error.localizedDescription
                     }

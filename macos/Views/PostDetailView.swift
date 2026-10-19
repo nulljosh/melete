@@ -143,6 +143,10 @@ struct PostDetailView: View {
                         Image(systemName: "square.and.arrow.up")
                     }
                 }
+
+                Divider()
+
+                CommentsView(postId: currentPost.id)
             }
             .padding(24)
         }
