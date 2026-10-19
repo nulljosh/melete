@@ -108,6 +108,16 @@ extension Color {
         a.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(srgbRed: 0.561, green: 0.761, blue: 0.525, alpha: 1) : NSColor(srgbRed: 0.302, green: 0.486, blue: 0.271, alpha: 1)
     })
     static let bulb = sparkBlue
+    static let paper = dynamic(light: (0.980, 0.980, 0.973), dark: (0.110, 0.102, 0.090))
+    static let card = dynamic(light: (1, 1, 1), dark: (0.149, 0.137, 0.122))
+    static let hairline = dynamic(light: (0.894, 0.886, 0.863), dark: (0.208, 0.192, 0.169))
+
+    private static func dynamic(light: (Double, Double, Double), dark: (Double, Double, Double)) -> Color {
+        Color(nsColor: NSColor(name: nil) { a in
+            let c = a.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
+            return NSColor(srgbRed: c.0, green: c.1, blue: c.2, alpha: 1)
+        })
+    }
     static let onAccent = Color(nsColor: NSColor(name: nil) { a in
         a.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? NSColor(srgbRed: 0.11, green: 0.10, blue: 0.09, alpha: 1) : .white
     })

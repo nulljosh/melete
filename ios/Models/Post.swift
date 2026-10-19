@@ -10,7 +10,7 @@ struct Post: Codable, Identifiable, Hashable {
     /// message on launch (Guideline 2.1(a)). The detail fetch supplies it.
     let content: String?
     let category: String
-    let score: Int
+    var score: Int
     let author: Author?
     let createdAt: String?
     // LLM enrichment
@@ -19,6 +19,8 @@ struct Post: Codable, Identifiable, Hashable {
     let enrichmentPlan: String?
     let linkedRepo: String?
     let enrichmentRequestedAt: String?
+    /// The signed-in caller's vote: 1, -1, or 0/nil for none. Sent by the server.
+    var myVote: Int? = nil
 
     struct Author: Codable, Hashable {
         let username: String

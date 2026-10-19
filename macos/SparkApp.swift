@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct SparkApp: App {
     @State private var appState = AppState()
+    @AppStorage("tutorial_done") private var tutorialDone = false
 
     var body: some Scene {
         WindowGroup {
@@ -14,10 +15,15 @@ struct SparkApp: App {
                 .tint(.sparkBlue)
                 .frame(minWidth: 820, minHeight: 520)
                 .preferredColorScheme(ProcessInfo.processInfo.arguments.contains("-dark") ? .dark : nil)
-                .onboarding(key: "spark",
-                            signedIn: appState.isLoggedIn,
-                            slides: sparkOnboardingSlides,
-                            finishLabel: "Get started")
+                .overlay {
+                    if !tutorialDone {
+                        TutorialView { withAnimation(.easeInOut(duration: 0.4)) { tutorialDone = true } }
+                            .environment(appState)
+                            .transition(.opacity)
+                    }
+                }
+                // Someone already signed in has used the app; the tour is for newcomers.
+                .task { if appState.isLoggedIn { tutorialDone = true } }
         }
         .windowStyle(.titleBar)
         .defaultSize(width: 900, height: 650)

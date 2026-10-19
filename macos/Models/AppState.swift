@@ -167,23 +167,15 @@ final class AppState {
         guard !votingPostIds.contains(postId) else { return }
         votingPostIds.insert(postId)
 
+        // Same rules as the server: the same arrow again takes the vote back,
+        // the other arrow switches it.
         let originalPosts = posts
         if let idx = posts.firstIndex(where: { $0.id == postId }) {
-            let delta = type == "up" ? 1 : -1
-            let old = posts[idx]
-            posts[idx] = Post(
-                id: old.id,
-                title: old.title,
-                content: old.content,
-                category: old.category,
-                score: old.score + delta,
-                author: old.author,
-                createdAt: old.createdAt,
-                enriched: old.enriched,
-                enrichmentSpec: old.enrichmentSpec,
-                enrichmentPlan: old.enrichmentPlan,
-                linkedRepo: old.linkedRepo
-            )
+            let prev = posts[idx].myVote ?? 0
+            let v = type == "up" ? 1 : -1
+            let mine = prev == v ? 0 : v
+            posts[idx].score += mine - prev
+            posts[idx].myVote = mine
         }
 
         do {

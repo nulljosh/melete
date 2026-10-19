@@ -1,15 +1,16 @@
 import SwiftUI
 
-private let whatsNewVersion = "3.0"
+private let whatsNewVersion = "3.1"
 private let whatsNewRows: [(icon: String, text: String)] = [
-    ("sparkles", "Sparkjar is now Thinkpond. Same jar, new light."),
-    ("bell", "Today's idea, every morning at nine."),
-    ("square.grid.2x2", "Categories with icons, and a calmer feed."),
-    ("paintpalette", "One palette across iPhone, Mac and the web."),
+    ("leaf", "A new look: a brain on a lily pad, in pond green."),
+    ("arrow.up.circle", "One vote per idea. Tap again to take it back."),
+    ("sparkles", "Brainstorm lives in Create: give a topic, get three ideas."),
+    ("person.circle", "Profile shows every idea you have posted."),
 ]
 
 struct WhatsNewSheet: View {
     @AppStorage("whats_new_seen_version") private var seenVersion = ""
+    @AppStorage("tutorial_done") private var tutorialDone = false
     @State private var isPresented = false
 
     var body: some View {
@@ -17,6 +18,8 @@ struct WhatsNewSheet: View {
             .task {
                 // Wait for the splash to fade before showing anything.
                 try? await Task.sleep(for: .seconds(1.6))
+                // Newcomers get the tour instead; this sheet is for people updating.
+                if !tutorialDone { seenVersion = whatsNewVersion }
                 isPresented = seenVersion != whatsNewVersion
             }
             .sheet(isPresented: $isPresented) {

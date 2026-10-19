@@ -17,6 +17,8 @@ struct Post: Codable, Identifiable, Hashable {
     let enrichmentSpec: String?
     let enrichmentPlan: String?
     let linkedRepo: String?
+    /// The signed-in caller's vote: 1, -1, or 0/nil for none. Sent by the server.
+    var myVote: Int? = nil
 
     struct Author: Codable, Hashable {
         let username: String

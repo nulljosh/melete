@@ -295,20 +295,23 @@ struct VoteButton: View {
         appState.votingPostIds.contains(postId)
     }
 
+    // Lit when this is the way you voted.
+    private var isMine: Bool {
+        let mine = appState.posts.first(where: { $0.id == postId })?.myVote ?? 0
+        return mine == (label == "up" ? 1 : -1)
+    }
+
     var body: some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             Task { await appState.vote(postId: postId, type: label) }
         } label: {
-            if isVoting {
-                ProgressView()
-                    .controlSize(.mini)
-            } else {
-                Image(systemName: icon)
-                    .font(.subheadline)
-                    .foregroundStyle(appState.isLoggedIn ? Color.sparkBlue : Color.secondary)
-                    .symbolEffect(.bounce, value: isVoting)
-            }
+            // No spinner: the vote shows at once and the server agrees or it reverts.
+            Image(systemName: isMine ? "\(icon).circle.fill" : icon)
+                .font(isMine ? .body : .subheadline)
+                .foregroundStyle(appState.isLoggedIn ? Color.sparkBlue : Color.secondary)
+                .contentTransition(.symbolEffect(.replace))
+                .frame(width: 24, height: 24)
         }
         .buttonStyle(.plain)
         .disabled(!appState.isLoggedIn || isVoting)
