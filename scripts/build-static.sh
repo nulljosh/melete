@@ -14,6 +14,7 @@ mkdir -p dist
 # Static pages and assets.
 cp -- *.html dist/
 cp -- *.svg dist/
+cp -- apple-touch-icon.png icon-192.png dist/
 cp manifest.json sw.js tokens.css devices.css theme.js webmcp.js onboarding.js dist/
 
 # Pages control files. No _redirects: vercel.json's `/(.*) -> /app.html` catch-all
