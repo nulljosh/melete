@@ -1,60 +1,57 @@
 # Thinkpond Technical Whitepaper
 
-**v3.0** | October 2026
+**v3.1** | October 2026
 
-A jar of ideas.
+Drop an idea in. Watch it ripple.
 
-Most ideas die because turning "someone should build X" into an actual plan
-is the part nobody wants to do. Thinkpond closes that gap. Post one, vote on
-others, argue in the comments. A model turns the good ones into build plans,
-so an idea does not need its poster to know how to scope it. Every morning a
-new idea shows up on its own, so the feed is never empty. Live at
-[thinkpond.jaybulb.com](https://thinkpond.jaybulb.com), with native iOS,
-macOS, and watchOS companions.
+Most ideas die at the same step. Somebody says "someone should build that," and nobody writes the plan. Thinkpond does the writing. People post ideas, vote on them and argue in the comments. A model writes a build spec and a plan for each idea, and a judge pass throws out the generic ones. Every morning the feed gets one new idea on its own, so it is never empty. It runs at [thinkpond.jaybulb.com](https://thinkpond.jaybulb.com), with iPhone, Mac and Apple Watch apps.
 
-## Core Mechanic: Ideas as First-Class Objects
+## Core mechanic: write, judge, then plan
 
-An idea is a post with a category, tags, votes, and comment threads, plus two
-AI-generated attachments:
+An idea is a post with a title, a body, a category, votes and comments. The model adds three things:
 
-- **Enrichment (SPEC + PLAN)**: a model on Cloudflare Workers AI
-  (`gpt-oss-120b`) writes a product spec and an implementation plan for each
-  new idea, turning a one-liner into something buildable.
-- **Idea Bases**: AI-generated idea clusters seeded from a topic, so an empty
-  feed can bootstrap itself instead of asking the first visitor to populate it.
+- **Generate.** `POST /api/ai?type=generate` calls `callGemma` in `api/ai.js`. The model is `@cf/openai/gpt-oss-120b` on Workers AI, reached through the `AI` binding. The project holds no model API key.
+- **Judge.** `judgeIdea` reads each draft again at low temperature, as a cold reader. It rejects generic ideas: a tracker, a list, a dashboard, a marketplace, or a problem with no named group of people. `tooSimilar` rejects a draft that repeats a recent one. If the judge fails or returns nonsense, the draft goes through. A broken judge must not stop the daily idea.
+- **Enrich.** `POST /api/ai?type=enrich` writes a spec (what the thing does) and a plan (the steps to build it). A post that has neither gets both.
 
-Ranking is Hot/New with optimistic-UI upvotes; category and tag filters
-(tech, design, business, random) slice the feed. New users see curated seed
-ideas, and the API falls back to seed data when D1 is empty or unreachable.
+The feed sorts by New or Trending. Tags and categories filter it. When the database is empty or unreachable, the first page shows a few seed ideas.
 
 ## Architecture
 
-- **Frontend**: one `index.html`, plain HTML, CSS, and JS, no build step.
-  CSS grid feed, PWA with offline support, dark/light toggle.
-- **API**: Cloudflare Pages Functions. The site moved off Vercel on
-  2026-08-17, which retired the old 12-function cap. Handlers stay
-  consolidated.
-- **Database**: Cloudflare D1 (database `spark`) behind the `jaybulb-api`
-  Worker, with files in KV. The schema lives in that repo.
-- **Auth**: JWT login, GitHub OAuth, ToS gate, Face ID on iOS.
-- **Cron Worker**: `worker/` fires daily at 09:00 UTC and calls the generate
-  and enrich endpoints. Nothing runs locally.
+- **Web**: plain HTML, CSS and JavaScript with no build step. `index.html` is the landing page and `app.html` is the app. The service worker is network first.
+- **API**: Cloudflare Pages Functions. One catch-all route sends each `/api/*` call to a handler in `api/`.
+- **Data**: rows in D1 and files in KV, behind the `jaybulb-api` Worker. `api/_lib/spark.js` is the only client.
+- **Cron**: Pages cannot hold a schedule. `worker/` is a small Worker that fires at 09:00 UTC and makes two authenticated calls: generate, then enrich the new idea.
+- **Auth**: email and password, GitHub OAuth, and Sign in with Apple on the native apps. Sessions are JWTs. Mail goes out through Resend.
+
+## App Store matches
+
+Each brief lists up to three App Store apps that are close to the idea. The browser asks Apple's iTunes Search API for software in the US, using the idea's search terms, with a limit of three. The iPhone and Mac apps make the same call. The lookup runs on the device, so Thinkpond's server never makes it.
+
+## Native apps
+
+iPhone, Mac and Watch all use the same API. The iPhone app keeps its token in the Keychain and asks for Face ID or Touch ID. The Watch app reads the feeds, votes and posts ideas, and keeps the last feed for reading offline. iPhone and Mac both have widgets for Hot, New and Stats.
+
+## Security
+
+- Every route checks the caller before it touches storage. Storage calls use a service key that only the server holds.
+- Posting is limited to 10 a minute per IP for accounts without Pro. Comments and password reset have their own limits.
+- A link on an idea must be `http` or `https`, because the value is rendered as a link.
+- Stripe webhooks are checked against their signature before any account changes.
+
+## Money
+
+The web offers a $1 one-time Pro unlock through Stripe, for unlimited posts and a 24-hour pin. The native apps sell nothing.
 
 ## Platforms
 
 | Platform | Version | Status |
 |---|---|---|
-| Web (PWA) | v3.0.0 | Live on Cloudflare Pages |
-| iOS | v1.0.1 | Live on the App Store. 3.0 waiting for review |
-| macOS | v1.0.2 | Live on the App Store. 3.0 waiting for review |
-| watchOS | v1.0 | Bundled with iOS |
+| Web | 3.1 | Live on Cloudflare Pages |
+| iPhone | 3.1 | 3.0 live on the App Store. 3.1 in review |
+| Mac | 3.1 | 3.0 live on the Mac App Store. 3.1 in review |
+| Apple Watch | 2.2.0 | Ships inside the iPhone app |
 
-## Security
+## License
 
-- Handlers in `api/` check the caller before any storage call. Storage calls
-  run server side only, with a service key.
-- JWT secret rotated 2026-05-09.
-- Known debt: an old `.env` lives in three historical commits (no longer
-  tracked), purge via `git filter-repo` is on the roadmap.
-- Transactional email is wired to Resend but not yet sending: the domain is
-  unverified, so signup/reset mail is the open blocker on the hosted flows.
+MIT 2026 Joshua Trommel. See [LICENSE](LICENSE).

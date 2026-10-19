@@ -1,333 +1,194 @@
 # Architecture
 
-Thinkpond is a self-regulating idea forum. Users post ideas, comment, vote, and browse. A cron Worker calls a model on Cloudflare Workers AI (`@cf/openai/gpt-oss-120b`) that auto-generates new ideas daily and enriches them with specs and build plans. No build step. Web app runs from plain HTML/JS. Native iOS/macOS/watchOS companions. Storage is Cloudflare D1 and KV behind the `jaybulb-api` Worker. Future monetization: paid accounts get unlimited posting and 24h pinned visibility.
+Thinkpond is an idea forum. People post ideas, vote and comment. A model writes a build spec and a plan for each idea, and a daily cron adds a new idea on its own. The web app is plain HTML, CSS and JavaScript with no build step. The iPhone, Mac and Apple Watch apps talk to the same API. Rows live in D1 and files in KV, behind the `jaybulb-api` Worker.
 
 ## How it runs
 
-1. **Web entry**: User lands on `index.html` (landing page with theme toggle, hero, features, CTA). Clicks to `app.html` or authenticates. Authenticated users see the feed (grid of idea cards) and can create, comment, vote.
-2. **Backend**: Cloudflare Pages + the `jaybulb-api` Worker (D1 and KV) + Resend. `/api/posts` is the main feed endpoint. `/api/ai` handles generation and enrichment. `/api/auth/*` handles login, register, GitHub OAuth, password reset, email verification.
-3. **AI cron job**: Cron worker (`worker/`) fires daily at 09:00 UTC. Calls `/api/ai?type=generate` to create one new idea, then `/api/ai?type=enrich` on all unenriched posts. Uses `@cf/openai/gpt-oss-120b` on Workers AI.
-4. **Native apps**: iOS, macOS, watchOS share the same backend API. iOS is live on App Store (v1.0). macOS v1.0 in submission. watchOS bundled (view-only).
+1. A visitor lands on `index.html`. The app itself is `app.html`.
+2. The app calls `/api/*`. One Pages Function, `functions/api/[[route]].js`, sends each path to a handler in `api/`.
+3. Handlers read and write rows through the `jaybulb-api` Worker, using `api/_lib/spark.js`. Email goes out through Resend.
+4. The AI paths run `@cf/openai/gpt-oss-120b` on Workers AI through the `AI` binding. `callGemma` in `api/ai.js` makes the call.
+5. The cron Worker in `worker/` fires at 09:00 UTC. It asks for one new idea, then asks for that idea's spec and plan.
 
-## Web
+## Top level
 
-### Pages
-
-| File | What it owns |
+| Path | What it does |
 |---|---|
-| `index.html` | Marketing landing page (432 lines). Hero section, feature list, CTA buttons to `/app` and app store links. Lazy-loads video background. Mobile-first responsive layout. Theme toggle in header. No login required. |
-| `app.html` | Main app single-page (1301 lines). Feed grid layout (CSS Grid auto-fill), feed infinite scroll, auth UI (login/register forms, OAuth buttons), create post modal (title/content/tags), post detail modal (full content, comments thread, voting), user profile section (avatar, bio, user's posts), settings panel, onboarding carousel (on first visit). All vanilla JavaScript, no framework. Handles auth token in localStorage. |
-| `user.html` | User profile page. Displays target user's name, avatar, bio, follower/following counts. Shows user's posts chronologically. Link to user's idea base. |
-| `reset.html` | Password reset form. Accepts token from email link. New password input with confirmation. Validation. Success/error messaging. |
-| `tos.html` | Terms of service. Legal text. Shown during registration signup (user must check checkbox to proceed). Static content, no interactivity. |
-| `support.html` | Support/contact page. Contact form (name, email, message) or email address/support links. Submission via API. |
+| `index.html` | Landing page. Hero, feature list, links to the app and the App Store. |
+| `app.html` | The web app. Feed with sort and filters, post detail with votes and comments, create, profile, settings, the $1 Pro unlock, App Store matches in each brief, and a trademark check for brief names. |
+| `user.html` | Public profile page for one user. |
+| `reset.html` | Password reset page. Reads the token from the email link. |
+| `tos.html`, `support.html` | Terms of service and support. Static pages. |
+| `theme.js` | Light and dark theme for every page. The choice is saved in `spark_theme`. Dark is the default. Loads in every `<head>`. |
+| `onboarding.js` | First-run carousel. Loaded by `app.html` only. |
+| `webmcp.js` | Registers the WebMCP tools for agents. Loaded by `app.html`. See [API.md](API.md#webmcp). |
+| `sw.js` | Service worker. Network first. The cache is only the offline fallback for the shell. |
+| `tokens.css` | Design tokens for the pages. A vendored copy, not an import. |
+| `devices.css` | Device frame styles. Copied into `dist/`, but no page loads it. Candidate for removal. |
+| `manifest.json` | PWA manifest. |
+| `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon.svg`, `icon-192.svg`, `icon-512.svg`, `mark.svg` | Icons. `scripts/make-appicon.sh` builds the app icon PNGs from `icon.svg`. |
+| `Thinkpond.icon` | Icon Composer bundle for the app icon. |
+| `wrangler.toml` | Pages project settings. Project name `sparkjar`, output `dist`, the `AI` binding, and public variables such as `APPLE_CLIENT_ID`. Secrets are not stored here. |
+| `static/_headers` | Security headers for Pages. |
+| `package.json` | npm scripts: `test`, `build`, `dev`, `deploy`. The `name` field still reads `hikko`. |
+| `vitest.config.js` | Test runner config. |
+| `api/` | Backend handlers. See below. |
+| `functions/` | Pages Functions adapter and the single `/api/*` route. |
+| `worker/` | Cron Worker. |
+| `ios/` | iPhone app. |
+| `macos/` | Mac app. |
+| `watchos/` | Apple Watch app. Ships inside the iOS app. |
+| `widgets-ios/`, `widgets-macos/` | Home Screen widgets for iPhone and Mac. |
+| `kmp/` | Kotlin Multiplatform client. Not shipped. |
+| `scripts/` | Build, icon, screenshot and maintenance scripts. |
+| `tests/` | Vitest suite. |
+| `brand/` | Brand notes, tokens and icon files. |
+| `metadata/` | App Store listing copy, kept by version. |
+| `screenshots/` | Screenshots for iOS and macOS. |
+| `launch/` | Launch post drafts. Some still describe the old stack, so check them before posting. |
+| `public/` | Not copied by the build, so Pages never serves it. |
+| `dist/` | Build output from `scripts/build-static.sh`. Not committed. |
+| `docs/` | This file, [API.md](API.md), and a ranked list of the ideas on the board. |
+| `README.md`, `WHITEPAPER.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `CHANGELOG.md`, `roadmap.md`, `MONEY.md` | Project docs. `AGENTS.md` is a symlink to `CLAUDE.md`. |
+| `architecture.svg`, `progress.svg` | Diagrams for the README. |
 
-### Styling & Theme
+## Backend (`api/`)
 
-| File | What it owns |
+Each file is a handler. `functions/api/[[route]].js` maps the URL to it. Every route is listed in [API.md](API.md).
+
+| File | What it does |
 |---|---|
-| `theme.js` | Light/dark theme control. Loaded in every page's `<head>` synchronously. Sets `data-theme` on `<html>` before first paint. Wires `[data-theme-toggle]` buttons. Persists to localStorage (`spark_theme`). Default: dark. |
-| `tokens.css` | Jaybulb design system alias layer. Imports canonical heyitsmejosh.com/tokens.css. |
-| `devices.css` | Responsive device frames (iPhone, Android, Mac) for landing demo. Canonical copy synced from portfolio. |
-| Root CSS in `index.html` + `app.html` | Inline styles. Grid layout for feed (`repeat(auto-fill, minmax(320px, 1fr))`), card styling, forms, no box-shadows. Minimal, fast to scan. Mobile-first. |
+| `posts.js` | Ideas: list, one, create, delete, vote. Falls back to seed ideas when the database is empty or unreachable. Exports `parseToken`, which the AI handlers use. |
+| `comments.js` | Comments: list for one idea, counts for many, create. |
+| `ai.js` | Routed by `?type=`. `generate` writes one idea, `enrich` writes a spec and plan, `idea-base` clusters ideas around a topic, `notes` exports one idea as Markdown, `rfs` lists Y Combinator's current requests. `callGemma` runs the model. `judgeIdea` rejects generic drafts. `tooSimilar` rejects repeats. |
+| `auth.js` | Router for `/api/auth/:action`. Hands each action to its file in `_lib/auth/`. |
+| `user.js` | Public profile by username, with that user's ideas. |
+| `users.js` | Public list of users. |
+| `avatar.js` | Avatar upload from base64 images up to 2 MB. |
+| `notifications.js` | List notifications, mark them read. |
+| `stripe.js` | Pro status and the Stripe Checkout link for the $1 unlock. |
+| `stripe-webhook.js` | Stripe events. A completed checkout sets `is_pro`. The signature is checked first. |
+| `health.js` | Says whether mail can go out. Sends nothing. |
 
-### Utilities
+### `api/_lib/`
 
-| File | What it owns |
+| File | What it does |
 |---|---|
-| `onboarding.js` | Reusable first-run carousel (145 lines). Shows to new users. Shared across web + native. Slides with title/body/artwork. Stores seen version in localStorage. |
-| `sw.js` | Service worker. Caches static assets, API responses. Offline fallback. Serves cached data when network is unreachable. |
-| `webmcp.js` | WebMCP tool registration. Exposes feed, posting, comments to in-browser agents via document.modelContext. |
+| `spark.js` | Client for the `jaybulb-api` Worker. Sends the service key on every call. `SPARK_API_URL` overrides the default host. |
+| `store.js` | Accounts, password hashing (bcrypt), JWT sessions (7 days), and the tokens for verification and reset. |
+| `ratelimit.js` | Per-IP limits for posting, commenting and password reset. |
+| `mail.js` | Sends mail through Resend. |
+| `mail.selfcheck.js`, `auth/apple.selfcheck.js`, `auth/verify-email.selfcheck.js` | Manual checks for mail, Sign in with Apple and verification. The test runner does not pick them up. |
+| `auth/register.js` | Create an account and send the verification email. |
+| `auth/login.js` | Username and password. Returns a token. |
+| `auth/password-reset.js` | `?action=forgot` sends the reset link. `?action=reset` sets the new password. |
+| `auth/verify-email.js` | Opened from the email link. Marks the account verified, then redirects. |
+| `auth/apple.js` | Verifies a Sign in with Apple identity token from the native apps. |
+| `auth/github.js` | Starts GitHub OAuth. |
+| `auth/github-callback.js` | Finishes GitHub OAuth. Runs on `hikko.jaybulb.com`, which must stay up for older app builds. |
+| `auth/delete-account.js` | Deletes the signed-in account. |
 
-## Backend API (api/)
+## Web function entry (`functions/`)
 
-Cloudflare Pages Functions. Calls the `jaybulb-api` Worker (D1 and KV) through `api/_lib/spark.js`, and Resend for email. All functions are in `api/_lib/auth/`, `api/*.js` (data layer), and routed via `functions/api/[[route]].js` (dynamic catch-all).
-
-### Core Endpoints
-
-| File | What it owns |
+| File | What it does |
 |---|---|
-| `api/posts.js` | GET feed (paginated, filtered by tag/sort), POST create post (rate-limited 10 per 60s), GET single post. Seed data fallback when D1 is empty or unreachable. |
-| `api/comments.js` | GET post comments, POST add comment, DELETE comment. |
-| `api/ai.js` | POST ?type=generate (create new idea as "gemma" author), ?type=enrich (fill spec+build plan on existing idea), ?type=idea-base (fetch idea base prompts), ?type=notes (fetch enrichment notes), ?type=rfs (fetch RFS data). Uses Cloudflare Workers AI binding. |
-| `api/user.js` | GET current user, PUT update profile (avatar, bio, settings). |
-| `api/users.js` | GET user by ID, GET public profile. |
-| `api/avatar.js` | POST generate avatar, GET user's avatar. Returns SVG or image blob. |
-| `api/notifications.js` | GET unread notifications, PUT mark read. |
-| `api/stripe.js` | Stub. POST checkout session creation. Not yet implemented. |
-| `api/stripe-webhook.js` | Stripe event handler. Not yet live. |
-| `api/auth.js` | Router. Delegates to `_lib/auth/*.js`. |
+| `functions/_adapter.js` | Turns a Node-style `(req, res)` handler into a Pages Function response. This is why `api/` handlers look like Node handlers. |
+| `functions/api/[[route]].js` | The one `/api/*` route. Maps the path to a handler, sends CORS headers, and returns `404` for unknown paths. |
 
-### Auth (api/_lib/auth/)
+## Cron (`worker/`)
 
-| File | What it owns |
+| File | What it does |
 |---|---|
-| `api/_lib/auth/register.js` | Email + password registration. Validates, creates user, sends verification email. Requires TOS checkbox. |
-| `api/_lib/auth/login.js` | Email + password login. Returns session token. |
-| `api/_lib/auth/github.js` | GitHub OAuth start. Redirects to GitHub. |
-| `api/_lib/auth/github-callback.js` | GitHub OAuth callback. Creates/updates user with GitHub ID and avatar. |
-| `api/_lib/auth/apple.js` | Apple Sign In start. |
-| `api/_lib/auth/apple.selfcheck.js` | Apple Sign In test. |
-| `api/_lib/auth/password-reset.js` | Send password reset email with token. |
-| `api/_lib/auth/verify-email.js` | Email verification endpoint (clicked from email). Marks user verified. |
-| `api/_lib/auth/verify-email.selfcheck.js` | Email verification test. |
-| `api/_lib/auth/delete-account.js` | Delete user and all data. |
+| `worker/worker.js` | Runs at 09:00 UTC. Calls `POST /api/ai?type=generate`, then `POST /api/ai?type=enrich` for the new idea. It holds no logic of its own. A `fetch` handler runs the same job by hand, behind the same secret. |
+| `worker/wrangler.jsonc` | Worker name `sparkjar-cron`. Cron `0 9 * * *`. Set `SPARK_DAEMON_SECRET` on it with `wrangler secret put`. It must match the Pages value. |
 
-### Utilities (api/_lib/)
+Only the new idea gets enriched. Older posts without a spec are filled in by `scripts/backfill-enrich.sh`, which is run by hand.
 
-| File | What it owns |
+## iPhone (`ios/`)
+
+Generated with `xcodegen generate` from `project.yml`. Targets iOS 17 and later.
+
+| Path | What it does |
 |---|---|
-| `api/_lib/spark.js` | Client for the `jaybulb-api` Worker at `https://api.jaybulb.com` (override with `SPARK_API_URL`). Sends the service key on every call. Rows live in D1, files in KV. |
-| `api/_lib/auth/` | Shared auth logic (see above). |
-| `api/_lib/mail.js` | Email sending via Resend API. Used for verification, password reset, notifications. |
-| `api/_lib/mail.selfcheck.js` | Mail delivery test. |
-| `api/_lib/ratelimit.js` | Rate limiting per IP (10 posts per 60s) + per user. Checks request headers. |
-| `api/_lib/store.js` | KV store abstraction. Caches feed, enrichment results. |
+| `SparkApp.swift` | App entry point. |
+| `ContentView.swift` | Root view. Holds the feed, create, profile and sign-in sheet, plus the shared card and button styles. |
+| `TutorialView.swift`, `WhatsNewSheet.swift` | First-run tour and the what's new sheet. |
+| `View+Glass.swift` | Glass material modifier used on floating controls. |
+| `API/SparkAPI.swift` | HTTP client for the API. |
+| `API/KeychainHelper.swift` | Stores the sign-in token in the Keychain. |
+| `Models/` | `Post`, `Comment`, `User`, `UserProfile`, `IdeaBase`, `RFSEntry`, and `AppState`, the shared observable state. `AppState` also runs the Face ID or Touch ID check. |
+| `Views/PostDetailView.swift`, `Views/CommentsView.swift`, `Views/IdeaBaseView.swift` | Post detail with votes, threaded comments, and Idea Bases. |
+| `Views/AppStoreMatches.swift` | Looks up the closest App Store apps for a brief, from the iTunes Search API. |
+| `SparkTests/` | Unit tests for models, API client, voting and app state. |
+| `UITests/` | Screenshot capture for App Store listings, through fastlane snapshot. |
+| `fastlane/` | Metadata in `metadata/en-US/` and screenshot config. |
+| `scripts/` | `appstore-shots.sh` captures screenshots with simctl. `simplify.sh` creates the standard folders. |
+| `Info.plist`, `PrivacyInfo.xcprivacy`, `Spark.entitlements` | App configuration and privacy manifest. |
 
-## Background Job (worker/)
+## Mac (`macos/`)
 
-Cron trigger for daily idea generation and enrichment.
+Also generated from `project.yml`. Targets macOS 14 and later.
 
-| File | What it owns |
+| Path | What it does |
 |---|---|
-| `worker/worker.js` | Scheduled handler. Fires daily at 09:00 UTC. Calls `/api/ai?type=generate`, then `/api/ai?type=enrich` on all unenriched posts. Bearer token: SPARK_DAEMON_SECRET. |
-| `worker/wrangler.jsonc` | Cloudflare Workers config. Cron triggers, env vars, binding to the main Pages project. |
+| `SparkApp.swift` | App entry point. |
+| `ContentView.swift` | Sidebar with Feed, Create and Profile. Shows the sign-in sheet when signed out. Keyboard shortcuts for a new post and refresh. |
+| `Views/FeedView.swift` | Idea grid with pull to refresh. |
+| `Views/PostDetailView.swift`, `Views/CommentsView.swift`, `Views/IdeaBaseView.swift` | Post detail, comments and Idea Bases. |
+| `Views/AppStoreMatches.swift` | Same App Store lookup as iPhone. |
+| `Views/CreateView.swift` | New idea form. |
+| `Views/ProfileView.swift` | Own profile and sign out. |
+| `Views/AuthSheet.swift` | Sign-in sheet. |
+| `API/`, `Models/` | Same client and data shapes as iPhone. |
+| `Thinkpond.icon` | Icon Composer bundle for the Mac app. |
 
-## Deployment
+## Apple Watch (`watchos/`)
 
-| File | What it owns |
+Ships inside the iOS app. It has no sign-in screen of its own, so it works from the account the iPhone app signs into.
+
+| Path | What it does |
 |---|---|
-| `functions/_adapter.js` | Cloudflare Pages Functions adapter. Exports handler for catching all routes via `[[route]]`. |
-| `functions/api/[[route]].js` | Dynamic route handler. Routes `/api/*` requests to `api/*.js` modules. |
-| `dist/` | Build output directory (generated, not checked in). Contains processed HTML, CSS, JS for deployment. |
-| `package.json` | npm scripts: `npm start` (local dev via `serve`), `npm test` (vitest), `npm run deploy` (wrangler deploy for worker). |
-| `.vercelignore` or similar | Ignore patterns for Cloudflare deployment. |
+| `SparkWatchApp.swift`, `ContentView.swift` | Entry point and root view. |
+| `Views/HotFeedView.swift`, `Views/NewFeedView.swift` | Hot and New feeds. |
+| `Views/PostDetailView.swift`, `Views/PostRow.swift` | Post detail and the list row. |
+| `Views/ComposeView.swift` | New idea from the wrist. |
+| `Views/Colors.swift` | Palette. |
+| `Models/WatchAPI.swift` | API client. Caches the last feed for offline reading. Handles votes and posts. |
+| `Models/WatchModels.swift` | Watch data shapes. |
 
-## iOS
+## Widgets (`widgets-ios/`, `widgets-macos/`)
 
-App Store live (v1.0). Companion to web app. Authentication via email or GitHub/Apple Sign In. View-only and post browsing; creating posts requires the web app or full signup flow not yet implemented natively.
+Each widget target has the same three widgets: Hot posts, New posts, and Stats. Each has a `Providers/` folder that fetches and refreshes on a schedule, a `Models/` folder for the API client and data shapes, and a `Views/` folder for the layouts. `widgets-macos/Views/SharedComponents.swift` holds the pieces the Mac widgets share.
 
-### App Shell
+## Kotlin Multiplatform (`kmp/`)
 
-| File | What it owns |
+A Compose client with a shared module (`SparkjarClient.kt`) that talks to the same API. It has an Android entry point and a desktop entry point. It is not shipped. The `native-release.yml` workflow can build it when a `native-v*` tag is pushed.
+
+## Data
+
+Rows live in D1 and files live in KV, behind the `jaybulb-api` Worker. The schema is in that Worker's repo, not this one. This repo only calls the Worker through `api/_lib/spark.js`.
+
+## Tests
+
+`npm test` runs Vitest on `tests/`. The suite covers the Pages adapter, the AI handlers, auth, comments, posts, theme behavior and the user workflow. `full-workflow.test.mjs` runs against a live API and is skipped unless `API_URL` is set. `onboarding.check.mjs` is a browser check for the onboarding carousel. Run it by hand.
+
+## Scripts
+
+| File | What it does |
 |---|---|
-| `ios/SparkApp.swift` | App entry. WindowGroup, environment setup. |
-| `ios/ContentView.swift` | Root shell. Auth UI vs feed. Tab shell when authenticated. TabView with feed, create, idea base, profile tabs. |
-| `ios/OnboardingView.swift` + `OnboardingSlides.swift` | First-run carousel. Three slides: "Ideas, out loud", "Upvote & comment", "Build yours". Shows to new users, stored in localStorage. |
+| `scripts/build-static.sh` | Copies the publishable files into `dist/`. The repo root holds too much to publish as is. |
+| `scripts/make-appicon.sh` | Rebuilds the app icon PNGs from `icon.svg`. Always use it, never export by hand. |
+| `scripts/screenshots.mjs` | Captures hero screenshots in light and dark, with Playwright. |
+| `scripts/backfill-enrich.sh` | One-off. Writes specs and plans for old posts that have none. |
+| `scripts/set-resend-key.sh` | Checks a Resend key with Resend before it is stored. |
+| `scripts/simplify.sh` | Creates the standard folders if they are missing. |
 
-### State & API
+## Deployment and secrets
 
-| File | What it owns |
-|---|---|
-| `ios/Models/AppState.swift` | Observable state container. Auth status, current user, feed cache, notification state, selected post detail. Observable bindings to Views. |
-| `ios/API/SparkAPI.swift` | HTTP client for /api endpoints. Handles login, fetch posts, post creation, comments, voting. Error handling with retry logic. |
-| `ios/API/KeychainHelper.swift` | Keychain access for storing auth token. Secure storage, requires Face/Touch ID unlock on sensitive operations. |
-| `ios/Models/Post.swift` | Post shape: id, title, content, author, votes, comment count, tags, created_at, enriched_at. Codable. |
-| `ios/Models/Comment.swift` | Comment shape: id, content, author, votes, created_at. Nested replies supported. |
-| `ios/Models/User.swift` + `UserProfile.swift` | User (minimal) and UserProfile (full). UserProfile includes bio, followers, following, posts. |
-| `ios/Models/IdeaBase.swift` | Idea spec structure: spec (how it works), build_plan (steps to implement). Synced from API. |
-| `ios/Models/RFSEntry.swift` | Request for Startup entry: title, description, category. Archive of past RFS calls. |
-
-### Views & UI
-
-| File | What it owns |
-|---|---|
-| `ios/Views/FeedView.swift` | Feed grid display. CSS Grid-like layout with auto-fill columns. Infinite scroll via pagination. Pull-to-refresh via RefreshControl. Shows idea cards in 3-line clamp. Tap to detail view. Search/filter bar. |
-| `ios/Views/PostDetailView.swift` | Full post detail. Shows entire content, spec if enriched, build plan if available. Below: comments section with nested reply threads. Vote buttons at top. Share button. |
-| `ios/Views/CommentsView.swift` | Threaded comment display. Nested replies indented. Vote on each comment. Reply text field. Link to parent post. |
-| `ios/Views/IdeaBaseView.swift` | Idea base library. Tab-based or list view showing all enriched ideas, past RFS entries, reference specs. Search by title/keyword. |
-| `ios/Views/UserProfileView.swift` | Profile card. Avatar, name, bio, follower count, following count. Shows user's recent posts in a grid. Edit profile button (if own profile). |
-| `ios/Views/` (other views) | Any additional UI components not individually listed. |
-| `ios/View+Glass.swift` | Glass morphism modifier. Applies frosted glass effect to floating UI elements. Conditional on iOS version (14+). |
-| `ios/WhatsNewSheet.swift` | What's New modal. Shows per-version changelog. Stored in UserDefaults to avoid repeat showing. |
-
-### Tests & Screenshots
-
-| File | What it owns |
-|---|---|
-| `ios/SparkTests/PostTests.swift` | Post model unit tests. Verifies JSON decoding from API responses, vote count updates, timestamp parsing, creation date handling. |
-| `ios/SparkTests/CommentTests.swift` | Comment model tests. Nested reply chain structure, reply-to parent links, vote tallying. |
-| `ios/SparkTests/UserProfileTests.swift` | User and UserProfile model tests. Avatar URL, follower/following counts, bio text handling. |
-| `ios/SparkTests/VotingTests.swift` | Voting logic tests. Vote increment/decrement, vote direction (up/down), vote cancellation. |
-| `ios/SparkTests/AuthResponseTests.swift` | OAuth response parsing. GitHub OAuth token + user info extraction. Apple Sign In token validation. |
-| `ios/SparkTests/AppStateTests.swift` | AppState observable tests. Auth state transitions (login/logout), feed cache updates, notification badges. |
-| `ios/SparkTests/SparkAPITests.swift` | SparkAPI client tests. Network error handling, HTTP status code mapping, JSON decoding errors, retry logic. |
-| `ios/SparkTests/MockSparkAPI.swift` | Mock SparkAPI for testing. Stub responses for posts, comments, user profiles. Allows deterministic testing without network. |
-| `ios/SparkTests/IntegrationTests.swift` | Integration tests. Full flow: authenticate -> fetch feed -> upvote post -> comment -> refresh. Uses MockSparkAPI. |
-| `ios/UITests/PreviewScreenshot.swift` | App Store screenshot tests via fastlane snapshot. Captures at correct screen dimensions (iPhone 11 Pro Max, iPhone 14 Plus). Includes dark/light variants. |
-| `ios/UITests/SnapshotHelper.swift` | Snapshot capture helper (auto-generated by fastlane fastlane-plugin-snapshot). Handles safe area insets, status bar stripping, multi-language capture. |
-
-## macOS
-
-v1.0 in submission. Desktop client with sidebar navigation + multi-window support. Similar data layer to iOS, different UI layout optimized for larger screens.
-
-### App Shell
-
-| File | What it owns |
-|---|---|
-| `macos/SparkApp.swift` | App entry. WindowGroup for main window. Menu bar extras. Theme preference. App delegate hooks. |
-| `macos/ContentView.swift` | Root shell with sidebar. Four sections: Feed (read-only grid), Create (post new idea, admin-only UI), Idea Bases (reference material), Profile (user bio + history). Auth UI overlaid when signed out. |
-| `macos/OnboardingView.swift` + `OnboardingSlides.swift` | Onboarding carousel. Same three slides as iOS. Shown to first-time users, skipped for returning visitors. |
-
-### State & API
-
-| File | What it owns |
-|---|---|
-| `macos/Models/AppState.swift` | Observable state container. Feed data, current user, sidebar selection state, theme preference. Mirrors iOS but adds window state (selected post detail panel, sidebar visibility). |
-| `macos/API/SparkAPI.swift` | HTTP client. Same endpoints as iOS. Error handling + retry logic. Longer timeouts for desktop (assume stable network). |
-| `macos/API/KeychainHelper.swift` | Keychain access. Stores auth token. Requires Cmd+Lock or authentication dialog on first access. |
-| `macos/Models/Post.swift` + `User.swift` | Data shapes (Post, User, Comment). Matches iOS structures. |
-
-### Views & UI
-
-| File | What it owns |
-|---|---|
-| `macos/Views/FeedView.swift` | Grid of idea cards. Infinite scroll, pull-to-refresh. Keyboard shortcuts (arrow keys to navigate, Enter to expand). |
-| `macos/Views/PostDetailView.swift` | Full post + comments in split panel or modal sheet. Shows spec + build plan if enriched. Comment input field. Voting buttons. |
-| `macos/Views/IdeaBaseView.swift` | Reference library. Shows all idea base entries (specs, build plans, past RFS calls) in a list. Search by keyword. |
-| `macos/Views/ProfileView.swift` | User's own profile + account settings. Edit bio, change avatar, show activity history. Sign out button. |
-| `macos/Views/CreateView.swift` | New idea form (admin-only, for now; future: open to all Pro users). Title, description, tags. Submit button. Validation. |
-| `macos/Views/AuthSheet.swift` | OAuth login sheet. Email + password OR GitHub/Apple sign-in. Shows after app launch if signed out. |
-
-### Build
-
-| File | What it owns |
-|---|---|
-| `macos/project.yml` | xcodegen manifest. Defines macOS app target, settings, entitlements, build phases. Same as iOS pattern (xcodegen generate, no committed xcodeproj). |
-
-## watchOS
-
-Bundled with iOS app. View-only companion. No login UI (requires iOS pre-auth via app group shared defaults).
-
-### App
-
-| File | What it owns |
-|---|---|
-| `watchos/ContentView.swift` | Root view. TabView (vertical page) with feed, idea base, notifications. Minimal UI optimized for small watch screen. |
-
-### Data Access
-
-| File | What it owns |
-|---|---|
-| (Shared with iOS) | watchOS accesses the same API endpoints as iOS. Auth token stored in shared app group UserDefaults. No separate Keychain store on watch. |
-
-## iOS Widgets
-
-Home screen widgets for iOS. Three widget types: Hot posts, New posts, and stats summary. Shared app group storage for auth token and cached data.
-
-| Dir | What it owns |
-|---|---|
-| `widgets-ios/SparkWidgets.swift` | Widget bundle entry point. Declares the three available widgets. |
-| `widgets-ios/Models/` | WidgetAPI (fetches posts and stats from API, caches to UserDefaults), WidgetModels (SparkPost, SparkStats data shapes). |
-| `widgets-ios/Providers/` | Timeline providers for each widget: HotPostsProvider, NewPostsProvider, StatsProvider. Fetch, cache, and refresh on schedule. |
-| `widgets-ios/Views/` | Widget UI: HotPostsWidget, NewPostsWidget, StatsWidget. Each renders timeline entries with proper sizing. |
-
-## macOS Widgets
-
-Home screen widgets for macOS. Same three types as iOS (Hot, New, Stats) with layouts optimized for larger widget sizes and additional interaction patterns.
-
-| Dir | What it owns |
-|---|---|
-| `widgets-macos/SparkWidgets.swift` | Widget bundle entry point. |
-| `widgets-macos/Models/` | SparkWidgetAPI (fetch posts and stats, cache to UserDefaults), WidgetModels (WidgetPost, SparkStats). |
-| `widgets-macos/Providers/` | Timeline providers: HotPostsProvider, NewPostsProvider, StatsProvider. Same refresh patterns as iOS. |
-| `widgets-macos/Views/` | Widget UI: HotPostsWidget, NewPostsWidget, StatsWidget. SmallPostRow, mediumPostRow, largePostRow layouts for macOS sizes. SharedComponents defines Spark brand colors and category pills. |
-
-## Kotlin Multiplatform (Android)
-
-Not yet shipped. Gradle-based project with shared common code + platform-specific UI (Compose).
-
-### Project Structure
-
-| Dir | What it owns |
-|---|---|
-| `kmp/shared/src/commonMain/kotlin/` | Shared business logic: ThinkpondClient (Ktor HTTP client), Models (Post, Comment, User), constants. Platform-agnostic. |
-| `kmp/shared/src/commonTest/kotlin/` | Shared tests (unit tests for models, parsing). |
-| `kmp/composeApp/src/androidMain/kotlin/` | Android-specific: MainActivity (entry point, setContent with Compose root). Launches into the shared App composable. |
-| `kmp/composeApp/src/commonMain/kotlin/` | App.kt (shared Compose UI). Screens for feed, detail, profile. Uses Compose Material 3 theme. |
-| `kmp/composeApp/src/desktopMain/kotlin/` | Desktop preview app (Main.kt). Allows running on macOS for testing. Window management via Compose Window API. |
-| `kmp/build.gradle.kts` | KMP Gradle config. Targets: Android, iOS (future), Desktop. Dependencies: Ktor client, Compose, serialization. |
-
-### Build
-
-| File | What it owns |
-|---|---|
-| `kmp/gradle.properties` | Gradle properties. JVM version, Compose version, plugin versions. |
-| `kmp/settings.gradle.kts` | Root settings. Includes composeApp and shared modules. Declares plugin versions (Kotlin, Compose, Android). |
-
-## Database (Cloudflare D1)
-
-Rows live in D1 (database `spark`) behind the `jaybulb-api` Worker. Files go to KV. The D1 schema lives in the `jaybulb-api` repo, not here.
-
-| Table | Purpose |
-|---|---|
-| `users` | User accounts. |
-| `posts` | Ideas, with spec and build plan once enriched. |
-| `comments` | Post comments. |
-| `idea_bases` | Idea base clusters. |
-| `notifications` | User notifications. |
-
-## Testing
-
-Vitest for backend/adapter testing. Playwright for browser-based onboarding verification. Some tests skip if env vars are not set.
-
-| File | What it owns |
-|---|---|
-| `tests/adapter.test.mjs` | Verifies Cloudflare Pages adapter translation contract. Tests that (req, res) doubles are built and handled correctly. |
-| `tests/ai.test.mjs` | Tests AI generation and enrichment endpoints. Exercises the generation and enrichment business logic. |
-| `tests/auth.test.mjs` | Tests login, registration, GitHub/Apple OAuth flows, tokens, sessions, password reset. Verifies auth state correctness. |
-| `tests/comments.test.mjs` | Tests comment creation, retrieval, and thread nesting. Verifies rate limiting on comment posts. |
-| `tests/full-workflow.test.mjs` | End-to-end test: signup, create post, vote, comment. Runs against live API (skipped if API_URL not set). |
-| `tests/posts.test.mjs` | Tests post creation, feed pagination, voting, deletion. Covers seed data fallback and rate limiting. |
-| `tests/theme.test.mjs` | Tests theme.js DOM behavior. Stubbed browser APIs verify light/dark toggle, localStorage persistence, selector queries. |
-| `tests/user-workflow.test.mjs` | Tests user creation flow and posting workflow. Creates dummy user, posts ideas, verifies retrieval. |
-| `tests/onboarding.check.mjs` | Playwright-based test. Verifies onboarding.js carousel shows/hides correctly for new vs returning users. |
-| `vitest.config.js` | Vitest configuration. Runs tests in parallel (except where sequential is required). Sets JWT_SECRET for tests. |
-
-## Scripts & Build
-
-Utility scripts for development, deployment, and screenshot capture.
-
-| File | What it owns |
-|---|---|
-| `scripts/build-static.sh` | Assembles `dist/` directory for Cloudflare Pages deployment. Copies publishable files (HTML, JS, CSS, icons) from repo root that also contains node_modules/ and native platform folders. |
-| `scripts/make-appicon.sh` | Regenerates all app icon PNGs from `icon.svg`. Renders at 1024 full-bleed, flattens onto icon background, then scales down for macOS, iOS, and watchOS sizes. Must use this script, never hand-export. |
-| `scripts/screenshots.mjs` | Captures hero screenshots in light and dark themes. Serves repo over localhost, uses Playwright to navigate and screenshot the feed view. Outputs PNG files for landing page and app store. |
-| `scripts/set-resend-key.sh` | Validates Resend API key against Resend API before storing it. Prevents silent failures from invalid keys lingering in production. |
-| `scripts/backfill-enrich.sh` | One-off enrichment backfill. Enriches every post that never got a spec or build plan. Not scheduled, run manually when needed. |
-| `scripts/simplify.sh` | Ensures standard folder structure. Creates docs/, scripts/, src/, tests/, assets/ directories if missing. |
-
-## Deployment & Secrets
-
-- **Web**: Cloudflare Pages + Functions. Serves HTML/JS from Pages, routes `/api/*` to Functions.
-- **AI**: Cloudflare Workers AI binding (`@cf/openai/gpt-oss-120b`).
-- **Email**: Resend API (RESEND_API_KEY).
-- **Database**: `jaybulb-api` Worker over D1 and KV. `SPARK_API_URL` is optional and defaults to `https://api.jaybulb.com`. `SPARK_SERVICE_KEY` is the service key sent on every call.
-- **Auth**: GitHub OAuth (GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET), Apple Sign In (keys from ASC).
-- **Stripe** (future): STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET.
-- **Cron Worker**: SPARK_DAEMON_SECRET (matches Pages project secret). Triggers daily generation/enrichment.
-
-## Monetization (Not Yet Built)
-
-Current state: all features free, 10 posts per 60s rate limit (spam protection only).
-
-Planned (no timeline):
-- **Spark Pro**: Unlimited posting, 24h pinned/priority visibility on new posts.
-- **Implementation hooks**: `is_pro`/`tier` column on the D1 `users` table, Stripe product/checkout, auth session wiring, Stripe webhook handler.
-- **Reference**: See Epiphany's `server/api/stripe.js` and `gates.js` for the pattern to copy.
-
-## Performance & Caching
-
-- **Feed caching**: Stored in KV, served stale-while-revalidate (client gets cached, server refreshes in background).
-- **Seed data fallback**: When D1 is empty or unreachable, `api/posts.js` returns hardcoded example posts so the app doesn't fully break.
-- **Service worker**: Static assets cached on install, API responses cached with Network-First strategy for pages, Cache-First for hashed assets.
-- **Theme sync**: localStorage (`spark_theme`) + browser preference (`prefers-color-scheme`).
-
-## Key Gotchas
-
-- **No build step**: Everything runs from source HTML/JS. Updates to `app.html` are live immediately after push.
-- **Onboarding.js is a template**: Copy-pasted into other projects. Changes here must be synced to consumers.
-- **AI generation is async**: The cron worker calls generate/enrich asynchronously; posts may appear unenriched for a few minutes after creation.
-- **Rate limiting is per-IP + per-user**: Anon IPs share a bucket (10 posts per 60s). Signed-in users have their own bucket (unlimited or Pro-limited when that ships).
-- **Keychain**: Both iOS and macOS use Keychain for token storage. Test on real devices; simulator Keychain is not persistent across app reinstalls.
-- **GitHub OAuth**: GITHUB_CLIENT_ID + GITHUB_CLIENT_SECRET must be set in production environment. Local dev can use test credentials or comment out OAuth.
+- **Web**: `npm run deploy` builds `dist/` and deploys it to the Cloudflare Pages project `sparkjar`. A push to git deploys nothing by itself.
+- **Cron**: `npx wrangler deploy --config worker/wrangler.jsonc`.
+- **Pages secrets**, set with `npx wrangler pages secret put <NAME> --project-name sparkjar`: `JWT_SECRET`, `SPARK_SERVICE_KEY`, `SPARK_DAEMON_SECRET`, `RESEND_API_KEY`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID`.
+- **Optional**: `SPARK_API_URL`, if the data Worker is not at the default host.
+- **Public variables**, in `wrangler.toml`: `ALLOWED_ORIGIN`, `APP_URL`, `APPLE_CLIENT_ID` (the bundle ID).
+- **Worker secret**: `SPARK_DAEMON_SECRET` on the cron Worker, the same value as on Pages.
+- **Old host**: `hikko.jaybulb.com` still serves the GitHub OAuth callback. Do not retire it.

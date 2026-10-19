@@ -1,19 +1,20 @@
-![Spark macOS](../icon.svg)
-# Spark macOS
-![version](https://img.shields.io/badge/version-v1.0.0-blue)
+![Thinkpond macOS](../icon.svg)
 
-Native macOS companion app for the Spark idea-sharing platform. Built with SwiftUI, targeting macOS 14+.
+# Thinkpond macOS
+
+![version](https://img.shields.io/badge/version-3.1-blue) ![license](https://img.shields.io/badge/license-MIT-green)
+
+Native Mac app for [Thinkpond](https://thinkpond.jaybulb.com), the idea forum. Built with SwiftUI for macOS 14 and later.
 
 ## Features
 
-- Browse, search, and filter posts by category
-- Sort by Hot or New
-- Upvote and downvote posts with optimistic updates
-- Create posts with title, content, and category
-- User profile with own post management
-- JWT authentication stored in Keychain
-- Keyboard shortcuts: Cmd-N (new post), Cmd-R (refresh)
-- Dark/light mode follows system
+- Feed of ideas in a sidebar layout, with a detail panel
+- Post detail with votes, comments and App Store matches
+- Post your own idea
+- Idea Bases: clusters of ideas around one topic
+- Profile with your own ideas and sign out
+- Keyboard shortcuts: Cmd-N for a new post, Cmd-R to refresh, Cmd-Return to submit
+- Dark and light mode follow the system
 
 ## Build
 
@@ -23,18 +24,7 @@ xcodegen generate
 open SparkMac.xcodeproj
 ```
 
-## Architecture
-
-```
-SparkApp (WindowGroup + Commands)
-  -> ContentView (NavigationSplitView sidebar)
-       -> FeedView (NavigationSplitView list/detail)
-       -> CreateView (Form)
-       -> ProfileView (List)
-  -> AuthSheet (modal)
-  -> AppState (@Observable, shared via .environment)
-  -> SparkAPI (URLSession, Keychain token storage)
-```
+The API it calls is described in [docs/API.md](../docs/API.md). The full layout is in [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md).
 
 ## License
 

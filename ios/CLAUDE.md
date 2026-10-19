@@ -1,5 +1,5 @@
 # Thinkpond iOS
-v3.0
+v3.1
 ## Rules
 - Portrait-only, UIRequiresFullScreen
 - Apple Liquid Glass: .ultraThinMaterial, blur, rounded corners, system font

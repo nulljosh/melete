@@ -1,138 +1,49 @@
-<img src="icon.svg" width="80" style="border-radius:18px">
+<img src="icon.svg" width="80" height="80" alt="Thinkpond icon">
 
-# Thinkpond
+![version](https://img.shields.io/badge/version-3.1-blue) [![tests](https://github.com/nulljosh/thinkpond/actions/workflows/test.yml/badge.svg)](https://github.com/nulljosh/thinkpond/actions/workflows/test.yml) ![license](https://img.shields.io/badge/license-MIT-green)
 
-![version](https://img.shields.io/badge/version-v3.0.1-blue) ![license](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fhikko-black?logo=github)](https://github.com/nulljosh/hikko)
+Drop an idea in. Watch it ripple.
 
-A jar of ideas. Post one, vote on others, and every morning a new one shows up on its own.
+A feed of ideas that people post, vote on and argue about. Every morning a new one shows up on its own, with a build spec and a plan already written.
 
-Each idea gets turned into a build spec and a step-by-step plan, server-side. Upvotes, comments, sign-in. Native apps for iOS, macOS and watchOS.
-
-[Live](https://thinkpond.jaybulb.com)
-
-<img src="progress.svg" width="460">
-
-## Platforms
-
-| Platform | Version | Status |
-|---|---|---|
-| Web (PWA) | v3.0.0 | Live |
-| iOS | 3.0 | [Live on the App Store](https://apps.apple.com/app/id6785162492). 3.0.1 waiting for review |
-| macOS | 3.0 | [Live on the Mac App Store](https://apps.apple.com/app/id6785162492) |
-| watchOS | v1.0.0 | Bundled with iOS |
-
-<img src="screenshots/ios/01-feed.jpg" width="240">
-<img src="screenshots/macos/01-feed.png" width="420">
+**[thinkpond.jaybulb.com →](https://thinkpond.jaybulb.com)**
 
 ## Features
 
-- Plain JS. One `index.html`, no build step
-- Sign up, log in, Face ID or Touch ID on iOS
-- Filter by category. Sort by Hot or New
-- One column, one idea at a time, infinite scroll
-- Upvotes that feel instant
-- A new idea every morning, written on Cloudflare Workers AI
-- Every idea grows a build spec and a plan
-- Idea Bases: clusters of ideas around a topic
-- Comment threads. Markdown export
-- Dark and light
-- Installs as a PWA and works offline
-- Cloudflare Pages Functions and Cloudflare D1 storage
-- Two columns on desktop, one on mobile
-- Tags: tech, design, business, random
-- Seeded with good ideas so new users don't land on nothing
+- A feed of ideas, sorted by New or Trending and filtered by tag or category
+- Post your own idea. Sign in to post, vote and comment
+- Upvote or downvote. The good ideas rise
+- Comment threads on every idea, and a Markdown export of each one
+- A new AI idea every morning at 09:00 UTC. A judge throws out the generic ones before they post
+- A build spec and a step-by-step plan for every idea, written on Cloudflare Workers AI
+- App Store matches in each brief: the closest apps already out there
+- Idea Bases: clusters of ideas around one topic
+- iPhone, Mac and Apple Watch apps, with Face ID or Touch ID on iPhone
+- Dark and light themes
+- $1 one-time Pro unlock on the web for unlimited posts and a 24-hour pin
 
-## Run
+## Development
 
 ```bash
-npx serve .
-npm test
+npm install
+npm run dev        # build, then serve dist/ with wrangler
+npm test           # vitest
+npm run deploy     # build, then deploy dist/ to the sparkjar Pages project
+npx wrangler deploy --config worker/wrangler.jsonc   # the daily cron Worker
 ```
 
-Deploy the site: `npm run deploy` (Cloudflare Pages).
+The Pages project still has the old name, `sparkjar`. The native apps are generated with `xcodegen generate` from each platform folder.
 
-The feed feeds itself. `POST /api/ai?type=generate` writes one idea. `POST /api/ai?type=enrich`
-fills in its spec and plan. Both run on Workers AI through the `AI` binding. No API key anywhere.
+## Docs
 
-Pages can't hold a cron, so the 09:00 schedule lives in a tiny sidecar Worker whose only
-job is to call those two endpoints:
+- [Whitepaper](WHITEPAPER.md): how an idea is written, judged and planned
+- [API](docs/API.md): every route, and the WebMCP tools
+- [Architecture](docs/ARCHITECTURE.md): what each folder does
+- [Roadmap](roadmap.md)
+- [Contributing](CONTRIBUTING.md) and [Security](SECURITY.md)
 
-```bash
-npx wrangler deploy --config worker/wrangler.jsonc
-```
-
-To enrich posts that predate the schedule:
-`SPARK_DAEMON_SECRET=... bash scripts/backfill-enrich.sh`
-
-## Known Issues
-
-
-## Security Roadmap
-
-- [ ] Purge old `.env` from git history (was committed in 3 old commits, no longer tracked): `brew install git-filter-repo && git filter-repo --path spark/.env --invert-paths` then force-push
-
-## App Store Submission
-
-The ASC record exists (id 6785162492). The IPA is built and exported. Upload is blocked on the Xcode 26 beta SDK, which the App Store rejects. When Xcode 26 goes stable:
-
-```bash
-asc builds upload --app 6785162492 --ipa /tmp/SparkExport/Spark.ipa --wait
-```
-
-Screenshots ready in `screenshots/ios/` (feed, sign-in, profile, ideas). Metadata in `ios/fastlane/metadata/en-US/`.
-
-## Roadmap
-
-**App Store, icons (2026-06-28)**
-- [x] App icon alpha channel stripped (was why ASC showed blank icon, Apple drops icons with alpha); macOS icon set created + wired in project.yml. Use `~/.agents/skills/icon/`.
-- [ ] **Ship fresh iOS + macOS builds**, icons are fixed on disk but ASC only updates the icon from a newly *processed* build. `xcodegen generate` in ios/ and macos/, then archive + upload (`ship` / asc-xcode-build), wait ~5–30 min.
-- [ ] Pick a mononame (rename "Spark Ideas"), cascades into bundle IDs + ASC records, do as its own task
-
-**App Store**
-- [ ] Submit iOS to App Store, blocked on Xcode 26 stable (beta SDK rejected by ASC); IPA + ASC record ready
-- [ ] Submit macOS to Mac App Store, widget embed error fixed 2026-07-01 (SparkWidgets appex was missing CFBundleIdentifier; GENERATE_INFOPLIST_FILE now on), build succeeds locally. ASC record created 2026-07-01 (Spark Mac, id 6786482755). Remaining: archive + upload (`asc-xcode-build`)
-- [ ] Add marketing landing page at `/landing` (currently feed is the homepage)
-- [ ] 1 more iOS screenshot (post detail with AI enrichment) for 5-screenshot requirement
-
-**Auth & Accounts**
-- [ ] SMTP email delivery for password reset
-- [ ] watchOS login UI (currently view-only without iOS pre-auth)
-
-**Features**
-- [ ] Infinite scroll / pagination (feed currently loads all posts)
-- [ ] Moderation tools
-
-**Done**
-- [x] iOS + macOS + watchOS companion apps
-- [x] AI enrichment (SPEC + PLAN, server-side on Workers AI)
-- [x] Idea Bases (AI topic clustering)
-- [x] Comment threads
-- [x] Seed 20+ quality ideas across all categories
-- [x] ASC app record, PrivacyInfo.xcprivacy, fastlane metadata, screenshots
-
-## Changelog
-
-- v2.0.0: JWT_SECRET rotated, Supabase RLS hardened
-- v1.3.0: Better seed ideas, RLS enabled on all Supabase tables, comment threads, iOS v2.0 (comments, profiles, sort, badges, 60+ tests), macOS + watchOS companions, WidgetKit widgets
-- v1.2.0
+<img src="architecture.svg" width="600" alt="Architecture">
 
 ## License
 
-MIT 2026 Joshua Trommel
-
-## From Spark.pdf (imported 2026-06-28)
-- [x] Renamed ASC app from "Spark - spark" → "Spark: Ideas" (2026-06-28)
-
-## Whitepaper
-
-[Technical whitepaper](WHITEPAPER.md)
-
-## API and agent tools
-
-An agent can drive this app. [`docs/API.md`](docs/API.md) lists the HTTP surface, where there
-is one, and the WebMCP tools registered on `document.modelContext`. Tools come in three kinds:
-read-only, writes you can undo, and the few that ask a human first.
-
-## Architecture
-
-<img src="architecture.svg" width="600">
+MIT 2026 Joshua Trommel. See [LICENSE](LICENSE).
