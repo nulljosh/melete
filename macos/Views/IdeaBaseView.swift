@@ -55,7 +55,7 @@ struct IdeaBaseView: View {
                 Section("Brainstorm a topic") {
                     TextField("Topic", text: $topic)
                         .textFieldStyle(.roundedBorder)
-                    TextField("Description (optional)", text: $description)
+                    TextField("Context (optional)", text: $description)
                         .textFieldStyle(.roundedBorder)
 
                     if let err = errorMsg {
@@ -66,7 +66,7 @@ struct IdeaBaseView: View {
                         Spacer()
                         Button(action: generate) {
                             if isCreating { ProgressView().controlSize(.small) }
-                            else { Text("Generate").fontWeight(.semibold) }
+                            else { Text("Write Three Ideas").fontWeight(.semibold) }
                         }
                         .buttonStyle(PrimaryButtonStyle())
                         .tint(.sparkBlue)

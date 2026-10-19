@@ -110,6 +110,7 @@ struct PostDetailView: View {
                                 .font(.caption)
                         }
                         .buttonStyle(.bordered)
+                        .fixedSize()
                         .help("Request AI write-up")
                     }
 
@@ -119,6 +120,7 @@ struct PostDetailView: View {
                                 .font(.caption)
                         }
                         .buttonStyle(.bordered)
+                        .fixedSize()
                         .help("Export as markdown")
                     }
 

@@ -69,23 +69,23 @@ struct ProfileView: View {
                         }
                     }
 
-                    Section {
-                        Button(role: .destructive) {
+                    Section("Account") {
+                        Button {
                             appState.logout()
                         } label: {
                             Label("Sign Out", systemImage: "arrow.right.square")
                         }
-                    }
-
-                    Section {
+                        .buttonStyle(.plain)
                         Button(role: .destructive) {
                             confirmingDeleteAccount = true
                         } label: {
                             Label("Delete Account", systemImage: "trash")
+                                .foregroundStyle(.red)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
-                .listStyle(.inset(alternatesRowBackgrounds: true))
+                .listStyle(.inset)
             } else {
                 VStack(spacing: 12) {
                     Image(systemName: "person.circle")

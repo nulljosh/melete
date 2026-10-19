@@ -57,6 +57,15 @@ struct CreateView: View {
                         .scrollContentBackground(.hidden)
                         .padding(4)
                         .background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 6))
+                        .overlay(alignment: .topLeading) {
+                            if content.isEmpty {
+                                Text("What is it, and who is it for?")
+                                    .foregroundStyle(.tertiary)
+                                    .padding(.horizontal, 9)
+                                    .padding(.vertical, 4)
+                                    .allowsHitTesting(false)
+                            }
+                        }
 
                     HStack {
                         Spacer()
