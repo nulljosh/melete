@@ -95,3 +95,7 @@ Build with `xcodegen generate` in each platform dir. Screenshots in `screenshots
 edits the generated `.xcodeproj`, so copy the new version and build number into `project.yml`
 afterwards or the next `xcodegen generate` reverts them. iOS screenshots: `cd ios && fastlane snapshot`
 (it hangs after writing the files; the PNGs are done when they appear). If snapshot hangs mid-run, `ios/scripts/appstore-shots.sh <udid> <outdir> <Spark.app>` does the same job with simctl and AXe and takes about a minute per device. Use a fresh simulator per size (iPhone 14 Plus gives 1284x2778 for the 6.5-inch set, iPad Pro 12.9-inch 6th gen gives 2048x2732).
+
+## The loop
+
+The roadmap loop picks up from `docs/LOOP-HANDOFF.md`. Read it first: it holds the current state, the next steps in order and the restart prompt.
