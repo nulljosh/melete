@@ -18,7 +18,8 @@ enum SidebarItem: String, CaseIterable, Identifiable {
 
 struct ContentView: View {
     @Environment(AppState.self) private var appState
-    @State private var selectedItem: SidebarItem = .feed
+    // ponytail: `-profile` launch arg opens on Profile for screenshots
+    @State private var selectedItem: SidebarItem = ProcessInfo.processInfo.arguments.contains("-profile") ? .profile : .feed
     // ponytail: `-detailOnly` launch arg hides the sidebar for landing-page screenshots
     @State private var columns: NavigationSplitViewVisibility = ProcessInfo.processInfo.arguments.contains("-detailOnly") ? .detailOnly : .all
 

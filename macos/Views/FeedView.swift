@@ -84,7 +84,9 @@ struct FeedView: View {
                     }
                 }
             }
-            .frame(minWidth: 280, idealWidth: 340, maxWidth: 500)
+            // Max plus the detail's 320 must stay within the detail column's 640 minimum,
+            // or the detail pane runs past the window edge at small sizes.
+            .frame(minWidth: 260, idealWidth: 300, maxWidth: 320)
 
             Group {
                 if let post = selectedPost {

@@ -99,10 +99,11 @@ struct FeedView: View {
                         .sensoryFeedback(.selection, trigger: appState.sortMode)
 
                         ForEach(appState.sortedPosts) { post in
-                            NavigationLink(value: post) {
+                            // ponytail: hidden link drops the row chevron so cards run full width (iOS 17 has no indicator modifier)
+                            ZStack {
+                                NavigationLink(value: post) { EmptyView() }.opacity(0)
                                 PostCard(post: post)
                             }
-                            .buttonStyle(PressableStyle())
                             .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.clear)
@@ -674,15 +675,6 @@ struct PrimaryButtonStyle: ButtonStyle {
             .padding(.horizontal, 20)
             .padding(.vertical, 12)
             .background(Color.bulb.opacity(isEnabled ? 1 : 0.4), in: Capsule())
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-            .animation(.spring(duration: 0.25), value: configuration.isPressed)
-    }
-}
-
-// Cards sink a little under the finger.
-struct PressableStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(duration: 0.25), value: configuration.isPressed)
     }

@@ -15,12 +15,12 @@ struct ProfileView: View {
     var body: some View {
         Group {
             if appState.isLoggedIn, let user = appState.user {
-                List {
+                Form {
                     Section {
                         HStack(spacing: 14) {
                             Circle()
                                 .fill(Color.sparkBlue.opacity(0.15))
-                                .frame(width: 48, height: 48)
+                                .frame(width: 44, height: 44)
                                 .overlay(
                                     Text(String(user.username.prefix(1)).uppercased())
                                         .font(.title3.bold())
@@ -29,62 +29,58 @@ struct ProfileView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(user.username)
                                     .font(.headline)
-                                Text("\(myPosts.count) post\(myPosts.count == 1 ? "" : "s")")
-                                    .font(.caption)
+                                Text("\(myPosts.count) idea\(myPosts.count == 1 ? "" : "s")")
+                                    .font(.callout)
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Button("Sign Out") { appState.logout() }
                         }
                         .padding(.vertical, 4)
                     }
 
                     if !myPosts.isEmpty {
-                        Section("Your Ideas") {
+                        Section("Your ideas") {
                             ForEach(myPosts) { post in
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(post.title)
-                                            .font(.subheadline.weight(.medium))
-                                            .lineLimit(2)
-                                        HStack {
-                                            Spacer()
-                                            Label("\(post.score)", systemImage: "arrow.up")
-                                                .font(.caption)
-                                                .foregroundStyle(.secondary)
-                                        }
-                                    }
-                                    Spacer()
+                                HStack(spacing: 12) {
+                                    Text(post.title)
+                                        .lineLimit(1)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Label("\(post.score)", systemImage: "arrow.up")
+                                        .labelStyle(.titleAndIcon)
+                                        .monospacedDigit()
+                                        .foregroundStyle(.secondary)
                                     Button {
                                         postToDelete = post
                                     } label: {
                                         Image(systemName: "trash")
-                                            .foregroundStyle(.red.opacity(0.7))
+                                            .foregroundStyle(.secondary)
                                     }
                                     .buttonStyle(.plain)
-                                    .help("Delete post")
+                                    .help("Delete idea")
                                 }
-                                .padding(.vertical, 2)
                             }
                         }
                     }
 
-                    Section("Account") {
-                        Button {
-                            appState.logout()
-                        } label: {
-                            Label("Sign Out", systemImage: "arrow.right.square")
+                    Section {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Delete account")
+                                Text("Permanently removes your account.")
+                                    .font(.callout)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Button(role: .destructive) {
+                                confirmingDeleteAccount = true
+                            } label: {
+                                Text("Delete…").foregroundStyle(.red)
+                            }
                         }
-                        .buttonStyle(.plain)
-                        Button(role: .destructive) {
-                            confirmingDeleteAccount = true
-                        } label: {
-                            Label("Delete Account", systemImage: "trash")
-                                .foregroundStyle(.red)
-                        }
-                        .buttonStyle(.plain)
                     }
                 }
-                .listStyle(.inset)
+                .formStyle(.grouped)
             } else {
                 VStack(spacing: 12) {
                     Image(systemName: "person.circle")
