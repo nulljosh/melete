@@ -12,9 +12,8 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.
 - [ ] Backfill: the feed is 20 "Shared X tracker for roommates" posts from the old model. Decide whether to unpin, hide or leave them.
 
-- [ ] App icon still uses the old terracotta firefly. Redo it in Icon Composer on the new lily-pad green (#4d7c45), then the favicons (`icon.svg`, `icon-192.svg`, `icon-512.svg`, `favicon.svg`).
+- [ ] 3.1 (iOS, Mac, watch): ships the green palette and the new drop-and-ripple icon. Cut it once 3.0.1 clears review, with fresh green screenshots.
 - [ ] Mac shots: the window opens at 900x650 and System Events is denied resizing it. Write the saved frame to defaults (1440x900), then capture with `screencapture -l`. Wait for the new-model ideas so the feed looks good.
-- [ ] iOS shots on the green palette go out with 3.1, after 3.0.1 clears review.
 
 ## Sign-in and mail
 - [ ] Sign in with Apple has never had a real round trip on a physical device. Needs a phone in hand.
