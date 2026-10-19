@@ -15,6 +15,15 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] 3.1 (iOS, Mac, watch): ships the green palette and the new drop-and-ripple icon. Cut it once 3.0.1 clears review, with fresh green screenshots.
 - [ ] Mac shots: the window opens at 900x650 and System Events is denied resizing it. Write the saved frame to defaults (1440x900), then capture with `screencapture -l`. Wait for the new-model ideas so the feed looks good.
 
+## From Joshua's QA, 2026-10-19
+- [ ] Merge the Ideas tab into Profile. Profile lists your own ideas (it says "0 posts" and shows none today), with Idea Bases and YC inspiration one tap in. Tab bar becomes Feed, Create, Profile.
+- [ ] Onboarding becomes a hands-on demo: walk the real feed, vote, open an idea, see the AI brief, then ask to sign in or sign up at the end. Today it is slides, shows after sign-in, and the bulb is still terracotta.
+- [ ] Idea Base "Queue Generation" saves a topic and nothing ever writes the ideas (the daemon that did is gone). Make the POST generate three ideas on the topic with gpt-oss and link them.
+- [ ] Brand kit and design system refresh around the green: BRAND.md, tokens, landing page, README.
+- [ ] The floating tab bar covers the bottom of post detail and comments. Add bottom inset.
+- [ ] After Post, a "Posted!" alert blocks the screen. Open the new post instead.
+- [ ] Google sign-in (and Apple on the web): code is done, blocked on the Google OAuth client and Apple Services ID.
+
 ## Sign-in and mail
 - [ ] Sign in with Apple has never had a real round trip on a physical device. Needs a phone in hand.
 - [ ] Confirm a password-reset email lands in a real inbox. `/api/health/mail` now says the Resend key is alive, but not that the mail arrives.
