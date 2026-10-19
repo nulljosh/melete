@@ -21,7 +21,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] The floating tab bar covers the bottom of post detail and comments. Add bottom inset.
 - [ ] Google sign-in (and Apple on the web): code is done, blocked on the Google OAuth client and Apple Services ID.
 
-- [ ] Mac parity with iOS 3.1: comments (the Mac has none), sidebar Feed / Create (Write, Brainstorm) / Profile with only your ideas.
 - [ ] Show which way you voted. The arrow looks the same before and after an upvote.
 - [ ] Delete the 42 junk posts. Backed up in `_attic/thinkpond-junk-posts-2026-10-19.json`, delete is `_attic/thinkpond-delete-junk.sql` (auto mode blocks it; Joshua runs it).
 
