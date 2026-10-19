@@ -32,12 +32,8 @@ struct IdeaBaseView: View {
                             HStack {
                                 Text(ib.topic)
                                     .font(.subheadline.bold())
-                                if ib.pending == true {
-                                    Text("Generating...")
-                                        .font(.caption2)
-                                        .foregroundStyle(.orange)
-                                } else {
-                                    Text("\(ib.postIds?.count ?? 0) ideas")
+                                if let n = ib.postIds?.count, n > 0 {
+                                    Text("\(n) ideas")
                                         .font(.caption2)
                                         .foregroundStyle(.secondary)
                                 }

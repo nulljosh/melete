@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111">
 <script src="/theme.js"></script>
-<title>Thinkpond, Catch ideas before they fly away</title>
+<title>Thinkpond, Drop an idea in. Watch it ripple.</title>
 <meta name="description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-<meta property="og:title" content="Thinkpond, Catch ideas before they fly away">
+<meta property="og:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
 <meta property="og:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-<meta property="og:url" content="https://hikko.heyitsmejosh.com">
-<meta property="og:image" content="https://hikko.heyitsmejosh.com/og.png">
+<meta property="og:url" content="https://hikko.jaybulb.com">
+<meta property="og:image" content="https://hikko.jaybulb.com/og.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://hikko.heyitsmejosh.com/og.png">
+<meta name="twitter:image" content="https://hikko.jaybulb.com/og.png">
   <meta name="apple-itunes-app" content="app-id=6785162492">
 <link rel="apple-touch-icon" href="/icon-192.svg">
 <link rel="icon" href="/icon.svg">
@@ -61,10 +61,10 @@
   /* Primary actions: flat lily-pad green. */
   .btn-primary { background: var(--accent); color: var(--on-accent); }
   .btn-primary:hover { transform: translateY(-2px); }
-  .btn-secondary { color: var(--text); border: 1px solid var(--border); background: transparent; }
+  .btn-secondary { color: var(--text); border: 1px solid var(--border); background: var(--bg); }
   .btn-secondary:hover { opacity: 0.7; }
 
-  header { position: sticky; top: 0; z-index: 100; background: var(--header-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+  header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
   .header-inner { max-width: 1080px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
   .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; color: var(--text); }
   .logo img { border-radius: 6px; width: 26px; height: 26px; }
@@ -81,7 +81,7 @@
   .theme-btn:hover { opacity: 0.7; }
 
   .hero { max-width: 1080px; margin: 0 auto; padding: 6rem 1.5rem 5rem; text-align: center; }
-  .hero-copy { animation: fadeUp 0.8s var(--ease) both; max-width: 640px; margin: 0 auto; }
+  .hero-copy { animation: fadeUp 0.8s var(--ease) backwards; max-width: 640px; margin: 0 auto; }
   .hero-actions { justify-content: center; }
   .hero h1 { font-size: clamp(2.75rem, 5.5vw, 4.25rem); line-height: 1.05; margin-bottom: 1.25rem; }
   .hero p { font-size: 1.125rem; line-height: 1.6; color: var(--text2); margin: 0 0 2rem; }
@@ -90,9 +90,9 @@
 
   /* a slow-drifting wall of idea titles, the feed itself as wallpaper */
   .hero { position: relative; isolation: isolate; overflow: hidden; }
-  .hero-copy { position: relative; z-index: 2; }
+  .hero-copy { position: relative; z-index: 2; transform: translate3d(0, calc(var(--sy, 0) * 0.15px), 0); opacity: calc(1 - var(--sy, 0) / 600); }
   .hero-wall {
-    position: absolute; top: -8%; bottom: -8%; left: 50%; width: 100vw; transform: translateX(-50%); z-index: 0;
+    position: absolute; top: -8%; bottom: -30%; left: 50%; width: 100vw; transform: translate3d(-50%, calc(var(--sy, 0) * 0.4px), 0); z-index: 0;
     display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 14px;
     opacity: 0.45; pointer-events: none; user-select: none;
   }
@@ -121,9 +121,6 @@
   .section-head { max-width: 480px; margin: 0 auto 3rem; text-align: center; }
   .section-head h2 { font-size: 2rem; }
 
-  .fly { position:absolute; width:8px; height:8px; border-radius:50%; background:#f7c948; box-shadow:0 0 14px 5px rgba(247,201,72,.55); opacity:0; animation: fly 9s ease-in-out infinite; pointer-events:none; }
-  @keyframes fly { 0%,100% { opacity:0; transform:translate(0,0); } 30%,60% { opacity:.9; } 50% { transform:translate(24px,-30px); } }
-  @media (prefers-reduced-motion: reduce) { .fly { animation:none; opacity:.6; } }
   .icon-tile { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-tint); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--link, var(--accent)); font-size: 1.25rem; }
 
   .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
@@ -151,7 +148,7 @@
   }
 
 /* footer directory, ported from Joshua Tree */
-footer { margin: 0; padding: 56px 0 40px; border-top: 1px solid var(--border); text-align: left; font-size: 13px; }
+footer { margin: 0; padding: 56px 0 0; border-top: 1px solid var(--border); text-align: left; font-size: 13px; }
 footer .foot-rule { display: flex; align-items: center; gap: 16px; max-width: 880px; margin: 0 auto; padding: 0 20px 28px; font-size: 13px; letter-spacing: .06em; font-weight: 500; color: var(--text2); }
 footer .foot-rule::before { content: ""; order: 1; flex: 1; height: 1px; background: var(--border); }
 footer .foot-rule > :first-child { order: 0; }
@@ -166,15 +163,16 @@ footer .foot-rule > :last-child { order: 2; }
 .foot-bar { max-width: 880px; margin: 0 auto; padding: 18px 20px 0; border-top: 1px solid var(--border); }
 .foot-bar .foot-meta { margin: 0; text-align: left; color: var(--text2); font-size: 12.5px; line-height: 1.9; }
 .foot-bar .foot-meta a { color: var(--text2); }
+.foot-band { display: block; width: 100%; height: clamp(200px, 28vw, 360px); margin-top: 40px; }
 @media (max-width: 700px) { .foot-dir { grid-template-columns: repeat(2, 1fr); } }
 </style>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Thinkpond">
-    <meta property="og:title" content="Thinkpond, Catch ideas before they fly away">
+    <meta property="og:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
     <meta property="og:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
-    <meta property="og:url" content="https://hikko.heyitsmejosh.com/">
+    <meta property="og:url" content="https://hikko.jaybulb.com/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Thinkpond, Catch ideas before they fly away">
+    <meta name="twitter:title" content="Thinkpond, Drop an idea in. Watch it ripple.">
     <meta name="twitter:description" content="A feed of AI-generated startup and project ideas, voted and enriched by the crowd. Vote, comment, and turn the best ones into something real.">
   </head>
 <body id="top">
@@ -194,23 +192,23 @@ footer .foot-rule > :last-child { order: 2; }
 </header>
 
 <div class="hero">
-  <div class="hero-wall" id="heroWall" aria-hidden="true"><i class="fly" style="left:12%;top:30%;animation-delay:0s"></i><i class="fly" style="left:28%;top:70%;animation-delay:2.2s"></i><i class="fly" style="left:46%;top:22%;animation-delay:4.1s"></i><i class="fly" style="left:63%;top:64%;animation-delay:1.3s"></i><i class="fly" style="left:78%;top:28%;animation-delay:5.5s"></i><i class="fly" style="left:90%;top:58%;animation-delay:3.2s"></i></div>
+  <div class="hero-wall" id="heroWall" aria-hidden="true"></div>
   <script>
+  // Parallax: the wall of ideas drifts at 40% of scroll, the headline at 15% and fades out.
   (function(){
-    var wall=document.getElementById('heroWall'),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,ticking=false;
-    if(reduced)return;
-    function onScroll(){if(ticking)return;ticking=true;requestAnimationFrame(function(){wall.style.transform='translateY('+(scrollY*0.15)+'px)';ticking=false;});}
-    addEventListener('scroll',onScroll,{passive:true});
+    var hero=document.currentScript.parentNode,ticking=false;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    addEventListener('scroll',function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){hero.style.setProperty('--sy',Math.min(scrollY,900));ticking=false;});},{passive:true});
   })();
   </script>
   <div class="hero-copy">
-    <div class="eyebrow">Thinkpond, the firefly jar</div>
-    <h1>Catch ideas before they fly away</h1>
-    <p>A jar of ideas that glows. A new one flies in every morning, grows a build spec and a plan, and the best ones rise when you vote.</p>
+    <div class="eyebrow">Thinkpond, the pond that thinks</div>
+    <h1>Drop an idea in. Watch it ripple.</h1>
+    <p>A new idea lands every morning with a build spec and a plan. Drop in your own, vote, and the good ones float to the top.</p>
     <div class="hero-actions">
       <a href="/app.html?auth=register" class="btn btn-primary">Sign up free</a>
       <a href="/app.html" class="btn btn-secondary">Browse the feed</a>
-      <a href="https://apps.apple.com/app/id6785162492" class="btn btn-secondary" target="_blank" rel="noopener">Mac App Store</a>
+      <a href="https://apps.apple.com/app/id6785162492" class="btn btn-secondary" target="_blank" rel="noopener">App Store</a>
     </div>
   </div>
 </div>
@@ -302,22 +300,22 @@ footer .foot-rule > :last-child { order: 2; }
     <div class="xp-card">
       <h3>Windows</h3>
       <p>Open the web app in Edge or Chrome, then <strong>Install Thinkpond</strong> from the address bar. It lands in the Start Menu like any other app.</p>
-      <a href="https://hikko.heyitsmejosh.com">Open &amp; install &rarr;</a>
+      <a href="https://hikko.jaybulb.com">Open &amp; install &rarr;</a>
     </div>
     <div class="xp-card">
       <h3>Android</h3>
       <p>Open the web app in Chrome, then <strong>Add to Home screen</strong>. Full screen, no browser chrome, works offline.</p>
-      <a href="https://hikko.heyitsmejosh.com">Open &amp; install &rarr;</a>
+      <a href="https://hikko.jaybulb.com">Open &amp; install &rarr;</a>
     </div>
     <div class="xp-card">
       <h3>Linux</h3>
       <p>Same as Windows: install the web app from Chrome or Chromium and it runs in its own window.</p>
-      <a href="https://hikko.heyitsmejosh.com">Open &amp; install &rarr;</a>
+      <a href="https://hikko.jaybulb.com">Open &amp; install &rarr;</a>
     </div>
     <div class="xp-card">
       <h3>Web</h3>
       <p>Nothing to install. The same app, in any modern browser.</p>
-      <a href="https://hikko.heyitsmejosh.com">Open the web app &rarr;</a>
+      <a href="https://hikko.jaybulb.com">Open the web app &rarr;</a>
     </div>
     </div>
   </div>
@@ -331,7 +329,7 @@ footer .foot-rule > :last-child { order: 2; }
       <ul>
         <li><a href="https://apps.apple.com/app/id6785162492">Mac App Store</a></li>
         <li><a href="/app.html">Open the web app</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/CHANGELOG.md">Changelog</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/CHANGELOG.md">Changelog</a></li>
         <li><a href="/support.html">Support</a></li>
       </ul>
     </div>
@@ -341,26 +339,26 @@ footer .foot-rule > :last-child { order: 2; }
         <li><a href="#features">Features</a></li>
         <li><a href="#how">How it works</a></li>
         <li><a href="#install-anywhere">Install anywhere</a></li>
-        <li><a href="https://heyitsmejosh.com/docs.html#hikko">Docs</a></li>
+        <li><a href="https://jaybulb.com/docs.html#thinkpond">Docs</a></li>
       </ul>
     </div>
     <div class="foot-col">
       <h3>Developers</h3>
       <ul>
-        <li><a href="https://github.com/nulljosh/hikko">Source</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/docs/API.md">API reference</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/docs/ARCHITECTURE.md">Architecture</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/issues">Report a bug</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/CONTRIBUTING.md">Contributing</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond">Source</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/docs/API.md">API reference</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/docs/ARCHITECTURE.md">Architecture</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/issues">Report a bug</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/CONTRIBUTING.md">Contributing</a></li>
       </ul>
     </div>
     <div class="foot-col">
       <h3>Project</h3>
       <ul>
         <li><a href="/tos.html">Terms</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/SECURITY.md">Security</a></li>
-        <li><a href="https://github.com/nulljosh/hikko/blob/main/LICENSE">License (MIT)</a></li>
-        <li><a href="https://heyitsmejosh.com">Portfolio</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/SECURITY.md">Security</a></li>
+        <li><a href="https://github.com/nulljosh/thinkpond/blob/main/LICENSE">License (MIT)</a></li>
+        <li><a href="https://jaybulb.com">Portfolio</a></li>
         <li><a href="#top">Back to top</a></li>
       </ul>
     </div>
@@ -368,7 +366,71 @@ footer .foot-rule > :last-child { order: 2; }
   <div class="foot-bar">
     <p class="foot-meta">Thinkpond <span id="footver"></span> &middot; MIT License &middot; &copy; 2026 Joshua Trommel &middot; Made with <span aria-hidden="true">&hearts;</span> in Vancouver, BC</p>
   </div>
+  <canvas class="foot-band" id="pondShader" aria-hidden="true"></canvas>
 </footer>
+<script>
+// Footer shader: the pond. Drops land at random and ring outward over a slow swell,
+// page colour at the top deepening to the accent at the bottom. Runs only while on
+// screen, one still frame under reduced motion; without WebGL the band stays empty.
+(function () {
+  var canvas = document.getElementById('pondShader');
+  var gl = canvas && canvas.getContext('webgl', { antialias: false });
+  if (!gl) return;
+  var FRAG = [
+    'precision mediump float;',
+    'uniform vec2 res; uniform float time; uniform vec3 bg; uniform vec3 ink;',
+    'float rnd(float n){ return fract(sin(n * 127.1) * 43758.5453); }',
+    'void main(){',
+    '  vec2 uv = gl_FragCoord.xy / res; float asp = res.x / res.y;',
+    '  vec2 p = vec2(uv.x * asp, uv.y);',
+    '  float h = 0.18 * sin(p.x * 2.3 + time * 0.35) * sin(p.y * 4.0 - time * 0.27);',
+    '  for (int i = 0; i < 6; i++) {',
+    '    float fi = float(i), t = time * 0.5 + fi * 1.9, n = floor(t / 5.0), lt = mod(t, 5.0);',
+    '    vec2 c = vec2(rnd(n + fi * 7.0) * asp, 0.15 + 0.7 * rnd(n * 3.1 + fi));',
+    '    float d = length(p - c) - lt * 0.12;',
+    '    h += sin(d * 60.0) * exp(-abs(d) * 18.0) * (1.0 - lt / 5.0);',
+    '  }',
+    '  float depth = pow(1.0 - uv.y, 1.3);',
+    '  vec3 base = mix(bg, ink, depth);',
+    '  vec3 lit = mix(ink, bg, smoothstep(0.3, 0.85, depth));',
+    '  gl_FragColor = vec4(mix(base, lit, clamp(h, 0.0, 1.0) * 0.45), 1.0);',
+    '}'
+  ].join('\n');
+  function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
+  var vs = sh(gl.VERTEX_SHADER, 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }'), fs = sh(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return;
+  var prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  var uRes = gl.getUniformLocation(prog, 'res'), uTime = gl.getUniformLocation(prog, 'time'), uBg = gl.getUniformLocation(prog, 'bg'), uInk = gl.getUniformLocation(prog, 'ink');
+  // Colours come from the live theme and are read again when it changes, never per frame.
+  function rgb(prop) {
+    var m = getComputedStyle(document.documentElement).getPropertyValue(prop).trim().match(/^#([0-9a-f]{6})$/i);
+    return m ? [0, 2, 4].map(function (i) { return parseInt(m[1].substr(i, 2), 16) / 255; }) : [0.3, 0.49, 0.27];
+  }
+  var bgc, inkc;
+  function colours() { bgc = rgb('--bg'); inkc = rgb('--accent'); }
+  function size() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr); canvas.height = Math.round(canvas.clientHeight * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  function draw(t) {
+    gl.uniform2f(uRes, canvas.width, canvas.height); gl.uniform1f(uTime, t / 1000);
+    gl.uniform3fv(uBg, bgc); gl.uniform3fv(uInk, inkc); gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches, onScreen = false, frame = 0;
+  function loop(t) { draw(t); frame = onScreen ? requestAnimationFrame(loop) : 0; }
+  function kick() { if (!still && onScreen && !frame) frame = requestAnimationFrame(loop); }
+  colours(); size(); draw(4000);
+  addEventListener('resize', function () { size(); draw(performance.now()); });
+  new MutationObserver(function () { colours(); draw(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; kick(); }).observe(canvas);
+})();
+</script>
 <script>fetch("/package.json").then(function(r){return r.json()}).then(function(p){if(p.version)document.getElementById("footver").textContent="v"+p.version}).catch(function(){})</script>
 <script>
 // Wallpaper of real idea titles from the feed; the sample list only shows if the API is down.
@@ -516,7 +578,7 @@ footer .foot-rule > :last-child { order: 2; }
     if (!slice.length) slice = lines.slice(0, per);
     slice.concat(slice).forEach(function (text, k) {  // doubled, so the loop is seamless
       var el = document.createElement('i');
-      el.className = 'tile' + ((c * 7 + k) % 9 === 0 ? ' lit' : '');  // a few fireflies in the jar
+      el.className = 'tile' + ((c * 7 + k) % 9 === 0 ? ' lit' : '');  // a few lily pads lit green
       el.innerHTML = '<svg viewBox="0 0 24 24">' + I[iconFor(text)] + '</svg>';
       col.appendChild(el);
     });

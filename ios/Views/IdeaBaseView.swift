@@ -43,9 +43,11 @@ struct IdeaBaseView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(ib.topic)
                                     .font(.subheadline.weight(.medium))
-                                Text("\(ib.postIds?.count ?? 0) ideas")
-                                    .font(.caption2)
-                                    .foregroundStyle(.secondary)
+                                if let n = ib.postIds?.count, n > 0 {
+                                    Text("\(n) ideas")
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                             .onAppear {
                                 if ib.id == ideaBases.last?.id { loadMore() }

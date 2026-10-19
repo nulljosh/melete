@@ -1,14 +1,14 @@
 # Thinkpond macOS
-v1.0.0
+v3.1
 ## Rules
 - macOS 14+, SwiftUI, @Observable
 - Sidebar navigation: Feed, Create, Profile
-- Accent: #0071e3 blue
+- Accent: lily-pad green #4d7c45 (#8fc286 dark), same palette as iOS
 - No emojis
 - Keyboard shortcuts: Cmd-N (new post), Cmd-R (refresh), Cmd-Return (submit post)
 - Error banner system for auth and API failures
 - Optimistic voting with debounce and error revert
-- Same API as iOS: https://hikko.heyitsmejosh.com
+- Same API as iOS: https://hikko.jaybulb.com
 ## Run
 ```bash
 cd macos && xcodegen generate && open SparkMac.xcodeproj
