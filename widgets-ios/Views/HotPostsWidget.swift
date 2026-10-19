@@ -174,5 +174,5 @@ struct HotPostsWidgetView: View {
 }
 
 extension Color {
-    static let sparkBlue = Color(red: 0/255, green: 113/255, blue: 227/255)
+    static let sparkBlue = Color(red: 77/255, green: 124/255, blue: 69/255) // lily-pad green #4d7c45
 }

@@ -1,6 +1,6 @@
 # Thinkpond brand kit and design system
 
-Thinkpond is where ideas ripple out. The mark is a drop and its ripple.
+An idea drops into the pond and ripples out
 
 ## The mark
 One bold flat white glyph on an accent gradient tile. No text, no outline, no emblem.
