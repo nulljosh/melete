@@ -11,6 +11,7 @@
 		0EEFE60C27CEE6B55A44F759 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436289A4D6A74C988487FC0E /* ProfileView.swift */; };
 		14456B07FFF1C9622E2B0BF0 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E3C9B418549FE7881B8C4 /* PostDetailView.swift */; };
 		297DC1ACAED1715EFA4964DF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA990AD670E5BA9D470D97 /* FeedView.swift */; };
+		349A9DACF3892CB3EF2C5179 /* AppStoreMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DECB7470480BEBEC576826E /* AppStoreMatches.swift */; };
 		43348A6105ED5FAF2864DFE7 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CB0C43584A71B2FFB2FA /* Post.swift */; };
 		53CC98910CFEEFE2DCBC89D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A7FFFF165AC6C43A0ACAFC /* Assets.xcassets */; };
 		6242807D9A2560BE5A973A12 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A4723C631395FB48011D97 /* User.swift */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		097EA01C2BE79648AFAD5147 /* SparkWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SparkWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B176C7E59929C4DD2D96928 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		0DECB7470480BEBEC576826E /* AppStoreMatches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreMatches.swift; sourceTree = "<group>"; };
 		0F253D2425067A1CB6EA57BB /* StatsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWidget.swift; sourceTree = "<group>"; };
 		0FB7E7EDC215E9663953CFF2 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		10F6A61533F53E35DBC87763 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		616835C07406D803A5749B78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0DECB7470480BEBEC576826E /* AppStoreMatches.swift */,
 				87E81CD2105DD2FB9C65A370 /* AuthSheet.swift */,
 				74ADF45D8EAF8BDDF5848A34 /* CommentsView.swift */,
 				0FB7E7EDC215E9663953CFF2 /* CreateView.swift */,
@@ -310,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD4E0341AC5DF7988CF24A97 /* AppState.swift in Sources */,
+				349A9DACF3892CB3EF2C5179 /* AppStoreMatches.swift in Sources */,
 				EFA46C8F2E8852FBBA4AD5E5 /* AuthSheet.swift in Sources */,
 				860D1DD7E3ED119C9F473BA5 /* Comment.swift in Sources */,
 				F98F8681104227A5A07A9FA2 /* CommentsView.swift in Sources */,

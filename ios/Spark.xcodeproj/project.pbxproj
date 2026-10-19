@@ -32,6 +32,7 @@
 		5BB9DD6838440BC8EADDA9B3 /* WhatsNewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6198C2205B519C65D90BAA74 /* WhatsNewSheet.swift */; };
 		5CD2F5C284CF86DFA30CE546 /* SparkWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FCC6BAE9EE29681504AD6344 /* SparkWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		65886B3F202242BC42C24F3E /* StatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58021A007F206C0665C9B3B0 /* StatsProvider.swift */; };
+		6B5783F7F47EB71785D46E2A /* AppStoreMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DBFDD54231937EB2FE534C /* AppStoreMatches.swift */; };
 		71BE24EAA1A700AAA9BB76CD /* PromoTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72094F9C74ACA143D955E51E /* PromoTour.swift */; };
 		76E656D417133C9C6FAAB2B7 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07602A28278D31BE34810E4E /* AppStateTests.swift */; };
 		793707E228BE00F04A985F48 /* HotPostsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310D140B001AC5985973BDC /* HotPostsWidget.swift */; };
@@ -144,6 +145,7 @@
 		DF0AE766ACE7A24B15BEB2FF /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		E188B5AB14AB56062C850BD7 /* Spark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spark.entitlements; sourceTree = "<group>"; };
 		E5DA0EC06F704242AF7E70B0 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		F4DBFDD54231937EB2FE534C /* AppStoreMatches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreMatches.swift; sourceTree = "<group>"; };
 		FCC6BAE9EE29681504AD6344 /* SparkWidgetsExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SparkWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -212,6 +214,7 @@
 		349D5D918C2486E46D5280D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F4DBFDD54231937EB2FE534C /* AppStoreMatches.swift */,
 				60FC9FCE7C2CE1C146107688 /* CommentsView.swift */,
 				85C9C82E1E93666E8871938C /* IdeaBaseView.swift */,
 				853643D321C111724EAABB6E /* PostDetailView.swift */,
@@ -482,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9CE52F15DCEE57F1C52005E /* AppState.swift in Sources */,
+				6B5783F7F47EB71785D46E2A /* AppStoreMatches.swift in Sources */,
 				54E0B9930C9FD58228F4CDB9 /* Comment.swift in Sources */,
 				DE4910D8269C9AEAE75D98EA /* CommentsView.swift in Sources */,
 				406DB6B6C2317DDE3A7A0A46 /* ContentView.swift in Sources */,
