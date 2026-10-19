@@ -25,6 +25,5 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
-- [ ] A second model pass that rejects a daily idea before it posts if it is generic.
 - [ ] Trademark and prior-art lookup on an idea.
 - [ ] The landing runs the real app under the hero (house standard), not just a wall of titles.

@@ -12,12 +12,12 @@ const { getIp, checkRateLimit } = require('./_lib/ratelimit');
 // deepseek-v4 are not).
 const GEMMA_MODEL = '@cf/openai/gpt-oss-120b';
 
-async function callGemma(prompt, maxTokens = 1200) {
+async function callGemma(prompt, maxTokens = 1200, temperature = 0.9) {
   const ai = globalThis.__env && globalThis.__env.AI;
   if (!ai) throw new Error('AI binding unavailable');
   const out = await ai.run(GEMMA_MODEL, {
     messages: [{ role: 'user', content: prompt }],
-    temperature: 0.9,
+    temperature,
     max_tokens: maxTokens
   });
   const msg = out && out.choices && out.choices[0] && out.choices[0].message;
@@ -57,6 +57,26 @@ function tooSimilar(title, recentTitles) {
     if (String(other).trim().split(/\s+/)[0].toLowerCase() === first) sameOpening++;
   }
   return sameOpening >= 2;
+}
+
+// Second opinion before anything posts. The writer at 0.9 still slips into
+// "an app that tracks X" now and then; a cold read at 0.2 catches it. A judge
+// that errors or mumbles lets the draft through: a broken judge must not
+// silence the daily idea.
+async function judgeIdea(idea, ask = callGemma) {
+  let verdict;
+  try {
+    verdict = parseJsonish(await ask(
+      `You review ideas for a public idea board and reject generic ones.\n` +
+      `Generic: a tracker, list, reminder, dashboard, marketplace, social network or "AI assistant" anyone could name without knowing the people; a shared schedule, chore or bill app for roommates or families; or a vague problem.\n` +
+      `Specific: a real group of people, one concrete job they do by hand today, and exactly what the app does about it.\n` +
+      `Title: ${idea.title}\nContent: ${idea.content}\n\n` +
+      `Reply with ONLY JSON: {"specific": true or false, "reason": "under 12 words"}`,
+      300, 0.2
+    ));
+  } catch { return { ok: true }; }
+  if (verdict && verdict.specific === false) return { ok: false, reason: String(verdict.reason || 'generic') };
+  return { ok: true };
 }
 
 const GEN_CATEGORIES = ['tech', 'productivity', 'finance', 'health', 'sustainability'];
@@ -100,7 +120,12 @@ async function handleGenerate(req, res) {
       `Reply with ONLY JSON: {"title": "...", "content": "..."}`
     );
     idea = parseJsonish(text);
-    if (idea && idea.title && idea.content && !tooSimilar(idea.title, titles)) break;
+    if (idea && idea.title && idea.content && !tooSimilar(idea.title, titles)) {
+      const verdict = await judgeIdea(idea);
+      if (verdict.ok) break;
+      idea = { generic: idea.title + ' (' + verdict.reason + ')' };
+      continue;
+    }
     if (idea && idea.title && idea.content) idea = { repeat: idea.title };
   }
 
@@ -108,6 +133,7 @@ async function handleGenerate(req, res) {
   // error page, which hid this failure entirely the first time it happened.
   if (!idea) return res.status(422).json({ error: 'Model returned unparseable idea', raw: text.slice(0, 300) });
   if (idea.repeat) return res.status(422).json({ error: 'Idea too close to a recent post', raw: idea.repeat });
+  if (idea.generic) return res.status(422).json({ error: 'Judge called the idea generic', raw: idea.generic });
   if (!idea.title || !idea.content) return res.status(422).json({ error: 'Incomplete idea', raw: text.slice(0, 300) });
 
   const rows = await sparkRequest('posts', {
@@ -366,3 +392,4 @@ module.exports = async function handler(req, res) {
   }
 };
 module.exports.tooSimilar = tooSimilar;
+module.exports.judgeIdea = judgeIdea;

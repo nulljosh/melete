@@ -119,3 +119,18 @@ describe('generate repeat guard', () => {
     expect(ai.tooSimilar('Voice memos that organize themselves', recent)).toBe(false);
   });
 });
+
+describe('generate judge', () => {
+  const idea = { title: 'Chore tracker', content: 'Track chores.' };
+  it('rejects what the judge calls generic', async () => {
+    const v = await ai.judgeIdea(idea, async () => '{"specific": false, "reason": "generic tracker"}');
+    expect(v).toEqual({ ok: false, reason: 'generic tracker' });
+  });
+  it('passes a specific idea', async () => {
+    expect((await ai.judgeIdea(idea, async () => '```json\n{"specific": true}\n```')).ok).toBe(true);
+  });
+  it('lets the draft through when the judge mumbles or fails', async () => {
+    expect((await ai.judgeIdea(idea, async () => 'hmm, maybe')).ok).toBe(true);
+    expect((await ai.judgeIdea(idea, async () => { throw new Error('AI down'); })).ok).toBe(true);
+  });
+});

@@ -4,6 +4,15 @@
 
 - App Store screenshots for the iPhone 6.5-inch and iPad Pro 12.9-inch sets retaken on the 3.0 build after Apple's Guideline 2.3.3 note (they still showed Spark 2.1.1). `ios/scripts/appstore-shots.sh` captures them headlessly with simctl and AXe. iOS 3.0 resubmitted 2026-10-05, same build.
 
+## [3.1.0] - 2026-10-19
+- New icon: a brain resting on a lily pad, in pond green, on every platform (Icon Composer on iOS and Mac).
+- Animated splash and a hands-on tour that ends at sign-in.
+- Brainstorm moved into Create. Profile shows only your ideas and posts.
+- Arrows show which way you voted; tapping again takes the vote back.
+- Mac gets comments and the tour.
+- Daily ideas get a second read before they post; a generic idea is thrown out and retried.
+- Web moved to thinkpond.jaybulb.com. Landing has a solid header, a parallax hero and a pond shader footer.
+
 ## [3.0.0] - 2026-10-04
 
 - Sparkjar is now Thinkpond: app name, icon label, site (hikko.heyitsmejosh.com), repo.
