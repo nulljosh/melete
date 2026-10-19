@@ -134,3 +134,4 @@ describe('generate judge', () => {
     expect((await ai.judgeIdea(idea, async () => { throw new Error('AI down'); })).ok).toBe(true);
   });
 });
+

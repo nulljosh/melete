@@ -1,6 +1,6 @@
 // v3: network-first. Read-first kept returning visitors on stale pages and
 // stale stylesheets after every deploy; the cache is now only the offline fallback.
-const CACHE = 'hikko-v3';
+const CACHE = 'thinkpond-v4';
 const ASSETS = ['/', '/index.html', '/theme.js', '/icon-192.svg', '/icon-512.svg'];
 
 self.addEventListener('install', e => {
@@ -16,7 +16,8 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET' || e.request.url.includes('/api/')) return;
+  // Own pages only. Cross-origin calls (the App Store lookup) go straight to the network.
+  if (e.request.method !== 'GET' || e.request.url.includes('/api/') || new URL(e.request.url).origin !== location.origin) return;
   e.respondWith(
     fetch(e.request).then(res => {
       if (res.ok && new URL(e.request.url).origin === location.origin) {

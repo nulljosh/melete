@@ -666,8 +666,8 @@
             const repoLink = p.linkedRepo ? `<a href="${escapeHtml(p.linkedRepo)}" target="_blank" rel="noopener" style="font-size:12px;color:var(--text3);display:block;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="event.stopPropagation()">${escapeHtml(p.linkedRepo.replace(/^https?:\/\//, ''))}</a>` : '';
             const enrichmentPanel = p.enriched ? `
                 <div id="enrich-${p.id}" class="enrich-panel" style="display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px" onclick="event.stopPropagation()">
-                    ${p.enrichmentSpec ? `<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">SPEC</div><div style="font-size:12px;color:var(--text2);white-space:pre-wrap;margin-bottom:12px">${escapeHtml(p.enrichmentSpec)}</div>` : ''}
-                    ${p.enrichmentPlan ? `<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">PLAN</div><div style="font-size:12px;color:var(--text2);white-space:pre-wrap">${escapeHtml(p.enrichmentPlan)}</div>` : ''}
+                    <div id="brief-${p.id}"></div>
+                    <div id="prior-${p.id}" data-q="${escapeHtml(p.title)}" style="margin-top:12px"></div>
                     <a href="${API_BASE}/api/ai?type=notes&id=${p.id}" style="font-size:12px;color:var(--text3);margin-top:10px;display:inline-block" onclick="event.stopPropagation()">Export to markdown</a>
                 </div>` : '';
             const enrichBtn = isLoggedIn() && !p.enriched
@@ -707,6 +707,44 @@
         function toggleEnrichPanel(id) {
             const panel = document.getElementById('enrich-' + id);
             if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            if (panel && panel.style.display === 'block') { loadBrief(id); loadPriorArt(id); }
+        }
+
+        // The feed list leaves spec and plan out to stay small; fetch them when the brief opens.
+        async function loadBrief(id) {
+            const box = document.getElementById('brief-' + id);
+            if (!box || box.dataset.loaded) return;
+            box.dataset.loaded = '1';
+            try {
+                const d = await (await fetch(`${API_BASE}/api/posts/${encodeURIComponent(id)}`)).json();
+                const p = d.post || d;
+                const part = (label, text, last) => text ? `<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">${label}</div><div style="font-size:12px;color:var(--text2);white-space:pre-wrap${last ? '' : ';margin-bottom:12px'}">${escapeHtml(text)}</div>` : '';
+                box.innerHTML = part('SPEC', p.enrichmentSpec) + part('PLAN', p.enrichmentPlan, true);
+            } catch { delete box.dataset.loaded; }
+        }
+
+        // Similar apps already on the App Store, fetched once per idea when its brief opens.
+        async function loadPriorArt(id) {
+            const box = document.getElementById('prior-' + id);
+            if (!box || box.dataset.loaded) return;
+            box.dataset.loaded = '1';
+            box.innerHTML = '<div style="font-size:12px;color:var(--text3)">Checking the App Store...</div>';
+            try {
+                // Straight from the viewer's browser: Apple allows CORS here, and it 429s Cloudflare's shared IPs.
+                const r = await fetch('https://itunes.apple.com/search?entity=software&country=us&limit=3&term=' + encodeURIComponent(box.dataset.q));
+                const apps = ((await r.json()).results || []).map(a => ({
+                    name: a.trackName, seller: a.sellerName, url: a.trackViewUrl,
+                    rating: a.averageUserRating ? Math.round(a.averageUserRating * 10) / 10 : null, ratings: a.userRatingCount || 0
+                }));
+                const head = '<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">ALREADY ON THE APP STORE</div>';
+                box.innerHTML = head + (apps.length ? apps.slice(0, 3).map(a =>
+                    `<a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--text2);text-decoration:none;padding:4px 0">` +
+                    `<span><strong style="color:var(--text)">${escapeHtml(a.name)}</strong> &middot; ${escapeHtml(a.seller)}</span>` +
+                    `<span style="color:var(--text3);white-space:nowrap">${a.rating ? a.rating + ' &#9733; (' + a.ratings + ')' : 'no ratings'}</span></a>`
+                ).join('') : '<div style="font-size:12px;color:var(--text3)">Nothing close. Open water.</div>');
+            } catch {
+                box.innerHTML = '';
+            }
         }
 
         async function requestEnrich(id) {

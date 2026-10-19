@@ -25,4 +25,5 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Two probe accounts from August: `probe1786367989`, `probe1786367990b`. Needs Joshua's yes before deleting.
 
 ## Toward 4.0
-- [ ] Trademark and prior-art lookup on an idea.
+- [ ] "Already on the App Store" on iOS and Mac: same iTunes search the web uses (call it from the device; Apple 429s Cloudflare's shared IPs). Show the top three under the brief.
+- [ ] Trademark lookup on an idea's name (USPTO has no free JSON search; find a source before building).

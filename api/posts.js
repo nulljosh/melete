@@ -19,7 +19,7 @@ const seedPosts = [
   { id: 'seed-12', title: 'Walking directions that prioritize shade in summer', content: 'Google Maps finds the fastest route but in August I want the route with the most tree cover. Use satellite imagery to estimate shade coverage on each street.', category: 'tech', author_username: 'lex', author_user_id: 'system', score: 144, created_at: '2026-03-25T12:00:00Z' }
 ];
 
-const LIST_COLUMNS = 'id,title,category,author_username,author_user_id,score,created_at,enriched,linked_repo,date,time,pinned_until';
+const LIST_COLUMNS = 'id,title,content,category,author_username,author_user_id,score,created_at,enriched,linked_repo,date,time,pinned_until';
 
 function parseToken(authHeader, cookieHeader) {
   if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -57,7 +57,7 @@ function rowToPost(r) {
 }
 
 async function getPostsFromDataSource({ limit, offset } = {}) {
-  // Only fetch columns needed for the feed list view (no content).
+  // Only the columns the feed list shows. Content is two short sentences; spec and plan load per post.
   // Pro posts pinned in the last 24h sort first, then the usual score/recency order.
   let query = `posts?select=${LIST_COLUMNS}&order=pinned_until.desc.nullslast,score.desc,created_at.desc`;
   if (Number.isFinite(limit)) query += `&limit=${limit}`;
