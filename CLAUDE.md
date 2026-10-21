@@ -6,7 +6,7 @@ Was Sparkjar, then Hotaru, Hikko and Thinkpond. Melete since 2026-10-19, named f
 
 ## What did not get renamed, on purpose
 - Cloudflare Pages project is `sparkjar`. Deploy with `npm run deploy`.
-- Home is `melete.jaybulb.com` (since 2026-10-19). `thinkpond.jaybulb.com` and `hikko.jaybulb.com` still serve: 3.1 builds call thinkpond, older builds call hikko, and the GitHub OAuth callback stays on hikko. Never retire either.
+- Home is `melete.jaybulb.com` (since 2026-10-19). `thinkpond.jaybulb.com` and `melete.jaybulb.com` still serve: 3.1 builds call thinkpond, older builds call hikko, and the GitHub OAuth callback stays on hikko. Never retire either.
 - Bundle ids `com.heyitsmejosh.spark`, Xcode targets `Spark` / `SparkMac`, the `spark_*` localStorage keys, and the Pages project `sparkjar`.
 
 ## Money

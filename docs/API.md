@@ -89,7 +89,7 @@ Redirects to GitHub to start OAuth. Returns `501` if `GITHUB_CLIENT_ID` is not s
 
 ### `GET /api/auth/github-callback`
 
-Where GitHub sends the user back. The callback is registered on `hikko.jaybulb.com`, which still serves it. Older app builds call that host too, so keep it up.
+Where GitHub sends the user back. The callback is registered on `melete.jaybulb.com`, which still serves it. Older app builds call that host too, so keep it up.
 
 ### `POST /api/auth/delete-account`: auth
 

@@ -85,7 +85,7 @@ Each file is a handler. `functions/api/[[route]].js` maps the URL to it. Every r
 | `auth/verify-email.js` | Opened from the email link. Marks the account verified, then redirects. |
 | `auth/apple.js` | Verifies a Sign in with Apple identity token from the native apps. |
 | `auth/github.js` | Starts GitHub OAuth. |
-| `auth/github-callback.js` | Finishes GitHub OAuth. Runs on `hikko.jaybulb.com`, which must stay up for older app builds. |
+| `auth/github-callback.js` | Finishes GitHub OAuth. Runs on `melete.jaybulb.com`, which must stay up for older app builds. |
 | `auth/delete-account.js` | Deletes the signed-in account. |
 
 ## Web function entry (`functions/`)
@@ -191,4 +191,4 @@ Rows live in D1 and files live in KV, behind the `jaybulb-api` Worker. The schem
 - **Optional**: `SPARK_API_URL`, if the data Worker is not at the default host.
 - **Public variables**, in `wrangler.toml`: `ALLOWED_ORIGIN`, `APP_URL`, `APPLE_CLIENT_ID` (the bundle ID).
 - **Worker secret**: `SPARK_DAEMON_SECRET` on the cron Worker, the same value as on Pages.
-- **Old host**: `hikko.jaybulb.com` still serves the GitHub OAuth callback. Do not retire it.
+- **Old host**: `melete.jaybulb.com` still serves the GitHub OAuth callback. Do not retire it.

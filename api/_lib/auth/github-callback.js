@@ -1,7 +1,7 @@
 const { sparkRequest } = require('../spark');
 const { createSession, issueToken, setSessionCookie } = require('../store');
 
-const SITE_URL = process.env.SITE_URL || 'https://hikko.jaybulb.com';
+const SITE_URL = process.env.SITE_URL || 'https://melete.jaybulb.com';
 
 async function getGithubToken(code) {
   const res = await fetch('https://github.com/login/oauth/access_token', {
