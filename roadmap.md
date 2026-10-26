@@ -5,7 +5,7 @@
 Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs until 4.0.
 
 ## Waiting on Apple
-- [ ] iOS 3.1 (202610191030) and Mac 3.1 (202610191041) are waiting for review, submitted 2026-10-19. Check with `asc versions list --app 6785162492`.
+- [ ] iOS 3.1 (202610191030) is waiting for review, submitted 2026-10-19. Mac 3.1 was missing the Sign in with Apple entitlement; fixed and resubmitted 2026-10-25, waiting for review. Check with `asc versions list --app 6785162492`.
 - [ ] Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
 
 ## Ship next
@@ -28,3 +28,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] Launch colour: the simulator shows a white launch frame before the laurel splash although `UILaunchScreen` names `LaunchBackground` and the asset compiles. Check on a phone before 3.2 ships.
 - [ ] 3.2 store listing: rename the App Store name to Melete (free on iOS and Mac as of 2026-10-19), new icon build, new screenshots with the lamp and the Melete name.
 - [ ] 3.2 on iOS and Mac: built, not submitted. Carries the simpler feed (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description), the lamp splash, the Melete name and icon, the Mac profile as a grouped settings form, the Mac detail pane fitted to its window, no YC strip in Brainstorm, and the notification prompt waiting for the splash. Submit once 3.1 clears review.
+
+## Ingested 2026-10-26
+- [ ] Landing og image: melete.jaybulb.com/og.png returns the HTML shell (SPA fallback), so the landing unfurls with no picture. Serve a real PNG at that path.
