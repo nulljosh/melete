@@ -30,4 +30,4 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] 3.2 on iOS and Mac: built, not submitted. Carries the simpler feed (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description), the lamp splash, the Melete name and icon, the Mac profile as a grouped settings form, the Mac detail pane fitted to its window, no YC strip in Brainstorm, and the notification prompt waiting for the splash. Submit once 3.1 clears review.
 
 ## Ingested 2026-10-26
-- [ ] Landing og image: melete.jaybulb.com/og.png returns the HTML shell (SPA fallback), so the landing unfurls with no picture. Serve a real PNG at that path.
+- [x] Landing og image: real 1200x630 PNG at `og.png` (laurel green, engraving, wordmark), served as image/png since 2026-10-26.
