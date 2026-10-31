@@ -293,8 +293,8 @@ const RFS_ENTRY_RE = /<div id="([\w-]+)"><div class="border[^"]*py-10[^"]*"><div
 
 function stripTags(s) {
   return s.replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&') // first, so "&amp;quot;" is decoded by the next line
     .replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&') // last, so "&amp;quot;" stays "&quot;"
     .replace(/\s+/g, ' ').trim();
 }
 
