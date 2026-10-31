@@ -29,6 +29,14 @@ struct PostDetailView: View {
                 Text(currentPost.content ?? "")
                     .font(.body)
                     .textSelection(.enabled)
+                ForEach([("Spec", currentPost.enrichmentSpec), ("Build plan", currentPost.enrichmentPlan)], id: \.0) { heading, text in
+                    if let text, !text.isEmpty {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(heading).font(.headline)
+                            Text(text).font(.body).textSelection(.enabled)
+                        }
+                    }
+                }
 
                 HStack(spacing: 14) {
                     VoteButton(label: "up", icon: "arrow.up", postId: currentPost.id)
