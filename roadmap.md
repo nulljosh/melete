@@ -29,6 +29,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [ ] 3.2 store listing: rename the App Store name to Melete (free on iOS and Mac as of 2026-10-19), new icon build, new screenshots with the lamp and the Melete name.
 - [ ] 3.2 on iOS and Mac: built, not submitted. Carries the simpler feed (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description), the lamp splash, the Melete name and icon, the Mac profile as a grouped settings form, the Mac detail pane fitted to its window, no YC strip in Brainstorm, and the notification prompt waiting for the splash. Submit once 3.1 clears review.
 
-- [ ] Xcode 27 refuses the project: xcodegen puts API, Models and Views in two groups (ios/project.yml path: .)
+- [x] Xcode 27 refuses the project: xcodegen puts API, Models and Views in two groups (ios/project.yml path: .)
 
 ## Ingested 2026-10-26

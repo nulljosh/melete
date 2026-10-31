@@ -1,5 +1,6 @@
 name: Spark
 options:
+  createIntermediateGroups: true  # Xcode 27 rejects a folder listed in two groups, which xcodegen does without this
   bundleIdPrefix: com.heyitsmejosh
   deploymentTarget:
     iOS: "17.0"
