@@ -34,5 +34,5 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 ## Ingested 2026-10-26
 
 ## Ingested 2026-10-30
-- [ ] Remove feed demo from landing page, user needs to sign up to see the feed
+- [x] Remove feed demo from landing page, user needs to sign up to see the feed
 - [ ] GitHub releases are stale
