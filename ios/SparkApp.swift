@@ -13,6 +13,14 @@ enum DailyIdea {
         try? await center.add(UNNotificationRequest(identifier: "daily-idea", content: content, trigger: trigger))
     }
 
+    // Launch only restores an existing grant. New permission requests belong to
+    // the settings toggle, where they cannot precede the app's first frame.
+    static func scheduleIfAuthorized() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        guard settings.authorizationStatus == .authorized else { return }
+        await schedule()
+    }
+
     static func cancel() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["daily-idea"])
     }
@@ -52,9 +60,9 @@ struct SparkApp: App {
                 showSplash = false
             }
             // The keychain outlives a reinstall, so a fresh install can already be signed in.
-            // Wait for the splash so the prompt lands on the feed, not on a blank screen.
+            // Never request permission during launch; only restore an existing schedule.
             .task(id: appState.isLoggedIn && tutorialDone && !showSplash) {
-                if appState.isLoggedIn, tutorialDone, !showSplash, UserDefaults.standard.object(forKey: "daily_idea") as? Bool ?? true { await DailyIdea.schedule() }
+                if appState.isLoggedIn, tutorialDone, !showSplash, UserDefaults.standard.object(forKey: "daily_idea") as? Bool ?? true { await DailyIdea.scheduleIfAuthorized() }
             }
         }
     }
