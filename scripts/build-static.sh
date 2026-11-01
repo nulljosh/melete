@@ -19,7 +19,7 @@ cp -- apple-touch-icon.png icon-192.png favicon-32.png *.webp dist/
 # The landing reads its version from package.json.
 cp package.json dist/
 mkdir -p dist/brand && cp brand/mark.svg brand/tokens.css dist/brand/
-cp manifest.json sw.js tokens.css devices.css theme.js webmcp.js onboarding.js dist/
+cp manifest.json sw.js tokens.css devices.css theme.js webmcp.js onboarding.js footer-band.js dist/
 
 # Pages control files. No _redirects: vercel.json's `/(.*) -> /app.html` catch-all
 # was a Vercel routing artifact, not a feature — app.html has no client-side
