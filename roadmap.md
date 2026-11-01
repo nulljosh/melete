@@ -4,6 +4,9 @@
 
 Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs until 4.0.
 
+## Name
+- [ ] Store name locked as Afflatus on the draft app info (2026-11-01, Joshua said handle it; read back three times). Next: the full rename to Afflatus everywhere, repo, folder, landing at afflatus.jaybulb.com, docs, app display name, per the one-name rule, then ship it with the next version.
+
 ## Waiting on Apple
 - [x] (11-01: 3.1 live on iOS and Mac) iOS 3.1 (202610191030) is waiting for review, submitted 2026-10-19. Mac 3.1 was missing the Sign in with Apple entitlement; fixed and resubmitted 2026-10-25, waiting for review. Check with `asc versions list --app 6785162492`.
 - [x] (11-01: set to https://melete.jaybulb.com/privacy on the 3.2 app info, goes live with 3.2; the live one said sparkjar.jaybulb.com) Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
