@@ -6,7 +6,7 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Waiting on Apple
 - [x] (11-01: 3.1 live on iOS and Mac) iOS 3.1 (202610191030) is waiting for review, submitted 2026-10-19. Mac 3.1 was missing the Sign in with Apple entitlement; fixed and resubmitted 2026-10-25, waiting for review. Check with `asc versions list --app 6785162492`.
-- [ ] Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
+- [x] (11-01: set to https://melete.jaybulb.com/privacy on the 3.2 app info, goes live with 3.2; the live one said sparkjar.jaybulb.com) Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
 
 ## Ship next
 - [ ] Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.
@@ -26,7 +26,7 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Toward 4.0
 - [ ] Launch colour: the simulator shows a white launch frame before the laurel splash although `UILaunchScreen` names `LaunchBackground` and the asset compiles. Check on a phone before 3.2 ships.
-- [ ] 3.2 store listing: rename the App Store name to Melete (free on iOS and Mac as of 2026-10-19), new icon build, new screenshots with the lamp and the Melete name.
+- [ ] 3.2 store listing: rename the App Store name to Melete (free on iOS and Mac as of 2026-10-19), new icon build, new screenshots with the lamp and the Melete name. (blocked: Joshua picks a name, 2026-11-01) Apple now refuses "Melete" ("already being used", probed on the 3.2 draft 2026-11-01). Free: Cogitation, Afflatus, Excogitate, Lucubrate. Taken: Mneme Aoede Noesis Inkling Reverie Ponder Ruminate Cogitate Musing Mull Germinate Brood Daydream Ideation Rumination Ideate Incubate Hunch Inspiro Pensive Pensieve Notion. iOS and Mac 3.2 drafts exist; listing name restored to Thinkpond.
 - [ ] (blocked 11-01: 3.1 is live, so 3.2 is next, but the launch-colour line above wants a real-phone check first; nothing uploaded yet) 3.2 on iOS and Mac: built, not submitted. Carries the simpler feed (cards are title, pitch and votes; one New/Trending switch; opening a card shows "Already on the App Store", then comments; the new-idea form is title and description), the lamp splash, the Melete name and icon, the Mac profile as a grouped settings form, the Mac detail pane fitted to its window, no YC strip in Brainstorm, and the notification prompt waiting for the splash. Submit once 3.1 clears review.
 
 
