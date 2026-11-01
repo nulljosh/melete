@@ -9,7 +9,7 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 - [x] (11-01: set to https://melete.jaybulb.com/privacy on the 3.2 app info, goes live with 3.2; the live one said sparkjar.jaybulb.com) Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
 
 ## Ship next
-- [ ] Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.
+- [x] (11-01: landing daily at 09:01 UTC, latest InterpretSync today; one gap, nothing on 10-29, the rest of the last eight days posted. If gaps repeat, `npx wrangler tail sparkjar-cron` at 09:00) Watch the first daily idea from gpt-oss-120b land (09:00 UTC 2026-10-20). If it posts nothing, the cron log says why: `npx wrangler tail sparkjar-cron`.
 - [ ] Backfill: the feed still carries old-model posts ("Recycling guide for local bins"). Decide whether to hide or leave them.
 - [ ] Delete the 42 junk posts. Backed up in `_attic/thinkpond-junk-posts-2026-10-19.json`, delete is `_attic/thinkpond-delete-junk.sql` (auto mode blocks it; Joshua runs it).
 - [ ] Mac Brainstorm store shot: the macOS input-source badge from Create's text editor sticks to the window and lands in the capture. Shoot it from a cold launch that never opens Write.
