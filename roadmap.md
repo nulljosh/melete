@@ -30,7 +30,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 ## Ingested 2026-10-26
 
 ## Ingested 2026-10-30
-- [x] (11-01: v3.1.0 tagged and released) GitHub releases are stale
 
 ## Landing pass, 2026-10-30
 
