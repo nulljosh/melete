@@ -31,7 +31,7 @@
             --surface2: #2f2b26;
             --surface3: #35312b;
             --text2: rgba(243,237,224,0.62);
-            --text3: rgba(243,237,224,0.36);
+            --text3: rgba(243,237,224,0.62); /* .36 was under 3:1 for the text that uses it */
             --text-secondary: rgba(243,237,224,0.62);
             --border: #35312b;
             --accent: #8fc286;
@@ -45,7 +45,7 @@
             --surface2: #f0efec;
             --surface3: #e8e6e1;
             --text2: rgba(28,26,23,0.62);
-            --text3: rgba(28,26,23,0.36);
+            --text3: rgba(28,26,23,0.62); /* .36 was 2.2:1 */
             --text-secondary: rgba(28,26,23,0.62);
             --border: #e4e2dc;
             --accent: #4d7c45;
@@ -80,7 +80,7 @@
             .theme-btn, .bell-btn { width: 32px; height: 32px; }
         }
         .idea { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
-        .idea h3 { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
+        .idea h2, .idea h3 { margin-bottom: 10px; font-size: 15px; line-height: 1.4; }
         .idea p { color: var(--text2); margin-bottom: 15px; font-size: 13px; line-height: 1.5; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .votes { display: flex; gap: 15px; align-items: center; }
         .vote-btn { background: var(--surface2); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 16px; cursor: pointer; color: var(--text3); font-weight: 700; transition: background 0.15s, color 0.15s; }
@@ -106,7 +106,7 @@
         .btn { background: var(--text); color: var(--bg); border: none; padding: 12px 24px; border-radius: 100px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; transition: opacity 0.15s; }
         .btn:hover { opacity: 0.85; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .close { float: right; font-size: 30px; cursor: pointer; color: var(--text3); }
+        .close { float: right; font-size: 30px; cursor: pointer; color: var(--text3); background: none; border: 0; padding: 0; line-height: 1; font-family: inherit; }
         .error { color: #ff453a; font-size: 14px; margin-bottom: 10px; }
         .success { color: var(--accent); font-size: 14px; margin-bottom: 10px; }
         footer { margin-top: 60px; padding: 30px 0 20px; border-top: 1px solid var(--border); color: var(--text3); font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
@@ -233,7 +233,7 @@
     <!-- Auth Modal -->
     <div class="modal" id="authModal">
         <div class="modal-box">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <button type="button" class="close" aria-label="Close" onclick="closeAuthModal()">&times;</button>
             <div class="tabs">
                 <button class="tab active" onclick="switchAuthTab('login')">Login</button>
                 <button class="tab" onclick="switchAuthTab('register')">Register</button>
@@ -281,7 +281,7 @@
     <!-- New Idea Modal -->
     <div class="modal" id="ideaModal">
         <div class="modal-box">
-            <span class="close" onclick="closeIdeaModal()">&times;</span>
+            <button type="button" class="close" aria-label="Close" onclick="closeIdeaModal()">&times;</button>
             <h2 style="margin-bottom:20px">New Idea</h2>
             <div id="proBanner" style="display:none;font-size:13px;color:var(--text-secondary);margin-bottom:14px;padding:10px 12px;border:1px solid var(--border);border-radius:8px">
                 Free posts are rate-limited and don't get priority visibility.
@@ -297,7 +297,7 @@
 
     <div class="modal" id="ideaBaseModal">
         <div class="modal-box">
-            <span class="close" onclick="document.getElementById('ideaBaseModal').classList.remove('show')">&times;</span>
+            <button type="button" class="close" aria-label="Close" onclick="document.getElementById('ideaBaseModal').classList.remove('show')">&times;</button>
             <h2 style="margin-bottom:20px">Generate Ideas</h2>
             <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Enter a topic and Melete will generate 8 ideas and seed them into the feed.</p>
             <div id="ideaBaseError" class="error"></div>
@@ -526,7 +526,7 @@
             const commentCount = (window.commentCounts && window.commentCounts[p.id]) || 0;
             return `
                 <div class="idea" onclick="toggleComments('${p.id}', event)">
-                    <h3>${escapeHtml(p.title)}</h3>
+                    <h2>${escapeHtml(p.title)}</h2>
                     <p>${escapeHtml(p.content)}</p>
                     <div class="votes">
                         <button class="vote-btn" onclick="vote('${p.id}','up'); event.stopPropagation();" ${!isLoggedIn() ? 'disabled' : ''}>&#9650;</button>
@@ -1066,9 +1066,9 @@
     </script>
 
     <!-- What's New Modal -->
-    <div class="modal" id="whats-new-modal">
+    <div class="modal" id="whats-new-modal" role="dialog" aria-modal="true" aria-label="What's new">
         <div class="modal-box">
-            <span class="close" onclick="dismissWhatsNew()">&times;</span>
+            <button type="button" class="close" aria-label="Close" onclick="dismissWhatsNew()">&times;</button>
             <h2>What's New in v3.1</h2>
             <ul>
                 <li>A new look: a brain resting on a lily pad, in pond green</li>
