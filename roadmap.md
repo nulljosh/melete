@@ -5,7 +5,7 @@
 Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs until 4.0.
 
 ## Waiting on Apple
-- [ ] iOS 3.1 (202610191030) is waiting for review, submitted 2026-10-19. Mac 3.1 was missing the Sign in with Apple entitlement; fixed and resubmitted 2026-10-25, waiting for review. Check with `asc versions list --app 6785162492`.
+- [x] (11-01: 3.1 live on iOS and Mac) iOS 3.1 (202610191030) is waiting for review, submitted 2026-10-19. Mac 3.1 was missing the Sign in with Apple entitlement; fixed and resubmitted 2026-10-25, waiting for review. Check with `asc versions list --app 6785162492`.
 - [ ] Privacy policy URL on the App Info still points at hikko.jaybulb.com. It still serves, but switch it to melete.jaybulb.com/privacy when an editable App Info exists (next version).
 
 ## Ship next
