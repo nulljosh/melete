@@ -33,4 +33,3 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Landing pass, 2026-10-30
 
-- [ ] Footer needs icons or glyphs, not text.
