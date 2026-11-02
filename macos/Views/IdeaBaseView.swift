@@ -4,8 +4,9 @@ struct IdeaBaseView: View {
     @Environment(AppState.self) private var appState
 
     @State private var ideaBases: [IdeaBase] = []
-    @State private var topic = ""
-    @State private var description = ""
+    // -brainstorm (store shots) types a sample topic in, so the form shows what it is for.
+    @State private var topic = ProcessInfo.processInfo.arguments.contains("-brainstorm") ? "Side projects for a carpenter" : ""
+    @State private var description = ProcessInfo.processInfo.arguments.contains("-brainstorm") ? "Weekends only, under $200 to start" : ""
     @State private var isCreating = false
     @State private var errorMsg: String?
     @State private var isLoading = false

@@ -8,7 +8,8 @@ struct CreateView: View {
     @State private var content = ""
     @State private var isPosting = false
     @State private var errorMsg: String?
-    @State private var brainstorm = false
+    // -brainstorm opens straight on Brainstorm (store shots): Write never shows, so its input-source badge cannot stick to the window.
+    @State private var brainstorm = ProcessInfo.processInfo.arguments.contains("-brainstorm")
 
     var body: some View {
         if !appState.isLoggedIn {
