@@ -33,3 +33,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 ## Landing pass, 2026-10-30
 
+
+## Ingested 2026-11-03
+- [ ] TLS error on the site/host (screenshot from Notes): fix the certificate/host and re-check
