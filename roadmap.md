@@ -35,4 +35,5 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 
 ## Ingested 2026-11-03
-- [ ] TLS error on the site/host (screenshot from Notes): fix the certificate/host and re-check
+- [x] TLS error on the site/host (screenshot from Notes): the phone runs iOS 3.0 or older, which calls sparkjar.heyitsmejosh.com (lapsed domain, now a parked host with no valid TLS). Live 3.1 calls hikko.jaybulb.com and current code melete.jaybulb.com, both 200 with valid certs. Fix: update the app from the App Store.
+- [ ] iOS+Mac 3.2 sit in PREPARE_FOR_SUBMISSION with no build attached and empty What's New: build, upload, attach, submit
