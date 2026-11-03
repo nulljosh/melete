@@ -7,10 +7,8 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 ## Waiting on Apple
 
 ## Ship next
-- [ ] Backfill: the feed still carries old-model posts ("Recycling guide for local bins"). Decide whether to hide or leave them.
 - [ ] Delete the 42 junk posts. Backed up in `_attic/thinkpond-junk-posts-2026-10-19.json`, delete is `_attic/thinkpond-delete-junk.sql` (auto mode blocks it; Joshua runs it).
 - [ ] Mac Brainstorm store shot: the macOS input-source badge from Create's text editor sticks to the window and lands in the capture. Shoot it from a cold launch that never opens Write.
-- [ ] A fresh install still asks for notifications before anything is on screen. Not DailyIdea (checked). Find the caller on a device.
 
 ## Sign-in and mail
 - [ ] Sign in with Apple has never had a real round trip on a physical device. Needs a phone in hand.
