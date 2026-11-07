@@ -13,13 +13,11 @@ targets:
     type: application
     platform: watchOS
     sources:
-      - path: .
-        excludes:
-          - "*.xcodeproj"
-          - "*.yml"
-          - ".git"
-          - ".gitignore"
-          - "README.md"
+      - ContentView.swift
+      - SparkWatchApp.swift
+      - Models
+      - Views
+      - Assets.xcassets
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.heyitsmejosh.spark.watchos
       ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

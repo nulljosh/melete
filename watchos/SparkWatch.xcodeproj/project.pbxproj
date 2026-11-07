@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0289FD0AA7D7F9A58BB80EDA /* SparkWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EEA0C6610903F80C98A98B /* SparkWatchApp.swift */; };
-		0631CC4953E563A78DD6E65F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D36C2C6900ED6404BCE3DF /* ContentView.swift */; };
-		0D70BDE63156E15AAF6D0C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3983932A0487907227043F75 /* Assets.xcassets */; };
+		0F445A039AA7B707C917BA11 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A2B0BCD14295FF2D0B8BB /* ContentView.swift */; };
+		2DFE3E6F907AFA9A7B1C87E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 313B97BEBAEAB6327542BB3D /* Assets.xcassets */; };
 		6A55F6767ABDD9082A6FD109 /* NewFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21203510698F4A369D281266 /* NewFeedView.swift */; };
 		721FD13441685D9B0975BA12 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BA1C996DD7C9D90EB2FA3E /* Colors.swift */; };
 		7C53CEDE572003BBA1874D51 /* WatchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB663EEF7DD8D28EEE24AA87 /* WatchAPI.swift */; };
 		80E4B7CD903093EFBE9D3DD9 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEF008162C34720F3179294 /* PostDetailView.swift */; };
 		9138DF617E9B9F1AED3F026D /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD0EF70D631A06F67032DA /* PostRow.swift */; };
 		B88EC2EDD58DF92ADD9456E9 /* WatchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0E382C11023711DFE8B233 /* WatchModels.swift */; };
+		DB6C14ED3FD56FEDF60D7028 /* SparkWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3108AC8ABB29DCE713D88AF6 /* SparkWatchApp.swift */; };
 		EDB623B6C5EAE05B13E2C812 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7989A723440E666B8255FD7 /* ComposeView.swift */; };
 		F9E7B20F3DEB733533404670 /* HotFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD59B4030B9FDE1CFC2325 /* HotFeedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040A2B0BCD14295FF2D0B8BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0ECD59B4030B9FDE1CFC2325 /* HotFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotFeedView.swift; sourceTree = "<group>"; };
 		21203510698F4A369D281266 /* NewFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedView.swift; sourceTree = "<group>"; };
 		2EFD0EF70D631A06F67032DA /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
-		3983932A0487907227043F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		49EEA0C6610903F80C98A98B /* SparkWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkWatchApp.swift; sourceTree = "<group>"; };
+		3108AC8ABB29DCE713D88AF6 /* SparkWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkWatchApp.swift; sourceTree = "<group>"; };
+		313B97BEBAEAB6327542BB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55A173A8932AA1FD3B5AB915 /* SparkWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SparkWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0E382C11023711DFE8B233 /* WatchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchModels.swift; sourceTree = "<group>"; };
 		A7989A723440E666B8255FD7 /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 		C4BA1C996DD7C9D90EB2FA3E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		CB663EEF7DD8D28EEE24AA87 /* WatchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAPI.swift; sourceTree = "<group>"; };
 		DFEF008162C34720F3179294 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
-		E5D36C2C6900ED6404BCE3DF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -45,25 +45,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		801DE2A8A6BDE7D63DD1291F /* watchos */ = {
-			isa = PBXGroup;
-			children = (
-				3983932A0487907227043F75 /* Assets.xcassets */,
-				E5D36C2C6900ED6404BCE3DF /* ContentView.swift */,
-				49EEA0C6610903F80C98A98B /* SparkWatchApp.swift */,
-				19EE8DC29B29532B64A793F3 /* Models */,
-				90C451DAD2FE175AA2E79354 /* Views */,
-			);
-			name = watchos;
-			path = .;
-			sourceTree = "<group>";
-		};
 		8A64D3AB781652851E527438 = {
 			isa = PBXGroup;
 			children = (
+				313B97BEBAEAB6327542BB3D /* Assets.xcassets */,
+				040A2B0BCD14295FF2D0B8BB /* ContentView.swift */,
+				3108AC8ABB29DCE713D88AF6 /* SparkWatchApp.swift */,
 				19EE8DC29B29532B64A793F3 /* Models */,
 				90C451DAD2FE175AA2E79354 /* Views */,
-				801DE2A8A6BDE7D63DD1291F /* watchos */,
 				B1CBDAD67090C44DAAA33A94 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,7 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D70BDE63156E15AAF6D0C05 /* Assets.xcassets in Resources */,
+				2DFE3E6F907AFA9A7B1C87E9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,12 +150,12 @@
 			files = (
 				721FD13441685D9B0975BA12 /* Colors.swift in Sources */,
 				EDB623B6C5EAE05B13E2C812 /* ComposeView.swift in Sources */,
-				0631CC4953E563A78DD6E65F /* ContentView.swift in Sources */,
+				0F445A039AA7B707C917BA11 /* ContentView.swift in Sources */,
 				F9E7B20F3DEB733533404670 /* HotFeedView.swift in Sources */,
 				6A55F6767ABDD9082A6FD109 /* NewFeedView.swift in Sources */,
 				80E4B7CD903093EFBE9D3DD9 /* PostDetailView.swift in Sources */,
 				9138DF617E9B9F1AED3F026D /* PostRow.swift in Sources */,
-				0289FD0AA7D7F9A58BB80EDA /* SparkWatchApp.swift in Sources */,
+				DB6C14ED3FD56FEDF60D7028 /* SparkWatchApp.swift in Sources */,
 				7C53CEDE572003BBA1874D51 /* WatchAPI.swift in Sources */,
 				B88EC2EDD58DF92ADD9456E9 /* WatchModels.swift in Sources */,
 			);
