@@ -33,4 +33,3 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 
 ## Ingested 2026-11-03
-- [x] iOS+Mac 3.2: build 202611070835 uploaded and attached to both, What's New written, `asc validate` 0 blocking (2026-11-07). Left: Joshua's yes to submit (launch-colour phone check and the store name line above still apply) (submitted 2026-11-07, in review)
