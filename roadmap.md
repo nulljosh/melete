@@ -33,4 +33,4 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 
 
 ## Ingested 2026-11-03
-- [ ] iOS+Mac 3.2 sit in PREPARE_FOR_SUBMISSION with no build attached and empty What's New: build, upload, attach, submit
+- [ ] iOS+Mac 3.2: build 202611070835 uploaded and attached to both, What's New written, `asc validate` 0 blocking (2026-11-07). Left: Joshua's yes to submit (launch-colour phone check and the store name line above still apply)

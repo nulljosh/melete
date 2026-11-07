@@ -11,6 +11,8 @@
 		00E8400C6240F74C3D445849 /* WidgetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F5DFCA4BD9F9BA9D2C9CB /* WidgetModels.swift */; };
 		0933738EE0C22BB1E013E2A9 /* IdeaBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419B97D24AE7CEE7CD3F8834 /* IdeaBaseView.swift */; };
 		1FB3C9DF0D4386D0638DF4C2 /* SparkWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78319D7A13546FEFEF8D95 /* SparkWidgets.swift */; };
+		2528F7D40EA791518B2AD8C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = "TEMP_674E93B5-C535-48B5-A2E8-9890CED30864" /* Assets.xcassets */; };
+		2A2792A8EA081005D6EE17D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_B04C2656-777B-42AB-9AC3-06BC76C70C93" /* ContentView.swift */; };
 		2A6143ECEF03DCAA2A87679F /* AppStoreMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AC9BBD8C22F83CC5ACDC8E /* AppStoreMatches.swift */; };
 		2D7D24763BBEB77C38BD1666 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6BA1107B7D5BFFC20826EE /* CommentsView.swift */; };
 		378C468D826ECEF28BE86A5D /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDFD38EAE1F6390CB1F6022 /* PostDetailView.swift */; };
@@ -18,24 +20,22 @@
 		5375E5AEA1CFBACE277A60C1 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9688E45EE5693615BD22E07A /* FeedView.swift */; };
 		5C678F928B8C9B9D3F58CC70 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA19718C5484AB4401241487 /* Comment.swift */; };
 		5CF6CFD86638EE4BA2467E45 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAF447247DB6DAB1767FD86 /* Post.swift */; };
-		65F575C17850114C778A041D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = "TEMP_98E5E97A-8840-4A27-990C-005C73722B90" /* Assets.xcassets */; };
 		70C6AD06D0353860A566CDB2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CF8B1454D8E8D36B9DD30 /* AppState.swift */; };
 		75AABDEBC93CD45ECE8730BA /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D9C9AA16639DE94461933A /* CreateView.swift */; };
 		760794207D9A35DC2EE244C9 /* SparkWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 097EA01C2BE79648AFAD5147 /* SparkWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		775EA22D31E08531145ABE76 /* HotPostsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5518274D1D7E8C30F63F47 /* HotPostsProvider.swift */; };
 		7A40742EECC44C39B58F4544 /* StatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA957152FAE1B1C9030BB9D9 /* StatsProvider.swift */; };
-		7B2B52EFF2C54DF918D45B4C /* SparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_28065DA6-4BE1-4788-8927-FEA7EAECC96B" /* SparkApp.swift */; };
 		89117C5776CDCAF5A7F7F833 /* SharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568A36C6D7D6F8A8C829A4 /* SharedComponents.swift */; };
+		B4806078C634E898E44A9223 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_CF80333D-54B4-4419-8179-25AE841543EC" /* TutorialView.swift */; };
 		B547E841A64621EC380F24F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AEF0A094E37D5677D2E1E3 /* User.swift */; };
 		BA24326F970B7E679EB465D9 /* NewPostsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22480DF94687E70C27A1AD5E /* NewPostsProvider.swift */; };
-		BA975F7A59A098B965C98964 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_2660A90C-A819-4373-959E-81360D4AB4FE" /* TutorialView.swift */; };
 		BD7802CB5DC12C5D6F4BECB0 /* SparkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45F610237B5860FE9BB69D9 /* SparkAPI.swift */; };
 		CF7D5E72CC7F1A2042D6E77D /* WidgetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF007CBC6917A8364DF7D7A /* WidgetAPI.swift */; };
 		DF7C07C74BDE4D15CD20BAB0 /* AuthSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D30C8A2E35F2E19DE87BBD5 /* AuthSheet.swift */; };
 		E97B22EC0244FC5E4DA1E8BD /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C41519D66928DE2043C7198 /* KeychainHelper.swift */; };
 		EE11BE0B46C8A4E2662AD43F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412163F5ABB42D99F51418E5 /* ProfileView.swift */; };
 		F1294080B9FDFF6DBD197EE6 /* HotPostsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD19DFE2D59432C8CC826F9 /* HotPostsWidget.swift */; };
-		F42812E90D27E1388C2F29D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_AE6A0751-D2BF-4836-AEA7-E91E600F2094" /* ContentView.swift */; };
+		FDE4E9BE1211662C6D724B46 /* SparkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = "TEMP_FD90511D-D6CF-4BD8-99E6-93F92A3CCAEF" /* SparkApp.swift */; };
 		FFEFB952ECB4CFE787D83AA2 /* StatsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6F488ADD44B2214E56FB8 /* StatsWidget.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,12 +91,12 @@
 		DA957152FAE1B1C9030BB9D9 /* StatsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsProvider.swift; sourceTree = "<group>"; };
 		E45F610237B5860FE9BB69D9 /* SparkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkAPI.swift; sourceTree = "<group>"; };
 		E5D9C9AA16639DE94461933A /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
-		"TEMP_2660A90C-A819-4373-959E-81360D4AB4FE" /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
-		"TEMP_28065DA6-4BE1-4788-8927-FEA7EAECC96B" /* SparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkApp.swift; sourceTree = "<group>"; };
-		"TEMP_53E5AF2F-F652-4D9F-9084-AF9D4700A2C4" /* SparkWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SparkWidgets.entitlements; sourceTree = "<group>"; };
-		"TEMP_98E5E97A-8840-4A27-990C-005C73722B90" /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		"TEMP_A01ECE41-F520-4332-A5C6-49A739D5749C" /* SparkMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SparkMac.entitlements; sourceTree = "<group>"; };
-		"TEMP_AE6A0751-D2BF-4836-AEA7-E91E600F2094" /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		"TEMP_46FF3371-B4B6-4170-9CDE-8F3F3F7A06DE" /* SparkWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SparkWidgets.entitlements; sourceTree = "<group>"; };
+		"TEMP_674E93B5-C535-48B5-A2E8-9890CED30864" /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		"TEMP_8BF90034-857A-4EA4-BB66-C775035330F6" /* SparkMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SparkMac.entitlements; sourceTree = "<group>"; };
+		"TEMP_B04C2656-777B-42AB-9AC3-06BC76C70C93" /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		"TEMP_CF80333D-54B4-4419-8179-25AE841543EC" /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		"TEMP_FD90511D-D6CF-4BD8-99E6-93F92A3CCAEF" /* SparkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -206,15 +206,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		"TEMP_888EC264-F7D0-4C72-9700-FF546CF8456F" /* . */ = {
+		"TEMP_F6C9E695-98B7-4FD1-94A6-EFB424BE9C2D" /* . */ = {
 			isa = PBXGroup;
 			children = (
-				"TEMP_98E5E97A-8840-4A27-990C-005C73722B90" /* Assets.xcassets */,
-				"TEMP_53E5AF2F-F652-4D9F-9084-AF9D4700A2C4" /* SparkWidgets.entitlements */,
-				"TEMP_A01ECE41-F520-4332-A5C6-49A739D5749C" /* SparkMac.entitlements */,
-				"TEMP_28065DA6-4BE1-4788-8927-FEA7EAECC96B" /* SparkApp.swift */,
-				"TEMP_2660A90C-A819-4373-959E-81360D4AB4FE" /* TutorialView.swift */,
-				"TEMP_AE6A0751-D2BF-4836-AEA7-E91E600F2094" /* ContentView.swift */,
+				"TEMP_674E93B5-C535-48B5-A2E8-9890CED30864" /* Assets.xcassets */,
+				"TEMP_46FF3371-B4B6-4170-9CDE-8F3F3F7A06DE" /* SparkWidgets.entitlements */,
+				"TEMP_8BF90034-857A-4EA4-BB66-C775035330F6" /* SparkMac.entitlements */,
+				"TEMP_FD90511D-D6CF-4BD8-99E6-93F92A3CCAEF" /* SparkApp.swift */,
+				"TEMP_CF80333D-54B4-4419-8179-25AE841543EC" /* TutorialView.swift */,
+				"TEMP_B04C2656-777B-42AB-9AC3-06BC76C70C93" /* ContentView.swift */,
 				DA54ABBDDBD1632E7B0DF4B7 /* Models */,
 				D50811BE7CEB69E2F5A27385 /* API */,
 				D50C5110C9612B586C19A437 /* Views */,
@@ -307,7 +307,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65F575C17850114C778A041D /* Assets.xcassets in Resources */,
+				2528F7D40EA791518B2AD8C0 /* Assets.xcassets in Resources */,
 				00DB6BAF58FE4EFFC663EF67 /* Melete.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,7 +324,7 @@
 				DF7C07C74BDE4D15CD20BAB0 /* AuthSheet.swift in Sources */,
 				5C678F928B8C9B9D3F58CC70 /* Comment.swift in Sources */,
 				2D7D24763BBEB77C38BD1666 /* CommentsView.swift in Sources */,
-				F42812E90D27E1388C2F29D8 /* ContentView.swift in Sources */,
+				2A2792A8EA081005D6EE17D2 /* ContentView.swift in Sources */,
 				75AABDEBC93CD45ECE8730BA /* CreateView.swift in Sources */,
 				5375E5AEA1CFBACE277A60C1 /* FeedView.swift in Sources */,
 				0933738EE0C22BB1E013E2A9 /* IdeaBaseView.swift in Sources */,
@@ -333,8 +333,8 @@
 				378C468D826ECEF28BE86A5D /* PostDetailView.swift in Sources */,
 				EE11BE0B46C8A4E2662AD43F /* ProfileView.swift in Sources */,
 				BD7802CB5DC12C5D6F4BECB0 /* SparkAPI.swift in Sources */,
-				7B2B52EFF2C54DF918D45B4C /* SparkApp.swift in Sources */,
-				BA975F7A59A098B965C98964 /* TutorialView.swift in Sources */,
+				FDE4E9BE1211662C6D724B46 /* SparkApp.swift in Sources */,
+				B4806078C634E898E44A9223 /* TutorialView.swift in Sources */,
 				B547E841A64621EC380F24F8 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,7 +416,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 202610251231;
+				CURRENT_PROJECT_VERSION = 202611070835;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QMM486NPYC;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -436,7 +436,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -482,7 +482,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 202610251231;
+				CURRENT_PROJECT_VERSION = 202611070835;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QMM486NPYC;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -496,7 +496,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
