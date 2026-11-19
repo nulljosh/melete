@@ -36,3 +36,6 @@ Only what is still open. History lives in git and `CHANGELOG.md`. The loop runs 
 ## Ingested 2026-11-13
 - [ ] Needs a stupid simple name (store still Thinkpond).
 - [ ] Generate new ideas every minute, day etc, using our LLMs. It could even start building them out. Ideas need to be stupid simple too.
+
+## Ingested 2026-11-18
+- [ ] Thinkpond/Melete + Macheon: super stale, bad name and icon. Recreate it from first principles and give it our own LLM. Have it run 24/7?
