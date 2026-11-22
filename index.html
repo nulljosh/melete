@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1f2b1d">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="/theme.js"></script>
 <title>Melete, ideas worth thinking about</title>
 <meta name="description" content="A new idea every morning. Vote, see what is already on the App Store, and build the one nobody has. On the web, iPhone and Mac.">
@@ -16,229 +15,171 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://melete.jaybulb.com/og.png">
 <meta name="apple-itunes-app" content="app-id=6785162492">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1a17" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="icon" href="/favicon.svg">
-<link rel="stylesheet" href="/tokens.css">
-<link rel="stylesheet" href="/brand/tokens.css">
+<link rel="icon" href="/icon.svg">
+<link rel="stylesheet" href="https://jaybulb.com/tokens.css">
+<link rel="stylesheet" href="https://jaybulb.com/landing.css">
+<script defer src="https://jaybulb.com/landing.js" data-shape="bars"></script>
 <style>
-  :root {
-    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --wide: clamp(16px, 5vw, 64px);
-  }
-  /* Paper, warm ink and laurel green (brand/BRAND.md). The field is the same in both themes. */
-  :root, :root[data-theme="light"] {
-    --bg: #fafaf8; --bg2: #f0efec; --card: #ffffff; --border: #e4e2dc;
-    --text: #1c1a17; --text2: rgba(28,26,23,0.66); --accent: #4d7c45; --on-accent: #ffffff;
-  }
-  :root[data-theme="dark"] {
-    --bg: #1c1a17; --bg2: #221f1b; --card: #26231f; --border: #35312b;
-    --text: #f3ede0; --text2: rgba(243,237,224,0.66); --accent: #8fc286; --on-accent: #1c1a17;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1c1a17; --bg2: #221f1b; --card: #26231f; --border: #35312b;
-      --text: #f3ede0; --text2: rgba(243,237,224,0.66); --accent: #8fc286; --on-accent: #1c1a17;
-    }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.5 var(--font); overflow-x: hidden; }
-  a { color: inherit; }
-  svg { flex: none; }
+/* House landing, as on Keyrate and Plank: white paper in light, the shared tokens in dark */
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --color-bg: #fff; --color-bg2: #f5f5f7; --color-hairline: #e5e5ea; } }
+:root[data-theme="light"] { --color-bg: #fff; --color-bg2: #f5f5f7; --color-hairline: #e5e5ea; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+:root { --vote: #34c759; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --vote: #30d158; } }
+:root[data-theme="dark"] { --vote: #30d158; }
 
-  /* Buttons: 48 point capsules */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px;
-    border-radius: 999px; border: 1px solid transparent; font: 600 15px var(--font); text-decoration: none; cursor: pointer;
-    transition: background .2s, color .2s, border-color .2s, transform .1s; white-space: nowrap; }
-  .btn:active { transform: translateY(1px); }
-  .btn:focus-visible, .icons a:focus-visible, .icons button:focus-visible { outline: 4px solid var(--accent-ring); outline-offset: 2px; }
-  .on-field .btn-solid { background: var(--on-field); color: var(--field); }
-  .on-field .btn-solid:hover { background: #fff; }
-  .on-field .btn-ghost { color: var(--on-field); border-color: rgba(238,243,234,.4); }
-  .on-field .btn-ghost:hover { border-color: var(--on-field); background: rgba(238,243,234,.08); }
-  .badge { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 24px;
-    background: #000; color: #fff; border: 1px solid #a6a6a6; font: 500 15px var(--font); text-decoration: none; }
-  .badge:hover { background: #1d1d1f; }
+.top { position: absolute; top: 0; left: 0; right: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; }
+.top .logo { display: flex; align-items: center; gap: 8px; font-weight: 650; }
+.top .logo img { border-radius: 7px; }
+.top nav { display: flex; gap: 8px; }
+.top .lp-btn { padding: 6px 14px; font-size: .875rem; }
+.top .lp-btn:not(.lp-solid) { border-color: transparent; }
 
-  /* Field: nav, hero and download band */
-  .on-field { background: var(--field); color: var(--on-field); }
-  nav.top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 28px; padding: 12px var(--wide); }
-  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
-  .links { display: flex; gap: 24px; }
-  .links a { font-size: 14px; text-decoration: none; color: var(--on-field-soft); }
-  .links a:hover { color: var(--on-field); }
-  .nav-cta { margin-left: auto; display: flex; gap: 8px; }
-  .nav-cta .btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+/* Hero, after Keyrate: one scene in Melete's own objects. Today's ideas lie tilted on the desk under the title, votes
+   ticking up on them; loose vote chips drift above at three depths. Each layer moves at its own scroll speed. */
+.lp-hero { isolation: isolate; overflow: hidden; min-height: min(100svh, 980px); justify-content: flex-start; padding-top: clamp(96px, 16vh, 168px); }
+.lp-hero .hero-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+            -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.backdrop::after { content: ""; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 44% 36% at 50% 30%, color-mix(in srgb, var(--bg) 92%, transparent), color-mix(in srgb, var(--bg) 40%, transparent) 70%, transparent); }
+.ground { position: absolute; left: 50%; bottom: 2%; width: min(1180px, 150vw); translate: -50% 0; will-change: transform;
+          -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 55%, transparent 100%); }
+.feed { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; transform: perspective(1600px) rotateX(34deg); transform-origin: 50% 100%; }
+.ic { display: grid; grid-template-columns: 1fr auto; column-gap: 14px; padding: 18px; border-radius: 18px; background: var(--bg2); border: 1px solid var(--border); text-align: left; transition: opacity .6s ease; min-height: 150px; }
+.ic.out { opacity: 0; }
+.ic small { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); }
+.ic h3 { grid-column: 1; font-size: 17px; line-height: 1.25; font-weight: 650; margin: 6px 0; }
+.ic p { grid-column: 1; font-size: 13px; line-height: 1.45; color: var(--text2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ic b, .chip { display: grid; place-items: center; border-radius: 12px; border: 1px solid var(--border); font-weight: 650; font-variant-numeric: tabular-nums; color: var(--text2); }
+.ic b { grid-column: 2; grid-row: 1 / 4; align-self: start; min-width: 44px; padding: 4px 0 6px; font-size: 14px; transition: background-color .35s, color .35s, border-color .35s; }
+.ic b::before, .chip::before { content: "\25B2"; font-size: 9px; line-height: 13px; }
+.ic b.up { background: var(--vote); border-color: var(--vote); color: #fff; transition-duration: .05s; }
+.sky { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+.sky .layer { position: absolute; inset: 0; will-change: transform; }
+.chip { position: absolute; width: var(--s); padding: calc(var(--s) * .08) 0; font-size: calc(var(--s) * .3); border-radius: calc(var(--s) * .28); background: var(--bg2); animation: drift ease-in-out infinite alternate; }
+.chip.lit { background: var(--vote); border-color: var(--vote); color: #fff; }
+.layer.far .chip { opacity: .35; filter: blur(1.5px); } .layer.mid .chip { opacity: .6; } .layer.near .chip { opacity: .85; }
+@keyframes drift { from { translate: 0 -8px; rotate: -6deg; } to { translate: 0 8px; rotate: 6deg; } }
+@media (max-width: 760px) { .feed { grid-template-columns: repeat(2, 1fr); } .ic:nth-child(n+7) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .chip { animation: none; } }
 
-  /* Hero: the live feed fills the field behind the copy, a field-coloured scrim keeps the headline clean, a bottom fade hides the edge. */
-  .hero { position: relative; display: grid; place-items: center; text-align: center; min-height: calc(100svh - 64px);
-    padding: clamp(32px, 6vh, 72px) var(--wide) clamp(56px, 9vh, 104px); overflow: hidden; isolation: isolate; }
-  .hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 56% 50% at 50% 50%, var(--field) 50%, transparent 100%); }
-  .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 28%; z-index: 1; pointer-events: none; background: linear-gradient(transparent, var(--field)); }
-  .hero-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
-  .kicker { margin: 0 0 18px; font-size: 15px; color: var(--on-field-soft); }
-  h1, h2, .serif { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; }
-  h1 { font-size: clamp(48px, 7vw, 100px); line-height: .98; margin: 0 0 28px; max-width: 12ch; }
-  .lead { margin: 0 0 32px; max-width: 40ch; font-size: clamp(17px, 1.6vw, 19px); line-height: 1.55; color: rgba(238,243,234,.8); }
-  .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 16px; }
-  .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
-  .iwall { height: 100%; max-width: 1440px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 210px; gap: 20px; align-content: center; opacity: .75; text-align: left; }
-  .ic { border: 1px solid rgba(238,243,234,.14); background: rgba(238,243,234,.05); border-radius: 16px; padding: 20px; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto 1fr; column-gap: 16px; overflow: hidden; transition: opacity .6s ease; }
-  .ic.out { opacity: 0; }
-  .ic small { grid-column: 1; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--on-field-soft); }
-  .ic h3 { grid-column: 1; margin: 8px 0; font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.01em; }
-  .ic p { grid-column: 1; margin: 0; font-size: 14px; line-height: 1.45; color: rgba(238,243,234,.7); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; max-height: 4.35em; align-self: start; }
-  .ic b { grid-column: 2; grid-row: 1 / 3; align-self: start; display: grid; place-items: center; min-width: 48px; padding: 6px 0; border-radius: 12px; border: 1px solid rgba(238,243,234,.2); font-size: 15px; transition: background .3s, color .3s; }
-  .ic b::before { content: "\25B2"; font-size: 10px; line-height: 14px; }
-  .ic b.up { background: var(--on-field); color: var(--field); }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-copy > * { animation: rise .6s ease-out both; }
-    .hero-copy > :nth-child(2) { animation-delay: .08s; } .hero-copy > :nth-child(3) { animation-delay: .16s; }
-    .hero-copy > :nth-child(4) { animation-delay: .24s; } .hero-copy > :nth-child(5) { animation-delay: .32s; }
-  }
-  @keyframes spin { to { rotate: 360deg; } }
-  @keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+section { padding: 2rem 1.5rem 7rem; }
+/* the result, shown rather than described: the top real idea, with its spec */
+.shot { max-width: 560px; margin: 0 auto; padding: 1.75rem; border-radius: 28px; background: var(--bg2); border: 1px solid var(--border); }
+.shot .ic { background: var(--bg); min-height: 0; }
+.shot .ic p { -webkit-line-clamp: 4; font-size: 14px; }
+.shot-spec { display: grid; gap: 8px; margin-top: 1.25rem; padding: 0 .25rem; font-size: .9rem; color: var(--text2); }
+.shot-spec div { display: flex; gap: 10px; align-items: baseline; }
+.shot-spec i { font-style: normal; font-weight: 650; color: var(--text); min-width: 3.2rem; }
+.shot-cap { margin-top: 1.25rem; text-align: center; font-size: .8125rem; color: var(--text3); }
+.says { list-style: none; max-width: 820px; margin: 3.5rem auto 0; line-height: 1.5; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; color: var(--text2); font-size: .975rem; }
+.says b { display: block; color: var(--text); font-weight: 650; margin-bottom: .2rem; }
+.where { text-align: center; margin-top: 4rem; color: var(--text2); }
+.where a { color: var(--text); font-weight: 600; margin-left: .4rem; }
+.where a:hover { text-decoration: underline; }
+@media (max-width: 700px) { .says { grid-template-columns: 1fr; gap: 1.25rem; text-align: center; } .shot { padding: 1.25rem 1rem; } }
 
-  /* Paper sections */
-  section.paper { padding: clamp(64px, 10vh, 112px) var(--wide); max-width: 1180px; margin: 0 auto; }
-  .big { font-size: clamp(48px, 7vw, 92px); line-height: 1; color: var(--accent); margin: 0 0 16px; }
-  .sub { margin: 0 0 40px; max-width: 46ch; color: var(--text2); }
-  .live { height: min(760px, 82vh); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--card); }
-  .live iframe { width: 100%; height: 100%; border: 0; display: block; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .card { border: 1px solid var(--border); border-radius: 16px; background: var(--card); padding: 24px 20px; transition: border-color .2s, transform .2s; }
-  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .tag { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
-  .card h3 { font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em; color: var(--accent); margin: 0 0 8px; }
-  .card p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--text2); }
-
-  .download { text-align: center; padding: 96px var(--wide); }
-  .download h2 { font-size: clamp(44px, 6vw, 76px); line-height: 1; margin: 0 0 12px; }
-  .download > p { margin: 0 auto 48px; max-width: 44ch; color: rgba(238,243,234,.78); }
-  .plats { display: grid; grid-template-columns: repeat(3, minmax(0, 220px)); justify-content: center; gap: 32px; }
-  .plats div { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .plats small { font-size: 13px; color: var(--on-field-soft); }
-  .plats b { font-family: var(--font-display); font-weight: 700; font-size: 32px; margin-bottom: 8px; }
-  .download > .other { margin: 40px auto 0; max-width: 52ch; font-size: 15px; color: var(--on-field-soft); }
-
-  /* Footer: tiles, glyph buttons, the engraved wordmark */
-  footer { text-align: center; padding: 72px 16px 24px; }
-  .tiles { display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; }
-  .tiles img { width: 80px; height: 80px; border-radius: 16px; display: block; }
-  .icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-  .icons a, .icons button { width: 48px; height: 48px; border-radius: 24px; display: inline-grid; place-items: center; color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 9%, transparent); border: 0; cursor: pointer; font-size: 18px; transition: background .2s, color .2s; }
-  .icons a:hover, .icons button:hover { background: var(--accent); color: var(--bg); }
-  .band { width: 100%; height: clamp(150px, 24vw, 340px); margin-top: 24px; }
-  .band canvas { display: block; width: 100%; height: 100%; }
-  .fine { margin: 8px 0 0; font-size: 13px; color: var(--text2); text-wrap: balance; }
-
-  @media (max-width: 820px) {
-    .links { display: none; }
-    .iwall { grid-template-columns: repeat(2, 1fr); }
-    .plats { grid-template-columns: minmax(0, 1fr); }
-  }
-  @media (max-width: 480px) {
-    nav.top { gap: 12px; }
-    .nav-cta .btn-ghost { display: none; }
-    .cta .btn { flex: 1 1 100%; }
-    .iwall { grid-template-columns: 1fr; padding: 16px; grid-auto-rows: 190px; opacity: .5; }
-    .hero::before { background: radial-gradient(ellipse 120% 46% at 50% 50%, var(--field) 62%, transparent 100%); }
-    .icons { gap: 8px; } .icons a, .icons button { width: 44px; height: 44px; }
-  }
+/* Footer, as on the other Jaybulb landings: brand and link columns, the engraved glyph band, one fine line */
+.foot { padding: 4rem 1.5rem 1.5rem; border-top: 1px solid var(--border); overflow: hidden; }
+.foot-top { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2.5rem; }
+.foot-brand { display: grid; gap: .5rem; align-content: start; }
+.foot-brand img { border-radius: 10px; }
+.foot-brand b { font-size: 2.5rem; line-height: 1; letter-spacing: -.02em; }
+.foot-brand p, .foot .label { color: var(--text2); font-size: .9375rem; }
+.foot-cols { display: flex; flex-wrap: wrap; gap: 3rem; }
+.foot-cols div { display: grid; gap: .5rem; align-content: start; }
+.foot .label { font-weight: 700; font-size: .875rem; margin-bottom: .25rem; }
+.foot-cols a { font-size: .9375rem; }
+.foot-cols a:hover { color: var(--vote); }
+.legal { margin-top: 1.5rem; font-size: .8125rem; color: var(--text2); text-align: center; }
+.legal a:hover, .legal button:hover { text-decoration: underline; }
+.legal button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+@media (max-width: 560px) { .foot-cols { gap: 2rem; } }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+.word-band { color: var(--text); position: relative; width: 100vw; margin: 40px 0 0 calc(50% - 50vw); height: clamp(120px, 16vw, 220px); }
+.word-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+.word-band.live .word-canvas { display: block; }
 </style>
-<style>/* footer glyph band (footer-band.js) */ .word-band{color:var(--accent);position:relative;width:100%;margin:32px 0 0;height:clamp(120px,16vw,220px)} .word-canvas{position:absolute;inset:0;width:100%;height:100%;display:none} .word-band.live .word-canvas{display:block}</style>
 </head>
 <body id="top">
-
-<nav class="top on-field" aria-label="Site">
-  <a class="logo" href="/" aria-label="Melete home"><svg width="26" height="26" aria-hidden="true"><use href="/brand/mark.svg#m" width="26" height="26"/></svg><span>Melete</span></a>
-  <div class="links"><a href="#features">Features</a><a href="#download">Download</a></div>
-  <div class="nav-cta">
-    <a class="btn btn-ghost" href="/app.html?auth=login">Log in</a>
-    <a class="btn btn-solid" href="/app.html?auth=register">Sign up</a>
-  </div>
-</nav>
-
+<div class="top">
+  <a class="logo" href="/" aria-label="Melete home"><img src="/icon.svg" alt="" width="28" height="28"><span>Melete</span></a>
+  <nav aria-label="Account"><a class="lp-btn" href="/app.html?auth=login">Log in</a><a class="lp-btn lp-solid" href="/app.html?auth=register">Sign up</a></nav>
+</div>
 <main>
-<header class="hero on-field">
-  <!-- The real feed behind the copy: today's ideas from /api/posts, votes ticking up. Decoration only. -->
-  <div class="hero-bg" aria-hidden="true" inert><div class="iwall" id="iwall"></div></div>
+<header class="lp-hero">
+  <div class="backdrop" aria-hidden="true" inert><div class="ground"><div class="feed" id="feed"></div></div></div>
+  <div class="sky" id="sky" aria-hidden="true" inert></div>
   <div class="hero-copy">
-    <p class="kicker">Named for Melete, the Muse of thought</p>
+    <span class="lp-mark"><img src="/icon.svg" alt="" width="56" height="56"></span>
     <h1>Ideas worth thinking about.</h1>
-    <p class="lead">A new idea lands every morning. Vote, see what is already on the App Store, and build the one nobody has. On the web, iPhone and Mac.</p>
-    <div class="cta">
-      <a class="btn btn-solid" href="/app.html?auth=register">Sign up free</a>
-      <a class="btn btn-ghost" href="/app.html">Open the web app</a>
+    <p class="lp-lede">A new idea lands every morning. Vote, then build the one nobody has.</p>
+    <div class="lp-cta">
+      <a href="/app.html" class="lp-btn lp-solid">Open the feed</a>
+      <a href="https://apps.apple.com/app/id6785162492" class="lp-btn" target="_blank" rel="noopener">App Store</a>
     </div>
-    <a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path id="apl" fill="currentColor" d="M16.37 12.74c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.61 2.25 2.75 2.21 1.1-.04 1.52-.71 2.86-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.15.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.34-3.55zM14.18 6.27c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23z"/></svg><span>Download on the App Store</span></a>
   </div>
 </header>
-
-<section class="paper" id="features">
-  <h2 class="big">Features</h2>
-  <div class="cards">
-    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Daily</div><h3>One idea at nine</h3><p>A fresh idea lands every morning, with a write-up of what to build first.</p></article>
-    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Vote</div><h3>The good ones rise</h3><p>One vote each. Switch between New and Trending.</p></article>
-    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>Check</div><h3>Who got there first</h3><p>Open an idea and the closest apps already on the App Store show up under it.</p></article>
-    <article class="card"><div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Brainstorm</div><h3>Three from a topic</h3><p>Give it a topic and it writes three ideas into the feed.</p></article>
+<section id="today" class="lp-reveal">
+  <div class="shot">
+    <div class="ic" id="today-card"><small>Tech</small><b>0</b><h3>Inspection-ready photo log for HVAC jobs</h3><p>Techs snap dozens of photos per install and lose them in the camera roll. Tag each one to the job and export one PDF for the inspector.</p></div>
+    <div class="shot-spec" aria-label="Every idea comes with a spec and a plan">
+      <div><i>Spec</i><span>Who it is for, the one job it kills, and what ships first.</span></div>
+      <div><i>Plan</i><span>The build, step by step, small enough to start tonight.</span></div>
+    </div>
+    <p class="shot-cap" id="today-cap">The top idea right now.</p>
   </div>
+  <ul class="says">
+    <li><b>One idea every morning.</b> Written, judged, then posted. Generic ones get thrown out.</li>
+    <li><b>Vote it up or down.</b> The good ones rise to the top.</li>
+    <li><b>A spec and a plan for each.</b> See what is already on the App Store first.</li>
+  </ul>
+  <p class="where">Free on the web, iPhone and Mac. <a href="/app.html">Open the feed &rarr;</a></p>
 </section>
-
-<section class="download on-field" id="download">
-  <h2>Download Melete</h2>
-  <p>The same feed everywhere, synced through your account.</p>
-  <div class="plats">
-    <div><small>iOS 17+</small><b>iPhone</b><a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg><span>App Store</span></a></div>
-    <div><small>macOS 14+</small><b>Mac</b><a class="badge" href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg><span>Mac App Store</span></a></div>
-    <div><small>Any browser</small><b>Web</b><a class="btn btn-solid" href="/app.html">Open the web app</a></div>
-  </div>
-  <p class="other">On Windows, Linux and Android, open the web app and install it from the browser. It gets its own window and keeps working offline.</p>
-</section>
-
 </main>
-
-<footer>
-  <div class="tiles" aria-hidden="true"><img src="/mt-head.webp" alt="" width="80" height="80"><img src="/mt-hand.webp" alt="" width="80" height="80"><img src="/mt-folds.webp" alt="" width="80" height="80"></div>
-  <nav class="icons" aria-label="Footer">
-    <a href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener" title="App Store" aria-label="App Store"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#apl"/></svg></a>
-    <a href="/app.html?auth=register" title="Sign up" aria-label="Sign up"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a>
-    <a href="/support.html" title="Support" aria-label="Support"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg></a>
-    <a href="/tos.html" title="Terms and privacy" aria-label="Terms and privacy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></a>
-    <a href="https://github.com/nulljosh/melete" title="Source" aria-label="Source"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></a>
-    <a href="https://jaybulb.com" title="Portfolio" aria-label="Portfolio"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
-    <button type="button" data-theme-toggle title="Switch theme" aria-label="Switch theme">&#9790;</button>
-    <a href="#top" title="Back to top" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
-  </nav>
+<footer class="foot">
+  <div class="foot-top">
+    <div class="foot-brand"><img src="/icon.svg" alt="" width="40" height="40"><b>Melete</b><p>Ideas worth thinking about.</p></div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><p class="label">Melete</p><a href="/app.html">Open the feed</a><a href="/app.html?auth=register">Sign up</a><a href="https://apps.apple.com/app/id6785162492" target="_blank" rel="noopener">iPhone and Mac</a></div>
+      <div><p class="label">Source</p><a href="https://github.com/nulljosh/melete">GitHub</a><a href="/support.html">Support</a><a href="/tos.html">Terms and privacy</a></div>
+      <div><p class="label">More</p><a href="mailto:info@jaybulb.com?subject=Melete">Feedback</a><a href="https://jaybulb.com">More apps</a><a href="#top">Back to top</a></div>
+    </nav>
+  </div>
   <div class="word-band" aria-hidden="true"><canvas class="word-canvas"></canvas></div>
-  <p class="fine">Melete <span id="ver"></span> &middot; <a href="https://github.com/nulljosh/melete/blob/main/LICENSE">MIT</a> &middot; &copy; 2026 Jaybulb &middot; Made in Vancouver, BC</p>
+  <p class="legal">Melete <span id="ver"></span> &middot; &copy; 2026 Joshua Trommel &middot; MIT &middot; <a href="/tos.html">Privacy</a> &middot; <button type="button" data-theme-toggle>Switch theme</button></p>
 </footer>
-
 <script>
-// Hero wall: the real feed from /api/posts, cards trading places and votes ticking up. Decoration only.
 (function () {
-  var wall = document.getElementById('iwall'); if (!wall) return;
-  var mq = function (q) { return matchMedia(q).matches; };
-  var n = mq('(max-width: 480px)') ? 3 : mq('(max-width: 820px)') ? 6 : 9, still = mq('(prefers-reduced-motion: reduce)');
-  var FALLBACK = [{ title: 'Inspection-ready photo log for HVAC jobs', content: 'Techs snap dozens of photos per install and lose them in the camera roll. Tag each to the job and export one PDF.', category: 'General', score: 4 },
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FALLBACK = [
+    { title: 'Inspection-ready photo log for HVAC jobs', content: 'Techs snap dozens of photos per install and lose them in the camera roll. Tag each one to the job and export one PDF for the inspector.', category: 'tech', score: 4 },
     { title: 'Recycling guide for local bins', content: 'Tells you what goes in each bin for your address, and updates when the rules change.', category: 'sustainability', score: 2 },
     { title: 'Branded auth emails from one worker', content: 'Each app sends its confirm and reset emails in its own colours and voice.', category: 'tech', score: 3 }];
   function fill(card, p) {
-    card.innerHTML = '';
-    var sm = document.createElement('small'), h = document.createElement('h3'), t = document.createElement('p'), b = document.createElement('b');
-    sm.textContent = p.category || 'Idea'; h.textContent = p.title; t.textContent = p.content || ''; b.textContent = p.score || 0;
-    card.append(sm, b, h, t); card._score = p.score || 0;
+    var sm = document.createElement('small'), b = document.createElement('b'), h = document.createElement('h3'), t = document.createElement('p');
+    sm.textContent = p.category || 'Idea'; b.textContent = p.score || 0; h.textContent = p.title;
+    t.textContent = String(p.content || '').split('\n\nSparked by')[0];
+    card.replaceChildren(sm, b, h, t); card._score = p.score || 0;
   }
+  // The ground: today's real feed, tilted under the title, votes ticking up. Decoration only.
   function start(posts) {
     posts = posts.filter(function (p) { return p && p.title; }); if (!posts.length) posts = FALLBACK;
-    var cards = [], next = 0;
-    for (var i = 0; i < n; i++) { var c = document.createElement('div'); c.className = 'ic'; fill(c, posts[next++ % posts.length]); wall.appendChild(c); cards.push(c); }
+    fill(document.getElementById('today-card'), posts[0]);
+    if (posts !== FALLBACK && posts[0].created_at) document.getElementById('today-cap').textContent = 'The top idea right now, posted ' + new Date(posts[0].created_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) + '.';
+    var feed = document.getElementById('feed'), cards = [], next = 0;
+    for (var i = 0; i < 9; i++) { var c = document.createElement('div'); c.className = 'ic'; fill(c, posts[next++ % posts.length]); feed.appendChild(c); cards.push(c); }
     if (still) return;
     setInterval(function () {
       var c = cards[Math.floor(Math.random() * cards.length)], b = c.querySelector('b');
-      c._score++; b.textContent = c._score; b.classList.add('up'); setTimeout(function () { b.classList.remove('up'); }, 1400);
+      c._score++; b.textContent = c._score; b.classList.add('up'); setTimeout(function () { b.classList.remove('up'); }, 1200);
     }, 900);
     setInterval(function () {
       var c = cards[Math.floor(Math.random() * cards.length)];
@@ -246,23 +187,37 @@
     }, 2600);
   }
   fetch('/api/posts?limit=30').then(function (r) { return r.json(); }).then(function (d) { start(d.posts || []); }).catch(function () { start(FALLBACK); });
+
+  // The sky: loose vote chips at three depths, a few lit green.
+  var sky = document.getElementById('sky'), layers = [];
+  [['far', 6, 26, .15], ['mid', 5, 38, .3], ['near', 4, 52, .5]].forEach(function (d, li) {
+    var layer = document.createElement('div'); layer.className = 'layer ' + d[0]; layer._speed = d[3];
+    for (var i = 0; i < d[1]; i++) {
+      var chip = document.createElement('span'); chip.className = 'chip' + ((i + li) % 4 === 0 ? ' lit' : '');
+      var side = i % 2 ? 1 : -1, x = 50 + side * (36 + ((i * 37 + li * 13) % 12)); // outer edges only, never over the title
+      chip.style.cssText = '--s:' + d[2] + 'px;left:' + x + '%;top:' + (6 + ((i * 23 + li * 17) % 58)) + '%;animation-duration:' + (5 + (i % 3) * 1.7) + 's';
+      chip.textContent = 3 + ((i * 7 + li * 5) % 40);
+      layer.appendChild(chip);
+    }
+    sky.appendChild(layer); layers.push(layer);
+  });
+  // Every layer at its own scroll speed: the ground slowest, the near chips fastest.
+  var ground = document.querySelector('.ground'), copy = document.querySelector('.hero-copy');
+  if (!still) {
+    var t = 0;
+    addEventListener('scroll', function () {
+      if (t) return;
+      t = requestAnimationFrame(function () {
+        t = 0; var y = scrollY; if (y > innerHeight * 1.2) return;
+        ground.style.transform = 'translate3d(0,' + (y * .1) + 'px,0)';
+        layers.forEach(function (l) { l.style.transform = 'translate3d(0,' + (-y * l._speed) + 'px,0)'; });
+        copy.style.transform = 'translate3d(0,' + (y * .2) + 'px,0)';
+      });
+    }, { passive: true });
+  }
+  fetch('/package.json').then(function (r) { return r.json(); }).then(function (p) { if (p.version) document.getElementById('ver').textContent = 'v' + p.version; }).catch(function () {});
 })();
-// Hero parallax: the feed drifts at 0.45, the copy lifts at 0.2 and fades. Off under reduced motion.
-(function () {
-  var bg = document.querySelector('.hero-bg'), copy = document.querySelector('.hero-copy');
-  if (!bg || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var t = 0;
-  addEventListener('scroll', function () {
-    if (t) return;
-    t = requestAnimationFrame(function () {
-      t = 0; var y = scrollY, h = innerHeight; if (y > h * 1.2) return;
-      bg.style.setProperty('--py', (y * .45) + 'px');
-      copy.style.transform = 'translate3d(0,' + (y * .2) + 'px,0)'; copy.style.opacity = Math.max(0, 1 - y / (h * .7));
-    });
-  }, { passive: true });
-})();
-fetch('/package.json').then(function (r) { return r.json(); }).then(function (p) { if (p.version) document.getElementById('ver').textContent = 'v' + p.version; }).catch(function () {});
 </script>
-<script src="footer-band.js" defer></script>
+<script src="/footer-band.js" defer></script>
 </body>
 </html>
