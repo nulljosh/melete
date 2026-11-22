@@ -135,3 +135,19 @@ describe('generate judge', () => {
   });
 });
 
+
+describe('daily seeds from the X bookmarks', () => {
+  const { SEEDS, seedFor } = require('../api/_lib/seeds.js');
+  it('hands out one seed per day in order, then none', () => {
+    expect(seedFor(new Date('2026-11-21T09:00:00Z'))).toBe(null);
+    expect(seedFor(new Date('2026-11-22T09:00:00Z'))).toBe(SEEDS[0]);
+    expect(seedFor(new Date('2026-11-23T09:00:00Z'))).toBe(SEEDS[1]);
+    expect(seedFor(new Date(Date.parse('2026-11-22T09:00:00Z') + SEEDS.length * 864e5))).toBe(null);
+  });
+  it('every seed credits an X post and has no emojis', () => {
+    for (const s of SEEDS) {
+      expect(s.src).toMatch(/^https:\/\/x\.com\/\w+\/status\/\d+$/);
+      expect(s.seed).not.toMatch(/\p{Extended_Pictographic}/u);
+    }
+  });
+});

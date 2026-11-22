@@ -3,6 +3,7 @@
 const { sparkRequest } = require('./_lib/spark');
 const { parseToken } = require('./posts');
 const { getIp, checkRateLimit } = require('./_lib/ratelimit');
+const { seedFor } = require('./_lib/seeds');
 
 // --- gemma ---
 
@@ -107,12 +108,19 @@ async function handleGenerate(req, res) {
   // The model copies the shape of whatever it is shown ("Shared X tracker for
   // roommates", five days running), so a rejected draft gets another try in a
   // fresh category. Three misses post nothing: a quiet day beats a repeat.
-  let idea, category, text;
+  // First try starts from today's real observation, if any; retries fall back
+  // to a random group so a rejected seed never costs the day its idea.
+  const todaySeed = seedFor();
+  let idea, category, text, usedSeed = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     category = GEN_CATEGORIES[Math.floor(Math.random() * GEN_CATEGORIES.length)];
+    usedSeed = attempt === 0 ? todaySeed : null;
     const angle = GEN_ANGLES[Math.floor(Math.random() * GEN_ANGLES.length)];
+    const start = usedSeed
+      ? `Start from this real observation, and make the idea your own rather than restating it: ${usedSeed.seed}`
+      : `Start from this group of people: ${angle}.`;
     text = await callGemma(
-      `Invent one software idea for a public idea board. Category: ${category}. Start from this group of people: ${angle}.\n` +
+      `Invent one software idea for a public idea board. Category: ${category}. ${start}\n` +
       `Find one specific, annoying job they do by hand today that software could kill. Not a generic tracker, list, calendar, splitter or "shared X". No apps for roommates or families.\n` +
       `Title: under 8 words, names the thing, no colon.\n` +
       `Content: two sentences, under 45 words total. First says the pain, second says what the app does. Plain words, no hype.\n` +
@@ -141,7 +149,7 @@ async function handleGenerate(req, res) {
     body: {
       id: 'post-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8),
       title: String(idea.title).slice(0, 200),
-      content: String(idea.content).slice(0, 2000),
+      content: (String(idea.content) + (usedSeed ? '\n\nSparked by ' + usedSeed.src : '')).slice(0, 2000),
       category,
       author_username: 'gemma',
       author_user_id: 'system',
