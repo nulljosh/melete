@@ -1,6 +1,6 @@
 {
   "name": "melete",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Melete: a new idea every morning, voted on and checked against the App Store",
   "keywords": ["idea-sharing", "voting", "forum"],
   "main": "index.html",

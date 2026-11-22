@@ -24,7 +24,7 @@ async function getGithubUser(token) {
   ]);
   const user = await userRes.json();
   const emails = await emailRes.json();
-  const primary = Array.isArray(emails) ? (emails.find(e => e.primary && e.verified) || emails[0]) : null;
+  const primary = Array.isArray(emails) ? emails.find(e => e.primary && e.verified) : null;
   return { id: String(user.id), login: user.login, email: primary?.email || user.email || null, avatar: user.avatar_url || null };
 }
 
@@ -54,7 +54,9 @@ module.exports = async function handler(req, res) {
         user = rows[0];
         await sparkRequest(`users?id=eq.${user.id}`, {
           method: 'PATCH', useServiceRole: true,
-          body: { github_id: gh.id, avatar_url: gh.avatar },
+          // GitHub just proved this address. If the account never did, whoever registered it may not own it:
+          // drop their password so a squatted signup cannot keep a door into the real owner's account.
+          body: { github_id: gh.id, avatar_url: gh.avatar, ...(user.verified ? {} : { verified: true, password_hash: null, password_salt: null }) },
         }).catch(() => {});
       }
     }
